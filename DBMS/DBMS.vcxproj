@@ -185,21 +185,38 @@
   <ItemGroup>
     <ClInclude Include="CFileTree.h" />
     <ClInclude Include="CTableView.h" />
+    <ClInclude Include="DBDao.h" />
+    <ClInclude Include="CDBEntity.h" />
+    <ClInclude Include="DBLogic.h" />
     <ClInclude Include="DBMS.h" />
     <ClInclude Include="DBMSDoc.h" />
     <ClInclude Include="DBMSView.h" />
+    <ClInclude Include="FieldDAO.h" />
+    <ClInclude Include="FieldEntity.h" />
+    <ClInclude Include="FieldLogic.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="TableDAO.h" />
+    <ClInclude Include="CTableEntity.h" />
+    <ClInclude Include="TableLogic.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFileTree.cpp" />
     <ClCompile Include="CTableView.cpp" />
+    <ClCompile Include="DBDao.cpp" />
+    <ClCompile Include="CDBEntity.cpp" />
+    <ClCompile Include="DBLogic.cpp" />
     <ClCompile Include="DBMS.cpp" />
     <ClCompile Include="DBMSDoc.cpp" />
     <ClCompile Include="DBMSView.cpp" />
+    <ClCompile Include="FieldDAO.cpp" />
+    <ClCompile Include="FieldEntity.cpp" />
+    <ClCompile Include="FieldLogic.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -207,6 +224,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TableDAO.cpp" />
+    <ClCompile Include="CTableEntity.cpp" />
+    <ClCompile Include="TableLogic.cpp" />
+    <ClCompile Include="Tool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DBMS.rc" />

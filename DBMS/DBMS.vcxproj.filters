@@ -13,27 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Dao">
+      <UniqueIdentifier>{e0947e6a-e3c3-4d78-9ffb-bee5dcad6ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dao\Head File">
+      <UniqueIdentifier>{03ee8e9c-d3ca-41ef-9e9d-d4222d592f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dao\Source File">
+      <UniqueIdentifier>{c4084905-6f21-4cbb-ad0e-51300dbe4b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{6ef9e06d-ac66-4741-8727-6746b91b5b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Head File">
+      <UniqueIdentifier>{ab58225e-f4ad-4a7e-8b8a-fe8c55e7670d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Source FIle">
+      <UniqueIdentifier>{4598e8f6-453f-4bcd-ae25-33a36b5348ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{2e343195-3dfb-4e49-bc02-af6d02cd6ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Head File">
+      <UniqueIdentifier>{6fafc92b-d863-4cb6-9890-bb197cf3840f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Source File">
+      <UniqueIdentifier>{d78eca62-cae5-4608-9960-f78f38cf2a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{55c5acd8-4178-4a74-91a9-78616fb7602d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic\Head File">
+      <UniqueIdentifier>{d7c14a27-6201-4b61-953c-c160b68d79f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic\Source File">
+      <UniqueIdentifier>{13e30a1a-0ca9-4289-b710-cde287e65eac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{372df5fc-a3d5-4397-a786-b6f0e75e14ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Head File">
+      <UniqueIdentifier>{55508543-b14a-44c4-aab1-7f5383cbb75c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Source File">
+      <UniqueIdentifier>{4f63bc12-b130-43d7-971d-68fa713ab175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{71e1502b-b558-4491-8f45-fee52e499e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Head FIle">
+      <UniqueIdentifier>{eea74547-2d45-4d3d-9292-0c09e8bba583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Source File">
+      <UniqueIdentifier>{896426f0-6851-495a-b66d-e80d5ad59374}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DBMS.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MainFrm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DBMSDoc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DBMSView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
@@ -45,15 +87,54 @@
     <ClInclude Include="CFileTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DBDao.h">
+      <Filter>Dao\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldDAO.h">
+      <Filter>Dao\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="TableDAO.h">
+      <Filter>Dao\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="CDBEntity.h">
+      <Filter>Entity\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldEntity.h">
+      <Filter>Entity\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="CTableEntity.h">
+      <Filter>Entity\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="DBMS.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="DBMSDoc.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="DBLogic.h">
+      <Filter>Logic\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldLogic.h">
+      <Filter>Logic\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="TableLogic.h">
+      <Filter>Logic\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Util\Head File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DBMS.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DBMSDoc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DBMSView.cpp">
@@ -67,6 +148,42 @@
     </ClCompile>
     <ClCompile Include="CFileTree.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DBDao.cpp">
+      <Filter>Dao\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldDAO.cpp">
+      <Filter>Dao\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="TableDAO.cpp">
+      <Filter>Dao\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CDBEntity.cpp">
+      <Filter>Entity\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldEntity.cpp">
+      <Filter>Entity\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="CTableEntity.cpp">
+      <Filter>Entity\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="DBMS.cpp">
+      <Filter>Global\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="DBMSDoc.cpp">
+      <Filter>Global\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="DBLogic.cpp">
+      <Filter>Logic\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldLogic.cpp">
+      <Filter>Logic\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="TableLogic.cpp">
+      <Filter>Logic\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Util\Source File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
