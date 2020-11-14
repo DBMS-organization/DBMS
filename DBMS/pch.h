@@ -13,6 +13,12 @@
 
 #include <conio.h>
 #include<string>
+#include<fstream>
+
+#include"Tool.h"
+#include"DBLogic.h"
+#include"TableLogic.h"
+#include"FieldLogic.h"
 
 using namespace std;
 

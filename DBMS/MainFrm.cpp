@@ -362,14 +362,20 @@ void CMainFrame::OnDbNew()
 void CMainFrame::OnTbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtTable(_T("table"));
+	if (m_pFileTree->canCreateTable()) {
+		m_pFileTree->OnCrtTable(_T("table"));
+	}
+	
 }
 
 //新建字段
 void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtField(_T("field"));
+	if (m_pFileTree->canCreateField()) {
+		m_pFileTree->OnCrtField(_T("field<"));
+	}
+	
 }
 
 //添加记录

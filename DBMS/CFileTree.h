@@ -46,6 +46,8 @@ public:
 	void DisplayDBList();		//显示数据库列表
 
 	void GetDBAndTableName(CString& dbName, CString& tbName);
+	bool canCreateTable();
+	bool canCreateField();
 
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCrtDB(CString dbname);

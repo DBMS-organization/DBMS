@@ -121,14 +121,31 @@ void CFileTree::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
 void CFileTree::OnCrtDB(CString dbname)
 {
 	// TODO: 在此添加命令处理程序代码
-	HTREEITEM hItem;
-	hItem = m_pTreeCtrl->InsertItem(dbname, 0, 0, TVI_ROOT, TVI_LAST);
-	if (hItem != NULL)
-	{
-		m_bAddDB = TRUE;
-		m_pTreeCtrl->SetItemData(hItem, DBVIEW_DB_ITEM);
-		//m_pTreeCtrl->EditLabel(hItem);
+	if (!CTool::isValidFileName(dbname)) {
+		AfxMessageBox(_T("数据库名中不能带有|\\/:*?<>|\""));
+		return;
 	}
+
+	if (dbname == _T("")) {
+		AfxMessageBox(_T("数据库名中不能为空"));
+		return;
+	}
+
+	CDBLogic dbLogic;
+	if (dbLogic.CreateDatabase(dbname)) {
+		HTREEITEM hItem;
+		hItem = m_pTreeCtrl->InsertItem(dbname, 0, 0, TVI_ROOT, TVI_LAST);
+		if (hItem != NULL)
+		{
+			m_bAddDB = TRUE;
+			m_pTreeCtrl->SetItemData(hItem, DBVIEW_DB_ITEM);
+			//m_pTreeCtrl->EditLabel(hItem);
+		}
+	}
+	else {
+		AfxMessageBox(_T("数据库名已存在！"));
+	}
+	
 
 }
 
@@ -145,16 +162,21 @@ void CFileTree::OnDeleteDB()
 }
 
 
-void CFileTree::OnCrtTable(CString dbname)
+void CFileTree::OnCrtTable(CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
+	if (!CTool::isValidFileName(tbname)) {
+		AfxMessageBox(_T("表名中不能带有|\\/:*?<>|\""));
+		return;
+	}
+
 	// 同时打开数据库
 	this->OnOpenDB();
 	if (m_hCurrDBItem == NULL) {
-		AfxMessageBox(_T("请选择数据库！"));
+		//AfxMessageBox(_T("请选择数据库！"));
 	}
 	else {
-		HTREEITEM hTableItem = m_pTreeCtrl->InsertItem(dbname, 1, 1, m_hCurrDBItem, TVI_LAST);
+		HTREEITEM hTableItem = m_pTreeCtrl->InsertItem(tbname, 1, 1, m_hCurrDBItem, TVI_LAST);
 		if (hTableItem != NULL)
 		{
 			m_pTreeCtrl->SetItemData(hTableItem, DBVIEW_TABLE_ITEM);
@@ -165,18 +187,18 @@ void CFileTree::OnCrtTable(CString dbname)
 	}
 }
 
-void CFileTree::OnCrtField(CString dbname)
+void CFileTree::OnCrtField(CString fieldname)
 {
 	if (m_hCurrDBItem == NULL) {
-		AfxMessageBox(_T("请选择数据表！"));
+		//AfxMessageBox(_T("请选择数据表！"));
 	}
 	else {
 		HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
 		if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM) {
-			AfxMessageBox(_T("请选择表！"));
+			//AfxMessageBox(_T("请选择表！"));
 		}
 		else {
-			HTREEITEM hFieldItem = m_pTreeCtrl->InsertItem(dbname, 2, 2, m_hCurrTBItem, TVI_LAST);
+			HTREEITEM hFieldItem = m_pTreeCtrl->InsertItem(fieldname, 2, 2, m_hCurrTBItem, TVI_LAST);
 			if (hFieldItem != NULL)
 			{
 				m_pTreeCtrl->SetItemData(hFieldItem, DBVIEW_FIELD_ITEM);
@@ -213,9 +235,7 @@ CString CFileTree::GetSelectedTBName()
 
 
 
-/****************************
-* 查看表记录
-****************************/
+//查看表记录
 void CFileTree::OnLookTable()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -224,9 +244,7 @@ void CFileTree::OnLookTable()
 }
 
 
-/****************************
-* 按照多字段条件查询记录
-****************************/
+//按照多字段查询
 void CFileTree::OnConditionQuery()
 {
 
@@ -296,6 +314,36 @@ void CFileTree::GetDBAndTableName(CString& dbName, CString& tbName)
 {
 	dbName = this->GetSelectedDBName();
 	tbName = this->GetSelectedTBName();
+}
+
+//判断是否能创建表，能则返回true否则返回false
+bool CFileTree::canCreateTable()
+{
+	if (m_hCurrDBItem == NULL) {
+		AfxMessageBox(_T("请选择数据库！"));
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool CFileTree::canCreateField()
+{
+	if (m_hCurrDBItem == NULL) {
+		AfxMessageBox(_T("请选择表！"));
+		return false;
+	}
+
+	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
+	if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM)          // 数据库节点
+	{
+		AfxMessageBox(_T("请选择表！"));
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
 

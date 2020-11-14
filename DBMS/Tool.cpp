@@ -94,7 +94,7 @@ bool CTool::isBool(CString b)
 /*判断content的数据类型是否为type
 * 若type为varchar则会判断varchar的长度是否能够存储所给的content
 */
-bool CTool::judgeType(CString type, CString content, int length = -1)
+bool CTool::judgeType(CString type, CString content, int length)
 {
 	bool judge = true;
 	switch (dataType(type)) {
