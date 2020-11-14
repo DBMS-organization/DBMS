@@ -37,6 +37,7 @@ public:
 
 	void ClearTable();
 	void displayTable();
+	void displayFieldMsg(CString dbname, CString tbname);
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 };
 

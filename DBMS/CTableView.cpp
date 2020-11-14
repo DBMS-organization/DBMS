@@ -69,18 +69,18 @@ void CTableView::OnInitialUpdate()
 	m_curView = TABLEVIEW_VALID;
 
 
-	m_ListCtrl->InsertColumn(0, CString("#"), LVCFMT_LEFT, 0);
-	m_ListCtrl->InsertColumn(1, CString("字段名"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(2, CString("顺序"), LVCFMT_LEFT, 0);
-	m_ListCtrl->InsertColumn(3, CString("类型"), LVCFMT_LEFT, 80);
-	m_ListCtrl->InsertColumn(4, CString("长度"), LVCFMT_LEFT, 50);
-	m_ListCtrl->InsertColumn(5, CString("最小值"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(6, CString("最大值"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(7, CString("默认值"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(8, CString("主键"), LVCFMT_LEFT, 40);
-	m_ListCtrl->InsertColumn(9, CString("允许空值"), LVCFMT_LEFT, 70);
-	m_ListCtrl->InsertColumn(10, CString("唯一值"), LVCFMT_LEFT, 60);
-	m_ListCtrl->InsertColumn(11, CString("注释"), LVCFMT_LEFT, 100);
+	//m_ListCtrl->InsertColumn(0, CString("#"), LVCFMT_LEFT, 0);
+	//m_ListCtrl->InsertColumn(1, CString("字段名"), LVCFMT_LEFT, 100);
+	//m_ListCtrl->InsertColumn(2, CString("顺序"), LVCFMT_LEFT, 0);
+	//m_ListCtrl->InsertColumn(3, CString("类型"), LVCFMT_LEFT, 80);
+	//m_ListCtrl->InsertColumn(4, CString("长度"), LVCFMT_LEFT, 50);
+	//m_ListCtrl->InsertColumn(5, CString("最小值"), LVCFMT_LEFT, 100);
+	//m_ListCtrl->InsertColumn(6, CString("最大值"), LVCFMT_LEFT, 100);
+	//m_ListCtrl->InsertColumn(7, CString("默认值"), LVCFMT_LEFT, 100);
+	//m_ListCtrl->InsertColumn(8, CString("主键"), LVCFMT_LEFT, 40);
+	//m_ListCtrl->InsertColumn(9, CString("允许空值"), LVCFMT_LEFT, 70);
+	//m_ListCtrl->InsertColumn(10, CString("唯一值"), LVCFMT_LEFT, 60);
+	//m_ListCtrl->InsertColumn(11, CString("注释"), LVCFMT_LEFT, 100);
 
 }
 
@@ -97,7 +97,36 @@ void CTableView::ClearTable()
 
 void CTableView::displayTable()
 {
+	this->ClearTable();
 	m_ListCtrl->InsertColumn(11, CString("测试"), LVCFMT_LEFT, 100);
+}
+
+//在表中显示字段描述信息
+void CTableView::displayFieldMsg(CString dbname, CString tbname)
+{
+	this->ClearTable();
+	m_ListCtrl->InsertColumn(0, CString("Order"), LVCFMT_LEFT, 80);
+	m_ListCtrl->InsertColumn(1, CString("FieldName"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(2, CString("Type"), LVCFMT_LEFT, 50);
+	m_ListCtrl->InsertColumn(3, CString("Length"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(4, CString("ModifyTime"), LVCFMT_LEFT, 150);
+	m_ListCtrl->InsertColumn(5, CString("Primary"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(6, CString("Unique"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(7, CString("Not null"), LVCFMT_LEFT, 100);
+
+	CFieldDAO fieldDao;
+	vector<CFieldEntity> fieldList = fieldDao.getFieldList(DATAFILEPATH+_T("\\")+dbname+ _T("\\")+tbname+ _T(".tdf"));
+	int i=0;
+	for (vector<CFieldEntity>::iterator ite = fieldList.begin(); ite != fieldList.end(); ++ite,i++) {
+		m_ListCtrl->InsertItem(i, CTool::IntToCString(ite->GetFieldOrder()));
+		m_ListCtrl->SetItemText(i, 1, ite->GetFieldName());
+		m_ListCtrl->SetItemText(i, 2, CTool::IntToCString(ite->GetFieldType()));
+		m_ListCtrl->SetItemText(i, 3, CTool::IntToCString(ite->GetFieldParam()));
+		m_ListCtrl->SetItemText(i, 4, ite->GetModifyTime());
+		m_ListCtrl->SetItemText(i, 5, CTool::BoolToCString(ite->GetPrimary()));
+		m_ListCtrl->SetItemText(i, 6, CTool::BoolToCString(ite->GetUnique()));
+		m_ListCtrl->SetItemText(i, 7, CTool::BoolToCString(ite->GetNotNull()));
+	}
 }
 
 void CTableView::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)

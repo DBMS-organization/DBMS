@@ -12,13 +12,12 @@ const char* CTool::CStringToChar(CString str)
 	return s.c_str();
 }
 
-char* CTool::boolToChar(bool bl)
+CString CTool::BoolToCString(bool bl)
 {
-	char ch[2];
-	ch[1] = '\0';
-	if (bl) ch[0] = '1';
-	else ch[0] = '0';
-	return ch;
+	CString s;
+	if (bl) s = "ture";
+	else s = "false";
+	return s;
 }
 
 //intתchar*
@@ -48,6 +47,13 @@ int CTool::dataType(CString tpname) {
 		return TYPE_VARCHAR;
 	}
 	return 0;
+}
+
+CString CTool::IntToCString(int num)
+{
+	CString s;
+	s.Format(_T("%d"), num);
+	return s;
 }
 
 //判断是否为time数据类型

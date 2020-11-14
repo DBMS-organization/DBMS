@@ -114,8 +114,6 @@ void CFileTree::DisplayDBList()
 			for (vector<CFieldEntity>::iterator ite3 = fieldList.begin(); ite3 != fieldList.end(); ++ite3) {
 				HTREEITEM hFIELD = m_pTreeCtrl->InsertItem(ite3->GetFieldName(), 1, 1, hTB, TVI_LAST);
 				m_pTreeCtrl->SetItemData(hFIELD, DBVIEW_FIELD_ITEM);
-
-
 			}
 		}
 	}
@@ -291,6 +289,13 @@ void CFileTree::OnLookTable()
 	pMainWnd->m_pTableView->displayTable();
 }
 
+//查看字段描述信息
+void CFileTree::OnLookField(CString dbname,CString tbname)
+{
+	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+	pMainWnd->m_pTableView->displayFieldMsg(dbname,tbname);
+}
+
 
 //按照多字段查询
 void CFileTree::OnConditionQuery()
@@ -334,6 +339,8 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		m_hCurrFIELDItem = hItem;
 		m_hCurrTBItem = m_pTreeCtrl->GetParentItem(m_hCurrFIELDItem);
 		m_hCurrDBItem = m_pTreeCtrl->GetParentItem(m_hCurrTBItem);
+
+		this->OnLookField(this->GetSelectedDBName(),this->GetSelectedTBName());
 	}
 
 	*pResult = 1;
