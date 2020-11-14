@@ -341,6 +341,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	//return CFrameWndEx::OnCreateClient(lpcs, pContext);
 	m_pTableView = (CTableView*)m_wndSplitter.GetPane(0, 1);
 	m_pFileTree = (CFileTree*)m_wndSplitter.GetPane(0, 0);
+	
 	return true;
 }
 
@@ -373,7 +374,7 @@ void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
 	if (m_pFileTree->canCreateField()) {
-		m_pFileTree->OnCrtField(_T("field<"));
+		m_pFileTree->OnCrtField(_T("field"), 2, 0, _T("21"), false, true, true);
 	}
 	
 }

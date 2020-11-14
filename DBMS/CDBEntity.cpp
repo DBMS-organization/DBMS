@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "CDBEntity.h"
 
-CDBEntity::CDBEntity(CString dbname, bool dbtype, CString filename)
+CDBEntity::CDBEntity(CString dbname, bool dbtype, CString DBpathIn)
 {
 	AllocConsole();
 	SetdbName(dbname);
 	SetType(dbtype);
-	SetFileName(filename);
+	SetDBpath(DBpathIn);
 
 	SYSTEMTIME time;
 	::GetLocalTime(&time);
@@ -14,10 +14,10 @@ CDBEntity::CDBEntity(CString dbname, bool dbtype, CString filename)
 	SetCreateTime(t.Format("%Y-%m-%d %H:%M:%S"));
 }
 
-CDBEntity::CDBEntity(CString dbname, bool dbtype, CString filename, CString createTime) {
+CDBEntity::CDBEntity(CString dbname, bool dbtype, CString DBpathIn, CString createTime) {
 	SetdbName(dbname);
 	SetType(dbtype);
-	SetFileName(filename);
+	SetDBpath(DBpathIn);
 	SetCreateTime(createTime);
 }
 

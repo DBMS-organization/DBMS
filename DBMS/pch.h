@@ -19,6 +19,12 @@
 #include"DBLogic.h"
 #include"TableLogic.h"
 #include"FieldLogic.h"
+#include"CDBEntity.h"
+#include"DBDao.h"
+#include"CTableEntity.h"
+#include"TableDAO.h"
+#include"FieldEntity.h"
+#include"FieldDAO.h"
 
 using namespace std;
 

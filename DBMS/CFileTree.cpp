@@ -82,9 +82,43 @@ void CFileTree::OnInitialUpdate()
 	m_bAddTB = FALSE;
 }
 
-
+//从文件中读取数据库信息并显示在树中
 void CFileTree::DisplayDBList()
 {
+	CDBDao dbDao;
+	vector<CDBEntity> dbList = dbDao.getDatabasesList(SYSPATH);
+	//删除树状图中的数据库显示
+	HTREEITEM hNextItem;
+	HTREEITEM hPreItem = m_pTreeCtrl->GetRootItem();
+	while (hPreItem != NULL)
+	{
+		hNextItem = m_pTreeCtrl->GetNextItem(hPreItem, TVGN_NEXT);
+		m_pTreeCtrl->DeleteItem(hPreItem);
+		hPreItem = hNextItem;
+	}
+
+	for (vector<CDBEntity>::iterator ite = dbList.begin(); ite != dbList.end(); ++ite)
+	{
+		//MessageBox(CUtil::IntegerToString(ite->GetId()),L"",MB_OK);
+		HTREEITEM hRoot = m_pTreeCtrl->InsertItem(ite->GetdbName(), 0, 0, TVI_ROOT, TVI_LAST);
+		m_pTreeCtrl->SetItemData(hRoot, DBVIEW_DB_ITEM);
+
+		CTableDAO tbDao;
+		vector<CTableEntity> tbList = tbDao.getTableList(ite->GetDBpath()+_T("\\") + ite->GetdbName()+ _T(".tb"));
+		for (vector<CTableEntity>::iterator ite2 = tbList.begin(); ite2 != tbList.end(); ++ite2) {
+			HTREEITEM hTB = m_pTreeCtrl->InsertItem(ite2->getTableName(), 1, 1, hRoot, TVI_LAST);
+			m_pTreeCtrl->SetItemData(hTB, DBVIEW_TABLE_ITEM);
+
+			CFieldDAO fieldDao;
+			vector<CFieldEntity> fieldList = fieldDao.getFieldList(ite2->gettdf());
+			for (vector<CFieldEntity>::iterator ite3 = fieldList.begin(); ite3 != fieldList.end(); ++ite3) {
+				HTREEITEM hFIELD = m_pTreeCtrl->InsertItem(ite3->GetFieldName(), 1, 1, hTB, TVI_LAST);
+				m_pTreeCtrl->SetItemData(hFIELD, DBVIEW_FIELD_ITEM);
+
+
+			}
+		}
+	}
 	
 }
 
@@ -176,18 +210,25 @@ void CFileTree::OnCrtTable(CString tbname)
 		//AfxMessageBox(_T("请选择数据库！"));
 	}
 	else {
-		HTREEITEM hTableItem = m_pTreeCtrl->InsertItem(tbname, 1, 1, m_hCurrDBItem, TVI_LAST);
-		if (hTableItem != NULL)
-		{
-			m_pTreeCtrl->SetItemData(hTableItem, DBVIEW_TABLE_ITEM);
-			m_pTreeCtrl->Expand(m_hCurrDBItem, TVE_EXPAND);
-			m_bAddTB = TRUE;
-			//m_pTreeCtrl->EditLabel(hTableItem);
+		CTableLogic tableLogic(this->GetSelectedDBName());
+		if (tableLogic.CreateTable(tbname)) {
+			HTREEITEM hTableItem = m_pTreeCtrl->InsertItem(tbname, 1, 1, m_hCurrDBItem, TVI_LAST);
+			if (hTableItem != NULL)
+			{
+				m_pTreeCtrl->SetItemData(hTableItem, DBVIEW_TABLE_ITEM);
+				m_pTreeCtrl->Expand(m_hCurrDBItem, TVE_EXPAND);
+				m_bAddTB = TRUE;
+				//m_pTreeCtrl->EditLabel(hTableItem);
+			}
 		}
+		else {
+			AfxMessageBox(_T("表名已存在！"));
+		}
+		
 	}
 }
 
-void CFileTree::OnCrtField(CString fieldname)
+void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull)
 {
 	if (m_hCurrDBItem == NULL) {
 		//AfxMessageBox(_T("请选择数据表！"));
@@ -198,14 +239,21 @@ void CFileTree::OnCrtField(CString fieldname)
 			//AfxMessageBox(_T("请选择表！"));
 		}
 		else {
-			HTREEITEM hFieldItem = m_pTreeCtrl->InsertItem(fieldname, 2, 2, m_hCurrTBItem, TVI_LAST);
-			if (hFieldItem != NULL)
-			{
-				m_pTreeCtrl->SetItemData(hFieldItem, DBVIEW_FIELD_ITEM);
-				m_pTreeCtrl->Expand(m_hCurrTBItem, TVE_EXPAND);
-				m_bAddTB = TRUE;
-				m_pTreeCtrl->EditLabel(hFieldItem);
+			CFieldLogic fieldLogic(this->GetSelectedDBName(), this->GetSelectedTBName());
+			if (fieldLogic.CreateField(fieldname, type, param, cdefault, primary, unique, notnull)) {
+				HTREEITEM hFieldItem = m_pTreeCtrl->InsertItem(fieldname, 2, 2, m_hCurrTBItem, TVI_LAST);
+				if (hFieldItem != NULL)
+				{
+					m_pTreeCtrl->SetItemData(hFieldItem, DBVIEW_FIELD_ITEM);
+					m_pTreeCtrl->Expand(m_hCurrTBItem, TVE_EXPAND);
+					m_bAddTB = TRUE;
+					m_pTreeCtrl->EditLabel(hFieldItem);
+				}
 			}
+			else {
+				AfxMessageBox(_T("字段名已存在！"));
+			}
+			
 		}
 	}
 }
