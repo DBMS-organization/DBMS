@@ -356,7 +356,7 @@ void CMainFrame::OnExit()
 void CMainFrame::OnDbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtDB(_T("database"));
+	m_pFileTree->OnCrtDB(_T("database_2"));
 }
 
 //新键表

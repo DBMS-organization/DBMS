@@ -49,6 +49,27 @@ int CTool::dataType(CString tpname) {
 	return 0;
 }
 
+CString CTool::IntTodataType(int num)
+{
+	if (num == TYPE_BOOL) {
+		return _T("BOOL");
+	}
+	else if (num == TYPE_DATETIME) {
+		return _T("DATETIME");
+	}
+	else if (num == TYPE_DOUBLE) {
+		return _T("DOUBLE");
+	}
+	else if (num == TYPE_INTEGER) {
+		return _T("INTEGER");
+	}
+	else if (num == TYPE_VARCHAR) {
+		return _T("VARCHAR");
+	}
+
+	return _T("");
+}
+
 CString CTool::IntToCString(int num)
 {
 	CString s;

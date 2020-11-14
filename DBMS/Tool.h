@@ -12,6 +12,7 @@ public:
 	static CString BoolToCString(bool bl);
 	static const char* IntToChar(int i);
 	static int dataType(CString tpname);
+	static CString IntTodataType(int num);
 
 	static CString IntToCString(int num);
 

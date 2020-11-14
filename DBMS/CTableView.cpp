@@ -105,11 +105,11 @@ void CTableView::displayTable()
 void CTableView::displayFieldMsg(CString dbname, CString tbname)
 {
 	this->ClearTable();
-	m_ListCtrl->InsertColumn(0, CString("Order"), LVCFMT_LEFT, 80);
+	m_ListCtrl->InsertColumn(0, CString("Order"), LVCFMT_LEFT, 60);
 	m_ListCtrl->InsertColumn(1, CString("FieldName"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(2, CString("Type"), LVCFMT_LEFT, 50);
+	m_ListCtrl->InsertColumn(2, CString("Type"), LVCFMT_LEFT, 100);
 	m_ListCtrl->InsertColumn(3, CString("Length"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(4, CString("ModifyTime"), LVCFMT_LEFT, 150);
+	m_ListCtrl->InsertColumn(4, CString("ModifyTime"), LVCFMT_LEFT, 180);
 	m_ListCtrl->InsertColumn(5, CString("Primary"), LVCFMT_LEFT, 100);
 	m_ListCtrl->InsertColumn(6, CString("Unique"), LVCFMT_LEFT, 100);
 	m_ListCtrl->InsertColumn(7, CString("Not null"), LVCFMT_LEFT, 100);
@@ -120,7 +120,7 @@ void CTableView::displayFieldMsg(CString dbname, CString tbname)
 	for (vector<CFieldEntity>::iterator ite = fieldList.begin(); ite != fieldList.end(); ++ite,i++) {
 		m_ListCtrl->InsertItem(i, CTool::IntToCString(ite->GetFieldOrder()));
 		m_ListCtrl->SetItemText(i, 1, ite->GetFieldName());
-		m_ListCtrl->SetItemText(i, 2, CTool::IntToCString(ite->GetFieldType()));
+		m_ListCtrl->SetItemText(i, 2, CTool::IntTodataType(ite->GetFieldType()));
 		m_ListCtrl->SetItemText(i, 3, CTool::IntToCString(ite->GetFieldParam()));
 		m_ListCtrl->SetItemText(i, 4, ite->GetModifyTime());
 		m_ListCtrl->SetItemText(i, 5, CTool::BoolToCString(ite->GetPrimary()));
