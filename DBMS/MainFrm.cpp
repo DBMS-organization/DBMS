@@ -369,15 +369,20 @@ void CMainFrame::OnDbNew()
 void CMainFrame::OnTbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	CreateTable ctb;
+	/*CreateTable ctb;
 	ctb.DoModal();
 	if (ctb.str != "")
 	{
 		if (m_pFileTree->canCreateTable()) {
 			m_pFileTree->OnCrtTable(ctb.str);
 		}
-	}
+	}*/
 	
+	if (m_pFileTree->canCreateTable()) {
+		CreateTable ctb;
+		ctb.DoModal();
+		m_pFileTree->OnCrtTable(ctb.str);
+	}
 	
 }
 
@@ -385,9 +390,10 @@ void CMainFrame::OnTbNew()
 void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	CreateField cfd;
-	cfd.DoModal();
+	
 	if (m_pFileTree->canCreateField()) {
+		CreateField cfd;
+		cfd.DoModal();
 		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type+1, cfd.length, _T("21"), false, true, true);
 	}
 	
