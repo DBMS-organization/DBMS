@@ -138,6 +138,15 @@
     <ClInclude Include="RecordDao.h">
       <Filter>Dao\Head File</Filter>
     </ClInclude>
+    <ClInclude Include="CreateDatabase.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTable.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateField.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -190,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="Tool.cpp">
       <Filter>Util\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateDatabase.cpp">
+      <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTable.cpp">
+      <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateField.cpp">
+      <Filter>View\Source File</Filter>
     </ClCompile>
     <ClCompile Include="CRecordEntity.cpp">
       <Filter>Entity\Source FIle</Filter>

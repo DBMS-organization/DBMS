@@ -168,6 +168,7 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
 };
 
 CAboutDlg::CAboutDlg() noexcept : CDialogEx(IDD_ABOUTBOX)
@@ -209,6 +210,7 @@ void CDBMSApp::SaveCustomState()
 }
 
 // CDBMSApp 消息处理程序
+
 
 
 
