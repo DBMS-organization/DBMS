@@ -30,7 +30,7 @@ vector<CFieldEntity>CFieldDAO::getFieldList(CString& tdfFilePath)
 
 		int fieldnum;
 		fieldnum = ceil((double)fileSize / (sizeof(int) * 3 + 128 * 2 + 20 + sizeof(bool) * 3));
-
+		_cprintf("fieldNummmmmmmmmmmmmmmmmmmmmmmmmm    filesize: %f  fieldlen: %d\n", (double)fileSize ,(sizeof(int) * 3 + 128 * 2 + 20 + sizeof(bool) * 3));
 
 		for (int i = 0; i < fieldnum; i++) {
 			//char* order = new char[4];
@@ -65,7 +65,7 @@ vector<CFieldEntity>CFieldDAO::getFieldList(CString& tdfFilePath)
 			infile.read((char*)&param, sizeof(int));
 
 			infile.read(modifytime, 20);
-			infile.read(defaultvalue, 20);
+			infile.read(defaultvalue, 128);
 			/*infile.read(primary, 2);
 			infile.read(unique, 2);
 			infile.read(notnull, 2);*/

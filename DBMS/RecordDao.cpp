@@ -5,8 +5,17 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 {
 	CString tdfFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname+_T(".tdf");
 	CString trdFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".trd");
+	CString tbFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + dbname + _T(".tb");
 
 	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
+
+	int recordNum;
+
+	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite)
+	{
+		
+	}
 
 	vector<CRecordEntity> recordList;
 	ifstream infile(tdfFilePath, ios::binary);				//打开表描述文件，获取字段信息

@@ -106,7 +106,7 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		outfile.write((char*)(&param), sizeof(int));
 
 		outfile.write(strtime.c_str(), 20);
-		outfile.write(strdefault.c_str(), 20);
+		outfile.write(strdefault.c_str(), 128);
 
 		/*outfile.write(chprimary, 2);
 		outfile.write(chunique, 2);
@@ -114,7 +114,6 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		outfile.write((char*)(&primary), sizeof(bool));
 		outfile.write((char*)(&unique), sizeof(bool));
 		outfile.write((char*)(&notnull), sizeof(bool));
-
 
 		return 1;
 	}
