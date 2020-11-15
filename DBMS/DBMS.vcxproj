@@ -184,6 +184,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CFileTree.h" />
+    <ClInclude Include="CreateDatabase.h" />
+    <ClInclude Include="CreateField.h" />
+    <ClInclude Include="CreateTable.h" />
     <ClInclude Include="CTableView.h" />
     <ClInclude Include="DBDao.h" />
     <ClInclude Include="CDBEntity.h" />
@@ -207,6 +210,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFileTree.cpp" />
+    <ClCompile Include="CreateDatabase.cpp" />
+    <ClCompile Include="CreateField.cpp" />
+    <ClCompile Include="CreateTable.cpp" />
     <ClCompile Include="CTableView.cpp" />
     <ClCompile Include="DBDao.cpp" />
     <ClCompile Include="CDBEntity.cpp" />

@@ -11,6 +11,10 @@
 #include"CTableView.h"
 #include "CFileTree.h"
 
+#include "CreateDatabase.h"
+#include "CreateTable.h"
+#include "CreateField.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -355,20 +359,26 @@ void CMainFrame::OnExit()
 void CMainFrame::OnDbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtDB(_T("database"));
+	CreateDatabase cdb;
+	cdb.DoModal();
+	m_pFileTree->OnCrtDB(cdb.str);
 }
 
 //新键表
 void CMainFrame::OnTbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtTable(_T("table"));
+	CreateTable ctb;
+	ctb.DoModal();
+	m_pFileTree->OnCrtTable(ctb.str);
 }
 
 //新建字段
 void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
+	CreateField cfd;
+	cfd.DoModal();
 	m_pFileTree->OnCrtField(_T("field"));
 }
 
