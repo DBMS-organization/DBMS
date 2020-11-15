@@ -46,6 +46,26 @@ BOOL CDBMSDoc::OnNewDocument()
 	// TODO: 在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
 
+	SetTitle(_T("无数据库"));						//设置标题前半段
+
+	CString filePath = _T("DBMSROOT");
+	CreateDirectory(filePath, NULL);					//创建文件夹
+	filePath = _T("DBMSROOT\\data");
+	CreateDirectory(filePath, NULL);					//创建文件夹
+
+	ofstream dbfile;
+	dbfile.open("DBMSROOT\\databases.db", ios::binary | ios::app);
+
+	dbfile.close();
+
+	//CDBLogic dbLogic;
+	//dbLogic.CreateDatabase(CString("ABC"));
+
+	//CTableLogic tableLogic(_T("ABC"));
+	//tableLogic.CreateTable(CString("table4"));
+	//CFieldLogic fieldLogic(_T("ABC"), _T("table4"));
+	//fieldLogic.CreateField(CString("age"), 2, 0, _T("21"), false, true, true);
+
 	return TRUE;
 }
 

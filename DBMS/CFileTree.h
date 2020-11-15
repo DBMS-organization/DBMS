@@ -46,14 +46,17 @@ public:
 	void DisplayDBList();		//显示数据库列表
 
 	void GetDBAndTableName(CString& dbName, CString& tbName);
+	bool canCreateTable();
+	bool canCreateField();
 
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCrtDB(CString dbname);
 	afx_msg void OnOpenDB();
 	afx_msg void OnDeleteDB();
 	afx_msg void OnCrtTable(CString dbname);
-	afx_msg void OnCrtField(CString dbname);
+	afx_msg void OnCrtField(CString dbname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull);
 	afx_msg void OnLookTable();
+	afx_msg void OnLookField(CString dbname, CString tbname);
 	afx_msg void OnConditionQuery();
 	afx_msg void OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteTable();
