@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CFileTree.h" />
+    <ClInclude Include="CRecordEntity.h" />
     <ClInclude Include="CTableView.h" />
     <ClInclude Include="DBDao.h" />
     <ClInclude Include="CDBEntity.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RecordDao.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="TableDAO.h" />
     <ClInclude Include="CTableEntity.h" />
@@ -207,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFileTree.cpp" />
+    <ClCompile Include="CRecordEntity.cpp" />
     <ClCompile Include="CTableView.cpp" />
     <ClCompile Include="DBDao.cpp" />
     <ClCompile Include="CDBEntity.cpp" />
@@ -224,6 +227,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RecordDao.cpp" />
     <ClCompile Include="TableDAO.cpp" />
     <ClCompile Include="CTableEntity.cpp" />
     <ClCompile Include="TableLogic.cpp" />

@@ -52,11 +52,14 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 		fpath = strfilepath.c_str();
 		ctime = strctime.c_str();
 
-		char type[2];
+		/*char type[2];
 		type[0] = '1';
-		type[1] = '\0';
+		type[1] = '\0';*/
+		bool type = true;
 		outFile.write(chDBname, 128);
-		outFile.write(type, 2);
+		//outFile.write(type, 2);
+		outFile.write((char*)(&type), sizeof(bool));
+
 		outFile.write(fpath, 256);
 		outFile.write(ctime, 20);
 

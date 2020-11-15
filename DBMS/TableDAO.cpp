@@ -23,8 +23,12 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 		//infile.seekg(0, ios::cur);	//文件指针指向开头
 		char* tbName = new char[128];
 		char* dbName = new char[128];
-		char* Record_num = new char[4];
-		char* Field_num = new char[4];
+
+		/*char* Record_num = new char[4];
+		char* Field_num = new char[4];*/
+		int Record_num;
+		int Field_num;
+
 		char* tdf = new char[256];//表格定义文件路径
 		char* tic = new char[256];//表格完整性文件路径
 		char* trd = new char[256];//表格记录文件路径
@@ -44,9 +48,12 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 
 		for (int i = 0; i < tablenum; i++) {
 			infile.read(tbName, 128);
-			//infile.read(dbName, 128);
-			infile.read(Record_num, 4);
-			infile.read(Field_num, 4);
+
+			/*infile.read(Record_num, 4);
+			infile.read(Field_num, 4);*/
+			infile.read((char*)&Record_num, sizeof(int));
+			infile.read((char*)&Field_num, sizeof(int));
+
 			infile.read(tdf, 256);
 			infile.read(tic, 256);
 			infile.read(trd, 256);
@@ -57,8 +64,8 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 
 			CString tbn(tbName);
 			CString dbn(dbName);
-			int recordnum = atoi(Record_num);
-			int fieldnum = atoi(Field_num);
+			/*int recordnum = atoi(Record_num);
+			int fieldnum = atoi(Field_num);*/
 			CString tdfpath(tdf);
 			CString ticpath(tic);
 			CString trdpath(trd);
@@ -69,9 +76,17 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 			CTableEntity tbE;
 			tbE.SetTableName(tbn);
 			tbE.SetCreateTime(createtime);
-			tbE.SetRecordNum(recordnum);
+
+			//tbE.SetRecordNum(recordnum);
+			tbE.SetRecordNum(Record_num);
+
 			tbE.SetModifyTime(modifytime);
-			tbE.SetFieldNum(fieldnum);
+
+			//tbE.SetFieldNum(fieldnum);
+			tbE.SetFieldNum(Field_num);
+
+			_cprintf("recordnum, fieldnum: %d %d\n", Record_num, Field_num);
+			
 			tbE.SetDBName(dbn);
 			tbE.Settdf(tdfpath);
 			tbE.Settrd(trdpath);

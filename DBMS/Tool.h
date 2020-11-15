@@ -5,6 +5,9 @@
 #define TYPE_INTEGER   4
 #define TYPE_VARCHAR   5
 
+#include "FieldEntity.h"
+using namespace std;
+
 class CTool
 {
 public:
@@ -29,6 +32,12 @@ public:
 
 	//判断文件名是否合法
 	static bool isValidFileName(CString filename);
+
+	//计算表中每一行数据的长度
+	static int calculateRecordLength(vector<CFieldEntity> fieldlist);
+
+	//获取指定数据类型的存储长度
+	static int getTypeStoreLength(CString tpname);
 
 };
 

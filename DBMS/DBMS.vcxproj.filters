@@ -132,6 +132,12 @@
     <ClInclude Include="Tool.h">
       <Filter>Util\Head File</Filter>
     </ClInclude>
+    <ClInclude Include="CRecordEntity.h">
+      <Filter>Entity\Head File</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordDao.h">
+      <Filter>Dao\Head File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -184,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="Tool.cpp">
       <Filter>Util\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CRecordEntity.cpp">
+      <Filter>Entity\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordDao.cpp">
+      <Filter>Dao\Source File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

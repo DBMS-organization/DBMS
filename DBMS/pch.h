@@ -14,6 +14,7 @@
 #include <conio.h>
 #include<string>
 #include<fstream>
+#include<vector>
 
 #include"Tool.h"
 #include"DBLogic.h"
@@ -25,6 +26,8 @@
 #include"TableDAO.h"
 #include"FieldEntity.h"
 #include"FieldDAO.h"
+#include"RecordDao.h"
+#include"CRecordEntity.h"
 
 using namespace std;
 

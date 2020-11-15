@@ -4,7 +4,7 @@
 #define SYSPATH CString("DBMSROOT\\databases.db")
 #define DATAFILEPATH CString("DBMSROOT\\data")
 
-#include<vector>
+
 #include <string>
 #include<fstream>
 #include <atlstr.h>

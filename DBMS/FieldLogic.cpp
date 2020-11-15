@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "FieldLogic.h"
 #include "FieldDAO.h"
+#include <amp.h>
+
+using namespace std;
 
 CFieldLogic::CFieldLogic(CString dbName, CString tableName)
 {
@@ -72,11 +75,11 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		strdefault = CT2A(cdefault.GetString());
 
 
-		strorder = std::to_string(order);
-		strtype = std::to_string(type);
-		strparam = std::to_string(param);
+		//strorder = std::to_string(order);
+		//strtype = std::to_string(type);
+		//strparam = std::to_string(param);
 
-		char chprimary[2], chunique[2], chnotnull[2];
+		/*char chprimary[2], chunique[2], chnotnull[2];
 		chprimary[1] = '\0';
 		if (primary) chprimary[0] = '1';
 		else chprimary[0] = '0';
@@ -87,20 +90,30 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 
 		chnotnull[1] = '\0';
 		if (notnull) chnotnull[0] = '1';
-		else chnotnull[0] = '0';
+		else chnotnull[0] = '0';*/
 
-		_cprintf("888888888888 %s %s %s %s\n", strorder.c_str(), strfieldname.c_str(), chprimary, chnotnull);
+		//_cprintf("888888888888 %s %s %s %s\n", strorder.c_str(), strfieldname.c_str(), chprimary, chnotnull);
 
 
-		outfile.write(strorder.c_str(), 4);
+		//outfile.write(strorder.c_str(), 4);
+		outfile.write((char*)(&order), sizeof(int));
+
 		outfile.write(strfieldname.c_str(), 128);
-		outfile.write(strtype.c_str(), 4);
-		outfile.write(strparam.c_str(), 4);
+		//outfile.write(strtype.c_str(), 4);
+		outfile.write((char*)(&type), sizeof(int));
+
+		//outfile.write(strparam.c_str(), 4);
+		outfile.write((char*)(&param), sizeof(int));
+
 		outfile.write(strtime.c_str(), 20);
 		outfile.write(strdefault.c_str(), 20);
-		outfile.write(chprimary, 2);
+
+		/*outfile.write(chprimary, 2);
 		outfile.write(chunique, 2);
-		outfile.write(chnotnull, 2);
+		outfile.write(chnotnull, 2);*/
+		outfile.write((char*)(&primary), sizeof(bool));
+		outfile.write((char*)(&unique), sizeof(bool));
+		outfile.write((char*)(&notnull), sizeof(bool));
 
 
 		return 1;

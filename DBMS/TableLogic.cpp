@@ -68,8 +68,10 @@ int CTableLogic::CreateTable(CString& tablename)
 		const char* tic;
 		const char* crtime;
 		const char* mtime;
-		const char* recordnum;
-		const char* fieldnum;
+		/*const char* recordnum;
+		const char* fieldnum;*/
+		int recordnum;
+		int fieldnum;
 
 		//string
 		strtablename = CT2A(tablename.GetString());
@@ -79,8 +81,10 @@ int CTableLogic::CreateTable(CString& tablename)
 		strtic = CT2A(ticpath.GetString());
 		strcrtime = CT2A(tb.getCreateTime().GetString());
 		strmtime = CT2A(tb.getModifyTime().GetString());
-		strrecordnum = std::to_string(tb.getRecord_num());
-		strfieldnum = std::to_string(tb.getField_num());
+		/*strrecordnum = std::to_string(tb.getRecord_num());
+		strfieldnum = std::to_string(tb.getField_num());*/
+		recordnum = tb.getRecord_num();
+		fieldnum = tb.getField_num();
 
 		//char*
 		tbname = strtablename.c_str();
@@ -90,12 +94,16 @@ int CTableLogic::CreateTable(CString& tablename)
 		tic = strtic.c_str();
 		crtime = strcrtime.c_str();
 		mtime = strmtime.c_str();
-		recordnum = strrecordnum.c_str();
-		fieldnum = strfieldnum.c_str();
+		/*recordnum = strrecordnum.c_str();
+		fieldnum = strfieldnum.c_str();*/
 
 		outFile.write(tbname, 128);
-		outFile.write(recordnum, 4);
-		outFile.write(fieldnum, 4);
+
+		/*outFile.write(recordnum, 4);
+		outFile.write(fieldnum, 4);*/
+		outFile.write((char*)(&recordnum), sizeof(int));
+		outFile.write((char*)(&fieldnum), sizeof(int));
+
 		outFile.write(tdf, 256);
 		outFile.write(trd, 256);
 		outFile.write(tic, 256);
