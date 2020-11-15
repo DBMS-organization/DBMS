@@ -11,6 +11,10 @@
 #include"CTableView.h"
 #include "CFileTree.h"
 
+#include "CreateDatabase.h"
+#include "CreateTable.h"
+#include "CreateField.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -356,16 +360,24 @@ void CMainFrame::OnExit()
 void CMainFrame::OnDbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_pFileTree->OnCrtDB(_T("database_2"));
+	CreateDatabase cdb;
+	cdb.DoModal();
+	m_pFileTree->OnCrtDB(cdb.str);
 }
 
 //新键表
 void CMainFrame::OnTbNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	if (m_pFileTree->canCreateTable()) {
-		m_pFileTree->OnCrtTable(_T("table"));
+	CreateTable ctb;
+	ctb.DoModal();
+	if (ctb.str != "")
+	{
+		if (m_pFileTree->canCreateTable()) {
+			m_pFileTree->OnCrtTable(ctb.str);
+		}
 	}
+	
 	
 }
 
@@ -373,8 +385,10 @@ void CMainFrame::OnTbNew()
 void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
+	CreateField cfd;
+	cfd.DoModal();
 	if (m_pFileTree->canCreateField()) {
-		m_pFileTree->OnCrtField(_T("field"), 2, 0, _T("21"), false, true, true);
+		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type+1, cfd.length, _T("21"), false, true, true);
 	}
 	
 }
@@ -383,4 +397,5 @@ void CMainFrame::OnFieldNew()
 void CMainFrame::OnRecordNew()
 {
 	// TODO: 在此添加命令处理程序代码
+
 }

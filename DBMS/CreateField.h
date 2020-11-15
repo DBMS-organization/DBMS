@@ -21,10 +21,18 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString str;
+	CString ed1str;
+	CString ed2str;
+	CString ed3str;
+	int type;
+	int length;
 	CEdit ed1;
 	CEdit ed2;
 	CEdit ed3;
 	CComboBox cb;
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedOk();
+	CButton ck1;
+	CButton ck2;
+	CButton ck3;
 };
