@@ -21,6 +21,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	int m_Row = -1, m_Col = -1;
 	CListCtrl list;
 	virtual BOOL OnInitDialog();
+	CEdit m_edit;
+	afx_msg void OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnEnKillfocusEdit1();
 };

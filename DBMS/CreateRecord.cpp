@@ -25,10 +25,13 @@ void CreateRecord::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, list);
+	DDX_Control(pDX, IDC_EDIT1, m_edit);
 }
 
 
 BEGIN_MESSAGE_MAP(CreateRecord, CDialogEx)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CreateRecord::OnNMDblclkList1)
+	ON_EN_KILLFOCUS(IDC_EDIT1, &CreateRecord::OnEnKillfocusEdit1)
 END_MESSAGE_MAP()
 
 
@@ -39,6 +42,7 @@ BOOL CreateRecord::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	m_edit.ShowWindow(SW_HIDE);
 	CRect rect;
 	list.GetClientRect(&rect);//获得当前listcontrol的宽度
 
@@ -71,3 +75,59 @@ BOOL CreateRecord::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
 }
+
+
+void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	LVHITTESTINFO info;
+	info.pt = pNMItemActivate->ptAction;
+
+	if (list.SubItemHitTest(&info) != -1)
+	{
+		m_Row = info.iItem;
+		m_Col = info.iSubItem;
+
+		//if (m_edit.m_hWnd == NULL) // editItem为一输入框控件， 
+		//{
+		//	RECT rect;
+		//	rect.left = 0;
+		//	rect.top = 0;
+		//	rect.bottom = 15;
+		//	rect.right = 200;
+		//	m_edit.Create(WS_CHILD | ES_RIGHT | WS_BORDER | ES_AUTOHSCROLL | ES_WANTRETURN | ES_MULTILINE, rect, this, 101);
+		//	GetDlgItem(IDC_EDIT1)->SetFont(this->GetFont(), FALSE);
+		//}
+		CRect rect;
+		list.GetSubItemRect(info.iItem, info.iSubItem, LVIR_BOUNDS, rect);
+		m_edit.SetParent(&list);
+		//int iSubItemWidth = list.GetColumnWidth(m_Col);
+		//rect.top += 14;
+		//rect.left += 15;
+
+		//rect.right = rect.left + iSubItemWidth;
+
+		//rect.bottom += 14;
+
+		m_edit.SetWindowText(list.GetItemText(info.iItem, info.iSubItem));
+		m_edit.MoveWindow(rect, TRUE);
+		m_edit.ShowWindow(1);
+		m_edit.SetFocus();
+	}
+
+
+	*pResult = 0;
+
+}
+
+
+void CreateRecord::OnEnKillfocusEdit1()
+{
+	CString str;
+	m_edit.GetWindowTextW(str);
+	list.SetItemText(m_Row, m_Col, str);
+	m_edit.ShowWindow(SW_HIDE);
+
+}
+
+
