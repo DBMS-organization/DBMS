@@ -5,7 +5,10 @@
 #include "DBMS.h"
 #include "CreateRecord.h"
 #include "afxdialogex.h"
-
+#include "FieldDAO.h"
+#include "CFileTree.h"
+#include "FieldLogic.h"
+#include "MainFrm.h"
 
 // CreateRecord 对话框
 
@@ -51,17 +54,33 @@ BOOL CreateRecord::OnInitDialog()
 	list.SetExtendedStyle(dwStyle); //设置扩展风格 
 
 	// 插入列并设置每一列的宽度
-	list.InsertColumn(0, _T("ID"), LVCFMT_CENTER, rect.Width() / 6, 0);
-	list.InsertColumn(1, _T("Name"), LVCFMT_CENTER, rect.Width() / 6, 1);
-	list.InsertColumn(2, _T("Sex"), LVCFMT_CENTER, rect.Width() / 6, 2);
-	list.InsertColumn(3, _T("Brith"), LVCFMT_CENTER, rect.Width() / 6, 3);
-	list.InsertColumn(4, _T("Department"), LVCFMT_CENTER, rect.Width() / 6, 4);
-	list.InsertColumn(5, _T("Address"), LVCFMT_CENTER, rect.Width() / 6, 5);
+	list.InsertColumn(0, _T("Order"), LVCFMT_CENTER, rect.Width() / 7, 0);
+	list.InsertColumn(1, _T("FieldName"), LVCFMT_CENTER, rect.Width() / 7, 1);
+	list.InsertColumn(2, _T("Type"), LVCFMT_CENTER, rect.Width() / 7, 2);
+	list.InsertColumn(3, _T("Length"), LVCFMT_CENTER, rect.Width() / 7, 3);
+	list.InsertColumn(4, _T("Primary"), LVCFMT_CENTER, rect.Width() / 7, 4);
+	list.InsertColumn(5, _T("Unique"), LVCFMT_CENTER, rect.Width() / 7, 5);
+	list.InsertColumn(6, _T("Not null"), LVCFMT_CENTER, rect.Width() / 7, 6);
+
+	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+	CString dbname= pMainWnd->m_pFileTree->GetSelectedDBName();
+	CString tbname= pMainWnd->m_pFileTree->GetSelectedTBName();
+	
+	CFieldDAO fieldDao;
+	int i = 0;
+	vector<CFieldEntity> fieldList = fieldDao.getFieldList(DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf"));
+	for (vector<CFieldEntity>::iterator ite = fieldList.begin(); ite != fieldList.end(); ++ite, i++) {
+		list.InsertItem(i, CTool::IntToCString(ite->GetFieldOrder()));
+		list.SetItemText(i, 1, ite->GetFieldName());
+		list.SetItemText(i, 2, CTool::IntTodataType(ite->GetFieldType()));
+		list.SetItemText(i, 3, CTool::IntToCString(ite->GetFieldParam()));
+		list.SetItemText(i, 4, CTool::BoolToCString(ite->GetPrimary()));
+		list.SetItemText(i, 5, CTool::BoolToCString(ite->GetUnique()));
+		list.SetItemText(i, 6, CTool::BoolToCString(ite->GetNotNull()));
+	}
 
 
-
-
-	list.InsertItem(0, _T("JAVA"));
+	/*list.InsertItem(0, _T("JAVA"));
 	list.SetItemText(0, 1, _T("01"));
 	list.SetItemText(0, 2, _T("02"));
 
@@ -69,8 +88,13 @@ BOOL CreateRecord::OnInitDialog()
 	list.SetItemText(1, 1, _T("13"));
 	list.SetItemText(1, 2, _T("14"));
 
+	list.InsertItem(2, _T("PHP"));
+	list.SetItemText(2, 1, _T("22"));
+	list.SetItemText(2, 2, _T("23"));*/
 
 	// TODO:  在此添加额外的初始化
+
+	AutoAdjustColumnWidth(&list);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
@@ -128,6 +152,22 @@ void CreateRecord::OnEnKillfocusEdit1()
 	list.SetItemText(m_Row, m_Col, str);
 	m_edit.ShowWindow(SW_HIDE);
 
+}
+
+void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
+{
+	pListCtrl->SetRedraw(FALSE);
+	CHeaderCtrl* pHeader = pListCtrl->GetHeaderCtrl();
+	int nColumnCount = pHeader->GetItemCount();
+	for (int i = 0; i < nColumnCount; i++)
+	{
+		pListCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE);
+		int nColumnWidth = pListCtrl->GetColumnWidth(i);
+		pListCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		int nHeaderWidth = pListCtrl->GetColumnWidth(i);
+		pListCtrl->SetColumnWidth(i, max(nColumnWidth, nHeaderWidth) + 5);
+	}
+	pListCtrl->SetRedraw(TRUE);
 }
 
 
