@@ -73,9 +73,9 @@ BOOL CDBMSDoc::OnNewDocument()
 
 
 
-	//测试添加记录
+	////测试添加记录
 	/*CRecordEntity recordEntity;
-	recordEntity.SetValue(_T("sname"), _T("hjhhhhh"));
+	recordEntity.SetValue(_T("sname"), _T("ydz"));
 	recordEntity.SetValue(_T("ssex"), _T("true"));
 	recordEntity.SetValue(_T("sage"), _T("20"));
 	recordEntity.SetValue(_T("num"), _T("2.333"));
@@ -98,6 +98,50 @@ BOOL CDBMSDoc::OnNewDocument()
 		string strnum = CT2A(num.GetString());
 		_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str());
 	}*/
+
+
+
+
+	//删除记录测试
+	/*CRecordLogic recordlogic;
+	recordlogic.DeleteRecord(_T("db1"), _T("t1"), _T("sname"), _T("ydz"));
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(_T("db1"), _T("t1"));
+	_cprintf("222222222222222222222222\n");
+
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		CString sname = recordite->GetValue(_T("sname"));
+		CString ssex = recordite->GetValue(_T("ssex"));
+		CString sage = recordite->GetValue(_T("sage"));
+		CString num = recordite->GetValue(_T("num"));
+		string strssex = CT2A(ssex.GetString());
+		string strsname = CT2A(sname.GetString());
+		string strsage = CT2A(sage.GetString());
+		string strnum = CT2A(num.GetString());
+		_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s recordnum %d\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str(),recordlist.size());
+
+	}*/
+
+
+	//修改记录测试
+	/*CRecordLogic recordlogic;
+	recordlogic.AlterRecord(_T("db1"), _T("t1"), _T("sname"), _T("ds"), _T("sname"), _T("dengshuo"));
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(_T("db1"), _T("t1"));
+	_cprintf("222222222222222222222222\n");
+
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		CString sname = recordite->GetValue(_T("sname"));
+		CString ssex = recordite->GetValue(_T("ssex"));
+		CString sage = recordite->GetValue(_T("sage"));
+		CString num = recordite->GetValue(_T("num"));
+		string strssex = CT2A(ssex.GetString());
+		string strsname = CT2A(sname.GetString());
+		string strsage = CT2A(sage.GetString());
+		string strnum = CT2A(num.GetString());
+		_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s recordnum %d\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str(),recordlist.size());
+
+	}*/
+
+
 
 	return TRUE;
 }

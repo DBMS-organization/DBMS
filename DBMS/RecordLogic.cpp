@@ -83,3 +83,158 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 	return 1;
 }
 
+int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldname, CString fieldvalue)
+{
+	this->dbName = dbname;
+	this->tbName = tablename;
+	this->tdfFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tablename + _T(".tdf");
+	this->trdFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tablename + _T(".trd");
+	this->tbFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + dbname + _T(".tb");
+
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(dbName, tbName);
+
+	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+
+	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
+
+	int count=0;
+	vector<CRecordEntity> newRecord;
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		if (fieldvalue.CompareNoCase(recordite->GetValue(fieldname))!=0) {
+			newRecord.push_back(*(recordite));
+	        //在.tb文件中减少记录数
+		}else {
+			CRecordDao::MinusRecordNum(dbname, tablename);
+			count++;
+		}
+	}
+	if (count == 0)return 0;
+
+	if (!newRecord.empty()) {
+		ofstream clrfile(trdFilePath, ios::binary);
+		clrfile.close();
+		//写文件
+		ofstream outfile(trdFilePath, ios::binary | ios::app);
+		for (vector<CRecordEntity>::iterator recordite = newRecord.begin(); recordite != newRecord.end(); ++recordite) {
+			for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+				CString fieldName = ite_1->GetFieldName();
+				CString recordvalue = recordite->GetValue(fieldName);
+				if (ite_1->GetFieldType() == TYPE_BOOL) {
+					bool tempbool;
+					tempbool = CTool::CStringToBool(recordvalue);
+					outfile.write((char*)(&tempbool), sizeof(bool));
+				}
+				else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+					string tempTime;
+					tempTime = CT2A(recordvalue.GetString());
+					outfile.write(tempTime.c_str(), CTool::getTypeStoreLength(_T("DATETIME")));
+				}
+				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
+					double tempDouble;
+					tempDouble = CTool::CStringToDouble(recordvalue);
+					outfile.write((char*)(&tempDouble), sizeof(double));
+				}
+				else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+					int tempInt = CTool::CStringToInt(recordvalue);
+					outfile.write((char*)(&tempInt), sizeof(int));
+				}
+				else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+					int varcharSize = recordvalue.GetLength() + 1;
+					string strtemp = CT2A(recordvalue.GetString());
+					//char* writedvarchar = new char[varcharSize + 1];
+					outfile.write((char*)(&varcharSize), sizeof(int));
+
+					//writedvarchar
+					outfile.write(strtemp.c_str(), varcharSize);
+				}
+			}
+		}
+		outfile.close();
+		return 1;
+	}
+	else {
+		ofstream clrfile(trdFilePath, ios::binary);
+		clrfile.close();
+	}
+	
+}
+
+
+int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primarykey, CString primarykeyValue, CString fieldname, CString fieldvalue)
+{
+	this->dbName = dbname;
+	this->tbName = tablename;
+	this->tdfFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tablename + _T(".tdf");
+	this->trdFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tablename + _T(".trd");
+	this->tbFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + dbname + _T(".tb");
+
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(dbName, tbName);
+
+	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+
+	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
+
+	bool isUnique;
+	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+		if (ite_1->GetFieldName().Compare(fieldname) == 0) {
+			isUnique=ite_1->GetUnique();
+		}
+	}
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		
+		if (primarykeyValue.CompareNoCase(recordite->GetValue(primarykey))==0) {
+			if (!isUnique) {
+				recordite->SetValue(fieldname,fieldvalue);
+			}
+			else {
+				for (vector<CRecordEntity>::iterator recordite_1 = recordlist.begin(); recordite != recordlist.end(); ++recordite_1) {
+					if (recordite_1->GetValue(fieldname).Compare(fieldvalue) == 0) {
+						return 0;
+					}
+				}
+				recordite->SetValue(fieldname, fieldvalue);
+			}
+		}
+	}
+	ofstream clrfile(trdFilePath, ios::binary);
+	clrfile.close();
+	//写文件
+	ofstream outfile(trdFilePath, ios::binary | ios::app);
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+			CString fieldName = ite_1->GetFieldName();
+			CString recordvalue = recordite->GetValue(fieldName);
+			if (ite_1->GetFieldType() == TYPE_BOOL) {
+				bool tempbool;
+				tempbool = CTool::CStringToBool(recordvalue);
+				outfile.write((char*)(&tempbool), sizeof(bool));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+				string tempTime;
+				tempTime = CT2A(recordvalue.GetString());
+				outfile.write(tempTime.c_str(), CTool::getTypeStoreLength(_T("DATETIME")));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
+				double tempDouble;
+				tempDouble = CTool::CStringToDouble(recordvalue);
+				outfile.write((char*)(&tempDouble), sizeof(double));
+			}
+			else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+				int tempInt = CTool::CStringToInt(recordvalue);
+				outfile.write((char*)(&tempInt), sizeof(int));
+			}
+			else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+				int varcharSize = recordvalue.GetLength() + 1;
+				string strtemp = CT2A(recordvalue.GetString());
+				//char* writedvarchar = new char[varcharSize + 1];
+				outfile.write((char*)(&varcharSize), sizeof(int));
+
+				//writedvarchar
+				outfile.write(strtemp.c_str(), varcharSize);
+			}
+		}
+	}
+	outfile.close();
+
+	return 1;
+}

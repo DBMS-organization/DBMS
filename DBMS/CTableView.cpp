@@ -9,6 +9,8 @@
 #include "MainFrm.h"
 
 
+
+
 // CTableView
 
 IMPLEMENT_DYNCREATE(CTableView, CListView)
@@ -95,10 +97,48 @@ void CTableView::ClearTable()
 	}
 }
 
-void CTableView::displayTable()
+//在表中显示记录
+void CTableView::displayTable(CString dbname, CString tbname)
 {
 	this->ClearTable();
-	m_ListCtrl->InsertColumn(11, CString("测试"), LVCFMT_LEFT, 100);
+
+	CString tdfFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tbname + _T(".tdf");
+	CString trdFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tbname + _T(".trd");
+
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(dbname, tbname);
+	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+
+	/*for (vector<CFieldEntity>::iterator fieldite = fieldlist.begin(); fieldite != fieldlist.end(); ++fieldite) {
+		m_ListCtrl->InsertColumn(fieldite->GetFieldOrder()-1, fieldite->GetFieldName(), LVCFMT_LEFT, 100);
+	}
+
+	int round = 0;
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		for (vector<CFieldEntity>::iterator fieldite_1 = fieldlist.begin(); fieldite_1 != fieldlist.end(); ++fieldite_1) {
+			if (fieldite_1->GetFieldOrder()==1) {
+				m_ListCtrl->InsertItem(round, recordite->GetValue(fieldite_1->GetFieldName()));
+			}
+			else {
+				m_ListCtrl->SetItemText(round, fieldite_1->GetFieldOrder()-1, recordite->GetValue(fieldite_1->GetFieldName()));
+			}
+		}
+		round++;
+	}*/
+
+	m_ListCtrl->InsertColumn(0, _T("序号"), LVCFMT_LEFT, 100);
+	for (vector<CFieldEntity>::iterator fieldite = fieldlist.begin(); fieldite != fieldlist.end(); ++fieldite) {
+		m_ListCtrl->InsertColumn(fieldite->GetFieldOrder(), fieldite->GetFieldName(), LVCFMT_LEFT, 100);
+	}
+	int order = 0;
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		m_ListCtrl->InsertItem(order, CTool::IntToCString(order+1));
+		for (vector<CFieldEntity>::iterator fieldite_1 = fieldlist.begin(); fieldite_1 != fieldlist.end(); ++fieldite_1) {
+			m_ListCtrl->SetItemText(order, fieldite_1->GetFieldOrder(), recordite->GetValue(fieldite_1->GetFieldName()));
+		}
+		order++;
+	}
+	
+	AutoAdjustColumnWidth(m_ListCtrl);
 }
 
 //在表中显示字段描述信息
@@ -129,6 +169,8 @@ void CTableView::displayFieldMsg(CString dbname, CString tbname)
 		m_ListCtrl->SetItemText(i, 7, CTool::BoolToCString(ite->GetUnique()));
 		m_ListCtrl->SetItemText(i, 8, CTool::BoolToCString(ite->GetNotNull()));
 	}
+
+	AutoAdjustColumnWidth(m_ListCtrl);
 }
 
 void CTableView::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
@@ -178,5 +220,19 @@ void CTableView::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-
+void CTableView::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
+{
+	pListCtrl->SetRedraw(FALSE);
+	CHeaderCtrl* pHeader = pListCtrl->GetHeaderCtrl();
+	int nColumnCount = pHeader->GetItemCount();
+	for (int i = 0; i < nColumnCount; i++)
+	{
+		pListCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE);
+		int nColumnWidth = pListCtrl->GetColumnWidth(i);
+		pListCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		int nHeaderWidth = pListCtrl->GetColumnWidth(i);
+		pListCtrl->SetColumnWidth(i, max(nColumnWidth, nHeaderWidth) + 5);
+	}
+	pListCtrl->SetRedraw(TRUE);
+}
 
