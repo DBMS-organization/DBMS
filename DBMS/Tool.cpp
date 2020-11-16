@@ -30,6 +30,11 @@ const char* CTool::IntToChar(int i)
 	return c;
 }
 
+CString CTool::IntToCStrign(int)
+{
+	return CString();
+}
+
 int CTool::dataType(CString tpname) {
 	if (tpname == _T("BOOL")) {
 		return TYPE_BOOL;
@@ -154,41 +159,19 @@ bool CTool::isValidFileName(CString filename)
 		return true;
 }
 
-int CTool::calculateRecordLength(vector<CFieldEntity> fieldlist)
-{
-	CString tpname;
-
-	if (tpname == _T("BOOL")) {
-		return TYPE_BOOL;
-	}
-	else if (tpname == _T("DATETIME")) {
-		return TYPE_DATETIME;
-	}
-	else if (tpname == _T("DOUBLE")) {
-		return TYPE_DOUBLE;
-	}
-	else if (tpname == _T("INTEGER")) {
-		return TYPE_INTEGER;
-	}
-	else if (tpname == _T("VARCHAR")) {
-		return TYPE_VARCHAR;
-	}
-	return 0;
-}
-
 int CTool::getTypeStoreLength(CString tpname)
 {
 	if (tpname == _T("BOOL")) {
-		return 2;
+		return sizeof(bool);
 	}
 	else if (tpname == _T("DATETIME")) {
 		return 20;
 	}
 	else if (tpname == _T("DOUBLE")) {
-		return TYPE_DOUBLE;
+		return sizeof(double);
 	}
 	else if (tpname == _T("INTEGER")) {
-		return TYPE_INTEGER;
+		return sizeof(int);
 	}
 	else if (tpname == _T("VARCHAR")) {
 		return TYPE_VARCHAR;

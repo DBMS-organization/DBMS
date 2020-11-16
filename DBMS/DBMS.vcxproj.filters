@@ -150,6 +150,9 @@
     <ClInclude Include="RecordLogic.h">
       <Filter>Logic\Head File</Filter>
     </ClInclude>
+    <ClInclude Include="CreateRecord.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="RecordDao.cpp">
       <Filter>Dao\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRecord.cpp">
+      <Filter>View\Source File</Filter>
     </ClCompile>
     <ClCompile Include="RecordLogic.cpp">
       <Filter>Logic\Source File</Filter>

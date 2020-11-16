@@ -14,6 +14,7 @@
 #include "CreateDatabase.h"
 #include "CreateTable.h"
 #include "CreateField.h"
+#include "CreateRecord.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -394,7 +395,7 @@ void CMainFrame::OnFieldNew()
 	if (m_pFileTree->canCreateField()) {
 		CreateField cfd;
 		cfd.DoModal();
-		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type+1, cfd.length, cfd.ed3str, false, true, true);
+		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type, cfd.length, cfd.ed4str, cfd.isPK, cfd.isUNIQUE, cfd.isNULL);
 	}
 	
 }
@@ -403,5 +404,7 @@ void CMainFrame::OnFieldNew()
 void CMainFrame::OnRecordNew()
 {
 	// TODO: 在此添加命令处理程序代码
+	CreateRecord crd;
+	crd.DoModal();
 
 }
