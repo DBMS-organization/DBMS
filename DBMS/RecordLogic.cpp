@@ -45,8 +45,34 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 	}
 	//在.tb文件中增加记录数
 	CRecordDao::AddRecordNum(dbname, tablename);
+	ofstream outfile(trdFilePath, ios::binary, ios::app);
 
+	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+		/*fieldName = ite_1->GetFieldName();*/
+		if (ite_1->GetFieldType() == TYPE_BOOL) {
+			bool tempbool;
+			outfile.write()
+		}
+		else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+			char* tempTime = new char[20];
+			
+		}
+		else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			///未实现
+			double tempDouble;
+			
+		}
+		else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+			int tempInt;
+			
+		}
+		else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+			int varcharSize = 0;
+			
+		}
 
+		recordEntity.SetValue(fieldName, fieldValue);
+		recordList.push_back(recordEntity);
+	}
 
 	return 1;
 }
