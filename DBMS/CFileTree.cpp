@@ -112,7 +112,7 @@ void CFileTree::DisplayDBList()
 			CFieldDAO fieldDao;
 			vector<CFieldEntity> fieldList = fieldDao.getFieldList(ite2->gettdf());
 			for (vector<CFieldEntity>::iterator ite3 = fieldList.begin(); ite3 != fieldList.end(); ++ite3) {
-				HTREEITEM hFIELD = m_pTreeCtrl->InsertItem(ite3->GetFieldName(), 1, 1, hTB, TVI_LAST);
+				HTREEITEM hFIELD = m_pTreeCtrl->InsertItem(ite3->GetFieldName(), 2, 2, hTB, TVI_LAST);
 				m_pTreeCtrl->SetItemData(hFIELD, DBVIEW_FIELD_ITEM);
 			}
 		}
@@ -202,6 +202,11 @@ void CFileTree::OnCrtTable(CString tbname)
 		return;
 	}
 
+	if (tbname == _T("")) {
+		AfxMessageBox(_T("表名不能为空"));
+		return;
+	}
+
 	// 同时打开数据库
 	this->OnOpenDB();
 	if (m_hCurrDBItem == NULL) {
@@ -222,12 +227,16 @@ void CFileTree::OnCrtTable(CString tbname)
 		else {
 			AfxMessageBox(_T("表名已存在！"));
 		}
-		
 	}
 }
 
 void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull)
 {
+	if (fieldname == _T("")) {
+		AfxMessageBox(_T("字段名不能为空"));
+		return;
+	}
+
 	if (m_hCurrDBItem == NULL) {
 		//AfxMessageBox(_T("请选择数据表！"));
 	}
@@ -242,10 +251,11 @@ void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefa
 				HTREEITEM hFieldItem = m_pTreeCtrl->InsertItem(fieldname, 2, 2, m_hCurrTBItem, TVI_LAST);
 				if (hFieldItem != NULL)
 				{
+					this->OnLookField(this->GetSelectedDBName(), this->GetSelectedTBName());
 					m_pTreeCtrl->SetItemData(hFieldItem, DBVIEW_FIELD_ITEM);
 					m_pTreeCtrl->Expand(m_hCurrTBItem, TVE_EXPAND);
 					m_bAddTB = TRUE;
-					m_pTreeCtrl->EditLabel(hFieldItem);
+					//m_pTreeCtrl->EditLabel(hFieldItem);
 				}
 			}
 			else {
@@ -333,7 +343,7 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		//显示当前表的字段信息
 		this->OnDesignTable();
 
-		OnLookTable();
+		this->OnLookTable();
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM) {
 		m_hCurrFIELDItem = hItem;

@@ -108,11 +108,12 @@ void CTableView::displayFieldMsg(CString dbname, CString tbname)
 	m_ListCtrl->InsertColumn(0, CString("Order"), LVCFMT_LEFT, 60);
 	m_ListCtrl->InsertColumn(1, CString("FieldName"), LVCFMT_LEFT, 100);
 	m_ListCtrl->InsertColumn(2, CString("Type"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(3, CString("Length"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(3, CString("Length"), LVCFMT_LEFT, 80);
 	m_ListCtrl->InsertColumn(4, CString("ModifyTime"), LVCFMT_LEFT, 180);
-	m_ListCtrl->InsertColumn(5, CString("Primary"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(6, CString("Unique"), LVCFMT_LEFT, 100);
-	m_ListCtrl->InsertColumn(7, CString("Not null"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(5, CString("default"), LVCFMT_LEFT, 80);
+	m_ListCtrl->InsertColumn(6, CString("Primary"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(7, CString("Unique"), LVCFMT_LEFT, 100);
+	m_ListCtrl->InsertColumn(8, CString("Not null"), LVCFMT_LEFT, 100);
 
 	CFieldDAO fieldDao;
 	vector<CFieldEntity> fieldList = fieldDao.getFieldList(DATAFILEPATH+_T("\\")+dbname+ _T("\\")+tbname+ _T(".tdf"));
@@ -123,9 +124,10 @@ void CTableView::displayFieldMsg(CString dbname, CString tbname)
 		m_ListCtrl->SetItemText(i, 2, CTool::IntTodataType(ite->GetFieldType()));
 		m_ListCtrl->SetItemText(i, 3, CTool::IntToCString(ite->GetFieldParam()));
 		m_ListCtrl->SetItemText(i, 4, ite->GetModifyTime());
-		m_ListCtrl->SetItemText(i, 5, CTool::BoolToCString(ite->GetPrimary()));
-		m_ListCtrl->SetItemText(i, 6, CTool::BoolToCString(ite->GetUnique()));
-		m_ListCtrl->SetItemText(i, 7, CTool::BoolToCString(ite->GetNotNull()));
+		m_ListCtrl->SetItemText(i, 5, ite->GetDefaultValue());
+		m_ListCtrl->SetItemText(i, 6, CTool::BoolToCString(ite->GetPrimary()));
+		m_ListCtrl->SetItemText(i, 7, CTool::BoolToCString(ite->GetUnique()));
+		m_ListCtrl->SetItemText(i, 8, CTool::BoolToCString(ite->GetNotNull()));
 	}
 }
 
