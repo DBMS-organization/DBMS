@@ -6,10 +6,25 @@
 
 const char* CTool::CStringToChar(CString str)
 {
+	/*
 	string s;
 	const char* ch;
 	s = CT2A(str.GetString());
-	return s.c_str();
+	ch = s.c_str();
+	return ch;
+	*/
+	//针对Unicode编码的转化方案
+	USES_CONVERSION;
+	return T2A(str);
+}
+
+void CTool::CStringToChar(CString str,char*c)
+{
+	string s;
+	const char* ch=new char[sizeof(s)];
+	s = CT2A(str.GetString());
+	ch = s.c_str();
+	c = const_cast<char*>(ch);
 }
 
 CString CTool::BoolToCString(bool bl)
@@ -20,7 +35,7 @@ CString CTool::BoolToCString(bool bl)
 	return s;
 }
 
-//intתchar*
+//int to char*
 const char* CTool::IntToChar(int i)
 {
 	const char* c;
@@ -30,9 +45,16 @@ const char* CTool::IntToChar(int i)
 	return c;
 }
 
-CString CTool::IntToCStrign(int)
+CString CTool::DoubleToCString(double d)
 {
-	return CString();
+	CString s;
+	s.Format(_T("%f"), d);
+	return s;
+	/*
+	char buff[128];
+	sprintf_s(buff, "%lf", d);
+	return CString(buff);
+	*/
 }
 
 int CTool::dataType(CString tpname) {
@@ -85,10 +107,25 @@ CString CTool::IntToCString(int num)
 //判断是否为time数据类型
 bool CTool::isTime(CString time)
 {
+	//regex r("\d\d\d\d-\d\d-\d\d\s\d\d:\d\d:\d\d");
+
+	regex r("^(((1[6-9]|[2-9]\d)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((1[6-9]|[2-9]\d)\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\d|30))|(((1[6-9]|[2-9]\d)\d{2})-0?2-(0?[1-9]|1\d|2[0-8]))|((((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26]))|((16|[2468][048]|[3579][26])00))-0?2-29) (20|21|22|23|[0-1]?\d):[0-5]?\d:[0-5]?\d$");
+	string s = CT2A(time.GetString());
+	return regex_match(s,r);
+	/*
 	regex r("\d\d\d\d-\d\d-\d\d\s\d\d:\d\d:\d\d");
 	string s = CT2A(time.GetString());
-	return regex_match(s, r);
-	return true;
+	if(!regex_match(s, r)) return false;
+	else {
+		string s1 = s.substr(0,10);
+		regex r1("((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229))|((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))$");
+		if (!regex_match(s1, r1))return false;
+		else {
+			string s2 = s.substr(12,8);
+			regex r2("");
+			return regex_match(s2,r2);
+		}
+	}*/
 }
 
 //判断是否为int类型
@@ -177,4 +214,12 @@ int CTool::getTypeStoreLength(CString tpname)
 		return TYPE_VARCHAR;
 	}
 	return 0;
+}
+
+CString CTool::GetCurrTime()
+{
+	SYSTEMTIME time;
+	::GetLocalTime(&time);
+	CTime t(time);
+	return t.Format("%Y-%m-%d %H:%M:%S");
 }
