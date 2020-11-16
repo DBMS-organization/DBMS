@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RecordDao.h"
+#include "Global.h"
 
 vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 {
@@ -14,7 +15,10 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 
 	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite)
 	{
-		
+		if (ite->getTableName() == tbname) {
+			recordNum = ite->getRecord_num();
+			break;
+		}
 	}
 
 	vector<CRecordEntity> recordList;
@@ -31,8 +35,27 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 		fileSize = infile.tellg();
 		infile.seekg(0, ios::beg);
 
-		int dbnum;
-		dbnum = ceil((double)fileSize / (128 + 2 + 256 + 20));
+		for (int i = 0; i < recordNum;i++) {
+			//读取每一个字段信息
+			for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1)
+			{
+				if (ite_1->GetFieldType() == TYPE_BOOL) {
+
+				}
+				else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+
+				}
+				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
+
+				}
+				else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+
+				}
+				else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+
+				}
+			}
+		}
 
 	}
 

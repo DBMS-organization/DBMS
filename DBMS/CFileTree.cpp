@@ -227,7 +227,6 @@ void CFileTree::OnCrtTable(CString tbname)
 		else {
 			AfxMessageBox(_T("表名已存在！"));
 		}
-		
 	}
 }
 
