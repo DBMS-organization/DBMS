@@ -14,6 +14,8 @@
 
 #include <propkey.h>
 
+#include "CRecordEntity.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -67,6 +69,35 @@ BOOL CDBMSDoc::OnNewDocument()
 	//fieldLogic.CreateField(CString("age"), 2, 0, _T("21"), false, true, true);
 
 	//CRecordDao::AddRecordNum(_T("db1"), _T("t1"));
+
+
+
+
+	//测试添加记录
+	/*CRecordEntity recordEntity;
+	recordEntity.SetValue(_T("sname"), _T("hjhhhhh"));
+	recordEntity.SetValue(_T("ssex"), _T("true"));
+	recordEntity.SetValue(_T("sage"), _T("20"));
+	recordEntity.SetValue(_T("num"), _T("2.333"));
+
+
+	CRecordLogic recordlogic;
+	recordlogic.AddRecord(_T("db1"), _T("t1"), recordEntity);
+
+	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(_T("db1"), _T("t1"));
+	_cprintf("LLLLLLLLLLLLLLLLLLLLLLL    %d\n",recordlist.size());
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
+		
+		CString sname = recordite->GetValue(_T("sname"));
+		CString ssex = recordite->GetValue(_T("ssex"));
+		CString sage = recordite->GetValue(_T("sage"));
+		CString num = recordite->GetValue(_T("num"));
+		string strssex = CT2A(ssex.GetString());
+		string strsname = CT2A(sname.GetString());
+		string strsage = CT2A(sage.GetString());
+		string strnum = CT2A(num.GetString());
+		_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str());
+	}*/
 
 	return TRUE;
 }

@@ -22,7 +22,7 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 	}
 
 	vector<CRecordEntity> recordList;
-	ifstream infile(tbFilePath, ios::binary);				//打开记录文件段信息
+	ifstream infile(trdFilePath, ios::binary);				//打开记录文件段信息
 
 	if (!infile) {					//文件打开异常
 		AfxMessageBox(_T("记录文件打开异常，请重试！"));
@@ -37,7 +37,7 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 
 		CString fieldName = _T("");
 		CString fieldValue = _T("");
-
+		_cprintf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  %d\n", recordNum);
 		for (int i = 0; i < recordNum;i++) {
 			CRecordEntity recordEntity;
 			//读取每一个字段信息
@@ -69,18 +69,18 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 					infile.read((char*)&varcharSize, sizeof(int));
 					char* tempVarchar = new char[varcharSize];
 					infile.read(tempVarchar, varcharSize);
+					//_cprintf("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ %s\n", tempVarchar);
 					fieldValue = CString(tempVarchar);
 				}
-
 				recordEntity.SetValue(fieldName, fieldValue);
-				recordList.push_back(recordEntity);
 			}
+			recordList.push_back(recordEntity);
 		}
 
 	}
 
 	infile.close();
-
+	
 	return recordList;
 }
 
@@ -108,7 +108,7 @@ void CRecordDao::AddRecordNum(CString dbname, CString tbname)
 			break;
 		}
 	}
-	CRecordDao::WriteRecordNum(tablelist);
+	CRecordDao::reWritetb(tablelist);
 }
 
 void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
@@ -123,10 +123,10 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 			ite->SetRecordNum(temp);
 		}
 	}
-	CRecordDao::WriteRecordNum(tablelist);
+	CRecordDao::reWritetb(tablelist);
 }
 
-void CRecordDao::WriteRecordNum(vector<CTableEntity> tablelist)
+void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 {
 	//string strdbname, strtbname;
 	//strdbname = CT2A(tablelist.at(0).getDBName().GetString());
@@ -144,10 +144,7 @@ void CRecordDao::WriteRecordNum(vector<CTableEntity> tablelist)
 		int recordnum;
 		int fieldnum;
 
-		SYSTEMTIME time;
-		::GetLocalTime(&time);
-		CTime t(time);
-		CString ctime = t.Format("%Y-%m-%d %H:%M:%S");
+		CString ctime = CTool::GetCurrTime();
 		
 
 

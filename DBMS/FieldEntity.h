@@ -10,9 +10,9 @@ private:
 	CString modifyTime;
 	//int Integrities;
 	CString DefaultValue;
-	int Primary;
-	int NotNull;
-	int Unique;
+	bool Primary;
+	bool NotNull;
+	bool Unique;
 	//int Integrities;//primary,notnull,unique
 
 public:
@@ -25,9 +25,9 @@ public:
 	int GetFieldParam() { return fieldParam; };
 	CString GetModifyTime() { return modifyTime; };
 	CString GetDefaultValue() { return DefaultValue; };
-	int GetPrimary() { return Primary; };
-	int GetNotNull() { return NotNull; };
-	int GetUnique() { return Unique; };
+	bool GetPrimary() { return Primary; };
+	bool GetNotNull() { return NotNull; };
+	bool GetUnique() { return Unique; };
 	//int GetIntegrities() { return Integrities; };
 
 	void SetFieldOrder(int filed_order) { fieldOrder = filed_order; };

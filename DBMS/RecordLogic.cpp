@@ -12,7 +12,6 @@ CRecordLogic::~CRecordLogic()
 
 int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &record)
 {
-	//.tb文件记录数加1
 	this->dbName = dbname;
 	this->tbName = tablename;
 	this->tdfFilePath = _T("DBMSROOT\\data\\") + dbname + _T("\\") + tablename + _T(".tdf");
@@ -25,13 +24,6 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
 
-	//CTableEntity tb(tablename, dbname);
-
-		//tb.SetRecordNum();
-
-	int fieldnum = fieldlist.size();
-	int recordnum = recordlist.size();
-
 	for (vector<CFieldEntity>::iterator fieldite = fieldlist.begin(); fieldite != fieldlist.end(); ++fieldite) {
 		//判断所有字段中是否唯一
 		if (fieldite->GetUnique()) {
@@ -42,37 +34,51 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 				}
 			}
 		}
+		if (fieldite->GetNotNull()) {
+			if (record.GetValue(fieldite->GetFieldName()) == _T("")) {
+				return 0;
+			}
+		}
 	}
-	//在.tb文件中增加记录数
-	CRecordDao::AddRecordNum(dbname, tablename);
-	ofstream outfile(trdFilePath, ios::binary, ios::app);
-
+	_cprintf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
+	ofstream outfile(trdFilePath, ios::binary | ios::app);
+	
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
-		/*fieldName = ite_1->GetFieldName();*/
+		CString fieldName = ite_1->GetFieldName();
+		CString recordvalue = record.GetValue(fieldName);
 		if (ite_1->GetFieldType() == TYPE_BOOL) {
 			bool tempbool;
-			outfile.write()
+			tempbool = CTool::CStringToBool(recordvalue);
+			outfile.write((char*)(&tempbool), sizeof(bool));
 		}
 		else if (ite_1->GetFieldType() == TYPE_DATETIME) {
-			char* tempTime = new char[20];
-			
+			string tempTime;
+			tempTime = CT2A(recordvalue.GetString());
+			outfile.write(tempTime.c_str(), CTool::getTypeStoreLength(_T("DATETIME")));
 		}
-		else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			///未实现
+		else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
 			double tempDouble;
-			
+			tempDouble = CTool::CStringToDouble(recordvalue);
+			outfile.write((char*)(&tempDouble), sizeof(double));
 		}
 		else if (ite_1->GetFieldType() == TYPE_INTEGER) {
-			int tempInt;
-			
+			int tempInt = CTool::CStringToInt(recordvalue);
+			outfile.write((char*)(&tempInt), sizeof(int));
 		}
 		else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
-			int varcharSize = 0;
-			
-		}
+			int varcharSize = recordvalue.GetLength()+1;
+			string strtemp = CT2A(recordvalue.GetString());
+			//char* writedvarchar = new char[varcharSize + 1];
+			outfile.write((char*)(&varcharSize), sizeof(int));
 
-		recordEntity.SetValue(fieldName, fieldValue);
-		recordList.push_back(recordEntity);
+			//writedvarchar
+			outfile.write(strtemp.c_str(), varcharSize);
+		}
 	}
+	outfile.close();
+
+	//在.tb文件中增加记录数
+	CRecordDao::AddRecordNum(dbname, tablename);
 
 	return 1;
 }
