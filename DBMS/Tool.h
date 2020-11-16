@@ -11,20 +11,25 @@ using namespace std;
 class CTool
 {
 public:
-	static const char* CStringToChar(CString str);
+	//XXXToChar()
+	static const char* CStringToChar(CString str); //空指针
+	static void CStringToChar(CString str,char* c);//乱码
+	static const char* IntToChar(int i);//空指针
 
+	//CStringToXXX
+	static int CStringToInt(CString str);
+	static bool CStringToBool(CString str);
+	static double CStringToDouble(CString str);
+
+	//XXXToCString()
 	static CString BoolToCString(bool bl);
-
-	static const char* IntToChar(int i);
-
-	static CString IntToCStrign(int);
-
-	static int dataType(CString tpname);
-	
-	static CString IntTodataType(int num);
-
+	static CString DoubleToCString(double d);
 	static CString IntToCString(int num);
 
+    //dataTypeToInt&intToDataType
+	static int dataType(CString tpname);
+	static CString IntTodataType(int num);
+		
 	//判断是否为time数据类型
 	static bool isTime(CString time);
 	//判断是否为int类型
@@ -35,12 +40,12 @@ public:
 	static bool isBool(CString b);
 	//判断content的数据类型是否为type
 	static bool judgeType(CString type, CString content, int length = -1);
-
 	//判断文件名是否合法
 	static bool isValidFileName(CString filename);
-
 	//获取指定数据类型的存储长度
 	static int getTypeStoreLength(CString tpname);
+	//获取当前时间
+	static CString GetCurrTime();
 
 };
 
