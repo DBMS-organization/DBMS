@@ -36,8 +36,9 @@ public:
 
 
 	void ClearTable();
-	void displayTable();
+	void displayTable(CString dbname, CString tbname);
 	void displayFieldMsg(CString dbname, CString tbname);
+	void AutoAdjustColumnWidth(CListCtrl* pListCtrl);//自适应长度
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 };
 

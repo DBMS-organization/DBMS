@@ -292,11 +292,11 @@ CString CFileTree::GetSelectedTBName()
 
 
 //查看表记录
-void CFileTree::OnLookTable()
+void CFileTree::OnLookTable(CString dbname, CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
-	pMainWnd->m_pTableView->displayTable();
+	pMainWnd->m_pTableView->displayTable(dbname, tbname);
 }
 
 //查看字段描述信息
@@ -343,7 +343,7 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		//显示当前表的字段信息
 		this->OnDesignTable();
 
-		this->OnLookTable();
+		this->OnLookTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM) {
 		m_hCurrFIELDItem = hItem;

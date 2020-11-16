@@ -55,7 +55,7 @@ public:
 	afx_msg void OnDeleteDB();
 	afx_msg void OnCrtTable(CString dbname);
 	afx_msg void OnCrtField(CString dbname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull);
-	afx_msg void OnLookTable();
+	afx_msg void OnLookTable(CString dbname, CString tbname);
 	afx_msg void OnLookField(CString dbname, CString tbname);
 	afx_msg void OnConditionQuery();
 	afx_msg void OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);

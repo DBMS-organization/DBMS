@@ -74,7 +74,7 @@ BOOL CDBMSDoc::OnNewDocument()
 
 
 	//测试添加记录
-	/*CRecordEntity recordEntity;
+	CRecordEntity recordEntity;
 	recordEntity.SetValue(_T("sname"), _T("hjhhhhh"));
 	recordEntity.SetValue(_T("ssex"), _T("true"));
 	recordEntity.SetValue(_T("sage"), _T("20"));
@@ -97,7 +97,7 @@ BOOL CDBMSDoc::OnNewDocument()
 		string strsage = CT2A(sage.GetString());
 		string strnum = CT2A(num.GetString());
 		_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str());
-	}*/
+	}
 
 	return TRUE;
 }
