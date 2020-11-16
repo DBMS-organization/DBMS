@@ -21,6 +21,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CListCtrl m_List1;
+	CListCtrl list;
 	virtual BOOL OnInitDialog();
 };
