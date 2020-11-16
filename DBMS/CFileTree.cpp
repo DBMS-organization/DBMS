@@ -514,6 +514,8 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 			CRecordLogic recordlogic;
 			
 			if (recordlogic.AddRecord(this->GetSelectedDBName(), this->GetSelectedTBName(), recordEntity)) {
+				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(),this->GetSelectedTBName());
 			}
 			else {
 				AfxMessageBox(_T("´¥·¸Ô¼ÊøÌõ¼ş£¡"));

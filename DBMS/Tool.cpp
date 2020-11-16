@@ -162,7 +162,9 @@ bool CTool::isDouble(CString d)
 		return true;
 	}
 	else{
-		regex r("\d+\.\d+");
+		/*regex r("\d+\.\d+");*/
+		regex r("^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$");
+		
 	    string s = CT2A(d.GetString());
      	return regex_match(s,r);
 	}
@@ -198,7 +200,7 @@ bool CTool::judgeType(CString type, CString content, int length)
 			judge = isDouble(content);;
 			break;
 		case TYPE_VARCHAR:
-			if (length != -1&& length < content.GetLength())
+			if (length < content.GetLength())
 				judge=false;
 			break;
 	}

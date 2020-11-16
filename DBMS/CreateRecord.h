@@ -21,12 +21,17 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	CRecordEntity recordEntity;
 	int m_Row = -1, m_Col = -1;
+	bool valid = true;
 	CListCtrl list;
 	virtual BOOL OnInitDialog();
 	void AutoAdjustColumnWidth(CListCtrl* pListCtrl);
+
+
 	
 	CEdit m_edit;
 	afx_msg void OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnEnKillfocusEdit1();
+	afx_msg void OnBnClickedOk();
 };

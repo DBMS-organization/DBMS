@@ -9,6 +9,7 @@
 #include "CFileTree.h"
 #include "FieldLogic.h"
 #include "MainFrm.h"
+#include "CRecordEntity.h"
 
 // CreateRecord 对话框
 
@@ -35,6 +36,7 @@ void CreateRecord::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CreateRecord, CDialogEx)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CreateRecord::OnNMDblclkList1)
 	ON_EN_KILLFOCUS(IDC_EDIT1, &CreateRecord::OnEnKillfocusEdit1)
+	ON_BN_CLICKED(IDOK, &CreateRecord::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -138,6 +140,22 @@ void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 		m_edit.MoveWindow(rect, TRUE);
 		m_edit.ShowWindow(1);
 		m_edit.SetFocus();
+
+		CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+		CString dbname = pMainWnd->m_pFileTree->GetSelectedDBName();
+		CString tbname = pMainWnd->m_pFileTree->GetSelectedTBName();
+		CString tdfFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf");
+		vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+		
+		
+
+		
+		//读取每一个字段信息
+		/*for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1)
+		{*/
+			
+		//}
+		
 	}
 
 
@@ -153,6 +171,58 @@ void CreateRecord::OnEnKillfocusEdit1()
 	list.SetItemText(m_Row, m_Col, str);
 	m_edit.ShowWindow(SW_HIDE);
 
+	
+	CString fieldName = _T("");
+	CString fieldValue = _T("");
+	CString type = _T("");
+	fieldName = list.GetItemText(m_Row, 1);
+	fieldValue = list.GetItemText(m_Row, m_Col);
+	type = list.GetItemText(m_Row, 2);
+
+	string s1, s2,s3;
+	s1 = CT2A(fieldName);
+	s2 = CT2A(fieldValue);
+	s3 = CT2A(type);
+
+	valid = true;
+	/*if (fieldName == _T("VARCHAR")) {
+		int len = CTool::CStringToInt(list.GetItemText(m_Row, 3));
+		_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT int s %d %s \n", CTool::CStringToInt(list.GetItemText(m_Row, 3)), list.GetItemText(m_Row, 3));
+		if (!CTool::judgeType(type, fieldValue, len)) {
+			valid = false;
+			AfxMessageBox(_T("输入值不符合约束！"));
+			list.SetItemText(m_Row, m_Col, _T(""));
+		}
+		else {
+			recordEntity.SetValue(fieldName, fieldValue);
+		}
+	}
+	else {
+		if (!CTool::judgeType(type, fieldValue)) {
+			valid = false;
+			AfxMessageBox(_T("输入值不符合约束！"));
+			list.SetItemText(m_Row, m_Col, _T(""));
+		}
+		else {
+			recordEntity.SetValue(fieldName, fieldValue);
+		}
+	}*/
+
+	int len = CTool::CStringToInt(list.GetItemText(m_Row, 3));
+	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT int s %d %s \n", CTool::CStringToInt(list.GetItemText(m_Row, 3)), list.GetItemText(m_Row, 3));
+	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT s1, s2,s3  %s %s %s\n", s1.c_str(), s2.c_str(),s3.c_str());
+
+
+
+	if (!CTool::judgeType(type, fieldValue, len)) {
+		valid = false;
+		AfxMessageBox(_T("输入值不符合约束！"));
+		list.SetItemText(m_Row, m_Col, _T(""));
+	}
+	else {
+		recordEntity.SetValue(fieldName, fieldValue);
+	}
+	
 }
 
 void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
@@ -172,3 +242,16 @@ void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 }
 
 
+
+
+void CreateRecord::OnBnClickedOk()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (valid) {
+		CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+		pMainWnd->m_pFileTree->OnCrtRecord(recordEntity);
+	}
+	
+
+	CDialogEx::OnOK();
+}
