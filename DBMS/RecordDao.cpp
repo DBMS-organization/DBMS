@@ -22,18 +22,18 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 	}
 
 	vector<CRecordEntity> recordList;
-	ifstream infile(tdfFilePath, ios::binary);				//打开表描述文件，获取字段信息
+	ifstream infile(tbFilePath, ios::binary);				//打开记录文件段信息
 
 	if (!infile) {					//文件打开异常
-		AfxMessageBox(_T("表描述文件打开异常，请重试！"));
+		AfxMessageBox(_T("记录文件打开异常，请重试！"));
 	}
 	else {							//文件正常打开
 		infile.seekg(0, ios::cur);	//文件指针指向开头
 
-		int fileSize;
-		infile.seekg(0, ios::end);
-		fileSize = infile.tellg();
-		infile.seekg(0, ios::beg);
+		//int fileSize;
+		//infile.seekg(0, ios::end);
+		//fileSize = infile.tellg();
+		//infile.seekg(0, ios::beg);
 
 		CString fieldName = _T("");
 		CString fieldValue = _T("");
@@ -54,10 +54,10 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 					infile.read(tempTime, 20);
 					fieldValue = CString(tempTime);
 				}
-				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			///未实现
+				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			
 					double tempDouble;
 					infile.read((char*)&tempDouble, sizeof(double));
-					fieldValue = _T("3.1415926");
+					fieldValue = CTool::DoubleToCString(tempDouble);
 				}
 				else if (ite_1->GetFieldType() == TYPE_INTEGER) {
 					int tempInt;
