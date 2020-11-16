@@ -39,25 +39,41 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 		CString fieldValue = _T("");
 
 		for (int i = 0; i < recordNum;i++) {
+			CRecordEntity recordEntity;
 			//读取每一个字段信息
 			for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1)
 			{
+				fieldName = ite_1->GetFieldName();
 				if (ite_1->GetFieldType() == TYPE_BOOL) {
-					fieldName=ite_1->GetFieldName();
-					//infile.read((char*)&fieldValue, sizeof(bool));
+					bool tempbool;
+					infile.read((char*)&tempbool, sizeof(bool));
+					fieldValue=CTool::BoolToCString(tempbool);
 				}
 				else if (ite_1->GetFieldType() == TYPE_DATETIME) {
-
+					char* tempTime = new char[20];
+					infile.read(tempTime, 20);
+					fieldValue = CString(tempTime);
 				}
-				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
-
+				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			///未实现
+					double tempDouble;
+					infile.read((char*)&tempDouble, sizeof(double));
+					fieldValue = _T("3.1415926");
 				}
 				else if (ite_1->GetFieldType() == TYPE_INTEGER) {
-
+					int tempInt;
+					infile.read((char*)&tempInt, sizeof(int));
+					fieldValue = CTool::IntToCString(tempInt);
 				}
 				else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
-
+					int varcharSize = 0;
+					infile.read((char*)&varcharSize, sizeof(int));
+					char* tempVarchar = new char[varcharSize];
+					infile.read(tempVarchar, varcharSize);
+					fieldValue = CString(tempVarchar);
 				}
+
+				recordEntity.SetValue(fieldName, fieldValue);
+				recordList.push_back(recordEntity);
 			}
 		}
 
