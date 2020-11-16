@@ -73,6 +73,7 @@ public:
 	afx_msg void OnLookLog();
 
 	afx_msg void OnCrtRecord(CRecordEntity& recordEntity);
+	afx_msg void OnDelRecord();
 };
 
 
