@@ -415,6 +415,23 @@ bool CFileTree::canCreateField()
 	}
 }
 
+bool CFileTree::canCreateRecord()
+{
+	if (m_hCurrDBItem == NULL) {
+		AfxMessageBox(_T("请选择表！"));
+		return false;
+	}
+	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
+	if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM || m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM)          // 数据库节点
+	{
+		AfxMessageBox(_T("请选择表！"));
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 
 void CFileTree::OnRenameDB()
 {
@@ -481,4 +498,28 @@ void CFileTree::OnClearTable()
 void CFileTree::OnLookLog()
 {
 	// TODO: 在此添加命令处理程序代码
+}
+
+void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
+{
+	if (m_hCurrDBItem == NULL) {
+		//AfxMessageBox(_T("请选择数据表！"));
+	}
+	else {
+		HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
+		if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM) {
+			//AfxMessageBox(_T("请选择表！"));
+		}
+		else {
+			CRecordLogic recordlogic;
+			
+			if (recordlogic.AddRecord(this->GetSelectedDBName(), this->GetSelectedTBName(), recordEntity)) {
+			}
+			else {
+				AfxMessageBox(_T("触犯约束条件！"));
+			}
+		}
+
+	}
+	
 }
