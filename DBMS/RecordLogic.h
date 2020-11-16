@@ -13,5 +13,7 @@ public:
 	~CRecordLogic();
 
 	int AddRecord(CString dbname, CString tablename, CRecordEntity& record);
+	int DeleteRecord(CString dbname, CString tablename, CString fieldname, CString fieldvalue);
+	int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primarykey, CString primarykeyValue, CString fieldname, CString fieldvalue);
 };
 

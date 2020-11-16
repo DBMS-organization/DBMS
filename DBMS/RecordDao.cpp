@@ -121,6 +121,7 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 		if (ite->getTableName() == tbname) {
 			int temp = ite->getRecord_num() - 1;
 			ite->SetRecordNum(temp);
+			_cprintf("111111111111111111111111111111111111111111111111111recordnum %d\n", temp);
 		}
 	}
 	CRecordDao::reWritetb(tablelist);
