@@ -394,7 +394,7 @@ void CMainFrame::OnFieldNew()
 	if (m_pFileTree->canCreateField()) {
 		CreateField cfd;
 		cfd.DoModal();
-		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type+1, cfd.length, cfd.ed3str, false, true, true);
+		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type, cfd.length, cfd.ed4str, cfd.isPK, cfd.isUNIQUE, cfd.isNULL);
 	}
 	
 }
