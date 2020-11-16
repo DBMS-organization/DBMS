@@ -69,14 +69,26 @@ void CRecordDao::AddRecordNum(CString dbname, CString tbname)
 	CString tbFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + dbname + _T(".tb");
 
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
+	
+	/*string strdbname, strtbname;
+	strdbname = CT2A(tablelist.at(0).getDBName().GetString());
+	strtbname = CT2A(tablelist.at(0).getTableName().GetString());
+	_cprintf("\nstrdbname.c_str(), strtbname.c_str()    %s %s\n", strdbname.c_str(), strtbname.c_str());*/
+	//_cprintf("\ndddddddddddddddddddddddddddddddddddddd tablelist size %d\n ",tablelist.size());
 
 	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite) {
 		if (ite->getTableName() == tbname) {
+			int recordnum;
+			recordnum = ite->getRecord_num();
+			_cprintf("\ntestrecordnum1    %d\n", recordnum);
 			int temp = ite->getRecord_num() + 1;
 			ite->SetRecordNum(temp);
+			recordnum = ite->getRecord_num();
+			_cprintf("\ntestrecordnum2    %d\n", recordnum);
+			break;
 		}
 	}
-
+	CRecordDao::WriteRecordNum(tablelist);
 }
 
 void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
@@ -91,12 +103,59 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 			ite->SetRecordNum(temp);
 		}
 	}
+	CRecordDao::WriteRecordNum(tablelist);
 }
 
 void CRecordDao::WriteRecordNum(vector<CTableEntity> tablelist)
 {
+	//string strdbname, strtbname;
+	//strdbname = CT2A(tablelist.at(0).getDBName().GetString());
+	//strtbname = CT2A(tablelist.at(0).getTableName().GetString());
+	//_cprintf("\n888888888888888strdbname.c_str(), strtbname.c_str()    %s %s\n", strdbname.c_str(), strtbname.c_str());
+	CString tbfilepath = DATAFILEPATH + _T("\\") + tablelist[0].getDBName() + _T("\\") + tablelist[0].getDBName() + _T(".tb");
+	ofstream clearFile(tbfilepath, ios::binary);
+	clearFile.close();
+
+	ofstream outFile(tbfilepath, ios::binary | ios::app);
 	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite) {
+		string strtablename, strdbname, strtdf, strtrd, 
+			strtic, strcrtime, strmtime, strrecordnum, strfieldnum;
+		
+		int recordnum;
+		int fieldnum;
+
+		SYSTEMTIME time;
+		::GetLocalTime(&time);
+		CTime t(time);
+		CString ctime = t.Format("%Y-%m-%d %H:%M:%S");
+		
+
+
+		strtablename = CT2A(ite->getTableName().GetString());
+		strdbname = CT2A(ite->getDBName().GetString());
+		strtdf = CT2A(ite->gettdf().GetString());
+		strtrd = CT2A(ite->gettrd().GetString());
+		strtic = CT2A(ite->gettic().GetString());
+		strcrtime = CT2A(ite->getCreateTime().GetString());
+		strmtime = CT2A(ctime.GetString());
+
+		recordnum = ite->getRecord_num();
+		fieldnum = ite->getField_num();
+		_cprintf("\ntestrecordnum3    %d %s\n", recordnum, strtablename.c_str());
+
+		
+		
+		outFile.write(strdbname.c_str(), 128);
+		outFile.write(strtablename.c_str(), 128);
+		outFile.write((char*)(&recordnum), sizeof(int));
+		outFile.write((char*)(&fieldnum), sizeof(int));
+		outFile.write(strtdf.c_str(), 256);
+		outFile.write(strtrd.c_str(), 256);
+		outFile.write(strtic.c_str(), 256);
+		outFile.write(strcrtime.c_str(), 20);
+		outFile.write(strmtime.c_str(), 20);
+
 
 	}
-
+	outFile.close();
 }

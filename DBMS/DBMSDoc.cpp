@@ -66,6 +66,8 @@ BOOL CDBMSDoc::OnNewDocument()
 	//CFieldLogic fieldLogic(_T("ABC"), _T("table4"));
 	//fieldLogic.CreateField(CString("age"), 2, 0, _T("21"), false, true, true);
 
+	//CRecordDao::AddRecordNum(_T("db1"), _T("t1"));
+
 	return TRUE;
 }
 

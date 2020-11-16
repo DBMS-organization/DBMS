@@ -4,6 +4,7 @@ class CRecordLogic
 private:
 	CString trdFilePath;
 	CString tdfFilePath;
+	CString tbFilePath;
 	CString dbName;
 	CString tbName;
 
@@ -12,6 +13,5 @@ public:
 	~CRecordLogic();
 
 	int AddRecord(CString dbname, CString tablename, CRecordEntity& record);
-	int 
 };
 

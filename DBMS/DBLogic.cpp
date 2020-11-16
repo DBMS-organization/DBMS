@@ -63,7 +63,7 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 		outFile.write(fpath, 256);
 		outFile.write(ctime, 20);
 
-
+		outFile.close();
 		return 1;
 	}
 	else {

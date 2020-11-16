@@ -115,6 +115,8 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		outfile.write((char*)(&unique), sizeof(bool));
 		outfile.write((char*)(&notnull), sizeof(bool));
 
+
+		outfile.close();
 		return 1;
 	}
 	else {

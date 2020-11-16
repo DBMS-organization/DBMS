@@ -5,7 +5,11 @@
 
 CTableLogic::CTableLogic(CString dbName)
 {
+	
 	this->DBName = dbName;
+	string strdbname;
+	strdbname = CT2A(DBName.GetString());
+	_cprintf("\nwwwwwwwwwwwwwwwwwwwwwwwwww strdbname.c_str()   %s\n", strdbname.c_str());
 	this->tbPath = _T("DBMSROOT\\data\\") + dbName + _T("\\") + dbName + _T(".tb");
 }
 
@@ -51,6 +55,9 @@ int CTableLogic::CreateTable(CString& tablename)
 		tdfpath = _T("DBMSROOT\\data\\") + DBName + _T("\\") + tablename + _T(".tdf");
 		trdpath = _T("DBMSROOT\\data\\") + DBName + _T("\\") + tablename + _T(".trd");
 		ticpath = _T("DBMSROOT\\data\\") + DBName + _T("\\") + tablename + _T(".tic");
+		string strdbname1;
+		strdbname1 = CT2A(DBName.GetString());
+		_cprintf("\n111111111111111111111111strdbname.c_str()   %s\n", strdbname1.c_str());
 		createfile1.open(tdfpath.GetString(), ios::binary | ios::app);
 		createfile2.open(trdpath.GetString(), ios::binary | ios::app);
 		createfile3.open(ticpath.GetString(), ios::binary | ios::app);
@@ -76,6 +83,9 @@ int CTableLogic::CreateTable(CString& tablename)
 		//string
 		strtablename = CT2A(tablename.GetString());
 		strdbname = CT2A(DBName.GetString());
+		/*string strdbname;
+		strdbname = CT2A(DBName.GetString());*/
+		_cprintf("\n333333333333333333333333333333333strdbname.c_str()   %s\n", strdbname.c_str());
 		strtdf = CT2A(tdfpath.GetString());
 		strtrd = CT2A(trdpath.GetString());
 		strtic = CT2A(ticpath.GetString());
@@ -97,6 +107,8 @@ int CTableLogic::CreateTable(CString& tablename)
 		/*recordnum = strrecordnum.c_str();
 		fieldnum = strfieldnum.c_str();*/
 
+
+		outFile.write(dbname, 128);
 		outFile.write(tbname, 128);
 
 		/*outFile.write(recordnum, 4);
@@ -110,6 +122,7 @@ int CTableLogic::CreateTable(CString& tablename)
 		outFile.write(crtime, 20);
 		outFile.write(mtime, 20);
 
+		outFile.close();
 		return 1;
 	}
 	else {

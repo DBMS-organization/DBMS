@@ -43,10 +43,11 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 		//_cprintf("fileSize-----%d\n", fileSize);
 
 		int tablenum;
-		tablenum = ceil((double)fileSize / (128 + 4 * 2 + 256 * 3 + 20 * 2));
+		tablenum = ceil((double)fileSize / (128*2 + sizeof(int) * 2 + 256 * 3 + 20 * 2));
 
 
 		for (int i = 0; i < tablenum; i++) {
+			infile.read(dbName, 128);
 			infile.read(tbName, 128);
 
 			/*infile.read(Record_num, 4);
@@ -74,6 +75,7 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 			//_cprintf("33333333 %s\n", dbName);
 
 			CTableEntity tbE;
+			tbE.SetDBName(dbn);
 			tbE.SetTableName(tbn);
 			tbE.SetCreateTime(createtime);
 
@@ -87,7 +89,6 @@ vector<CTableEntity> CTableDAO::getTableList(CString& tbFilePath)
 
 			_cprintf("recordnum, fieldnum: %d %d\n", Record_num, Field_num);
 			
-			tbE.SetDBName(dbn);
 			tbE.Settdf(tdfpath);
 			tbE.Settrd(trdpath);
 			tbE.Settic(ticpath);
