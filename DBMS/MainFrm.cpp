@@ -415,10 +415,14 @@ void CMainFrame::OnRecordNew()
 
 }
 
-
+//删除记录
 void CMainFrame::OnRecordDelete()
 {
 	// TODO: 在此添加命令处理程序代码
+	/************************************
+	在这调用CFileTree里的OnDelRecord()函数
+	这个函数还没写完整，参数和逻辑你们补充一下
+	************************************/
 }
 
 

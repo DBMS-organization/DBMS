@@ -525,3 +525,26 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 	}
 	
 }
+
+void CFileTree::OnDelRecord()
+{
+	if (m_hCurrDBItem == NULL) {
+		//AfxMessageBox(_T("请选择数据表！"));
+	}
+	else {
+		HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
+		if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM) {
+			//AfxMessageBox(_T("请选择表！"));
+		}
+		else {
+			CString dbname, tbname;
+			dbname = this->GetSelectedDBName();
+			tbname = this->GetSelectedTBName();
+			/*************************************
+			在这调用删除记录的函数,上面是表明和数据库名
+			****************************************/
+
+		}
+
+	}
+}
