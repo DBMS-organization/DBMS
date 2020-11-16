@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CFileTree.h" />
+    <ClInclude Include="CreateRecord.h" />
     <ClInclude Include="CRecordEntity.h" />
     <ClInclude Include="CreateDatabase.h" />
     <ClInclude Include="CreateField.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="CFileTree.cpp" />
     <ClCompile Include="CreateDatabase.cpp" />
     <ClCompile Include="CreateField.cpp" />
+    <ClCompile Include="CreateRecord.cpp" />
     <ClCompile Include="CreateTable.cpp" />
     <ClCompile Include="CRecordEntity.cpp" />
     <ClCompile Include="CTableView.cpp" />
