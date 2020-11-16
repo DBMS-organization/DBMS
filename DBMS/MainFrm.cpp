@@ -14,6 +14,7 @@
 #include "CreateDatabase.h"
 #include "CreateTable.h"
 #include "CreateField.h"
+#include "CreateRecord.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -403,5 +404,7 @@ void CMainFrame::OnFieldNew()
 void CMainFrame::OnRecordNew()
 {
 	// TODO: 在此添加命令处理程序代码
+	CreateRecord crd;
+	crd.DoModal();
 
 }
