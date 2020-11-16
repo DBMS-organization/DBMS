@@ -407,8 +407,11 @@ void CMainFrame::OnFieldNew()
 void CMainFrame::OnRecordNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	CreateRecord crd;
-	crd.DoModal();
+	if (m_pFileTree->canCreateRecord()) {
+		CreateRecord crd;
+		crd.DoModal();
+	}
+	
 
 }
 
