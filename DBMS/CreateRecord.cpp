@@ -54,13 +54,14 @@ BOOL CreateRecord::OnInitDialog()
 	list.SetExtendedStyle(dwStyle); //设置扩展风格 
 
 	// 插入列并设置每一列的宽度
-	list.InsertColumn(0, _T("Order"), LVCFMT_CENTER, rect.Width() / 7, 0);
-	list.InsertColumn(1, _T("FieldName"), LVCFMT_CENTER, rect.Width() / 7, 1);
-	list.InsertColumn(2, _T("Type"), LVCFMT_CENTER, rect.Width() / 7, 2);
-	list.InsertColumn(3, _T("Length"), LVCFMT_CENTER, rect.Width() / 7, 3);
-	list.InsertColumn(4, _T("Primary"), LVCFMT_CENTER, rect.Width() / 7, 4);
-	list.InsertColumn(5, _T("Unique"), LVCFMT_CENTER, rect.Width() / 7, 5);
-	list.InsertColumn(6, _T("Not null"), LVCFMT_CENTER, rect.Width() / 7, 6);
+	list.InsertColumn(0, _T("Order"), LVCFMT_CENTER, rect.Width() / 8, 0);
+	list.InsertColumn(1, _T("FieldName"), LVCFMT_CENTER, rect.Width() / 8, 1);
+	list.InsertColumn(2, _T("Type"), LVCFMT_CENTER, rect.Width() / 8, 2);
+	list.InsertColumn(3, _T("Length"), LVCFMT_CENTER, rect.Width() / 8, 3);
+	list.InsertColumn(4, _T("Primary"), LVCFMT_CENTER, rect.Width() / 8, 4);
+	list.InsertColumn(5, _T("Unique"), LVCFMT_CENTER, rect.Width() / 8, 5);
+	list.InsertColumn(6, _T("Not null"), LVCFMT_CENTER, rect.Width() / 8, 6);
+	list.InsertColumn(7, _T("Value"), LVCFMT_CENTER, rect.Width() / 8, 7);
 
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 	CString dbname= pMainWnd->m_pFileTree->GetSelectedDBName();
