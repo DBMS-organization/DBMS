@@ -162,10 +162,12 @@ bool CTool::isDouble(CString d)
 		return true;
 	}
 	else{
-		/*regex r("\d+\.\d+");*/
-		regex r("^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$");
+		//regex r("\d+\.\d+");
+		regex r("-[0-9]+(.[0-9]+)?|[0-9]+(.[0-9]+)?");
 		
 	    string s = CT2A(d.GetString());
+
+		_cprintf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& %d\n", regex_match(s, r));
      	return regex_match(s,r);
 	}
 }
