@@ -47,17 +47,20 @@ const char* CTool::IntToChar(int i)
 
 int CTool::CStringToInt(CString str)
 {
-	return 0;
+	return atoi(CT2A(str.GetBuffer()));
 }
 
 bool CTool::CStringToBool(CString str)
 {
-	return false;
+	if (strcmp(CT2A(str.GetBuffer()), "false")==0)
+		return false;
+	else
+		return true;
 }
 
 double CTool::CStringToDouble(CString str)
 {
-	return 0.0;
+	return atof(CT2A(str.GetBuffer()));
 }
 
 CString CTool::DoubleToCString(double d)
