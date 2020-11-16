@@ -45,6 +45,21 @@ const char* CTool::IntToChar(int i)
 	return c;
 }
 
+int CTool::CStringToInt(CString str)
+{
+	return 0;
+}
+
+bool CTool::CStringToBool(CString str)
+{
+	return false;
+}
+
+double CTool::CStringToDouble(CString str)
+{
+	return 0.0;
+}
+
 CString CTool::DoubleToCString(double d)
 {
 	CString s;

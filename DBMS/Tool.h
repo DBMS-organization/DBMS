@@ -16,6 +16,11 @@ public:
 	static void CStringToChar(CString str,char* c);//¬“¬Î
 	static const char* IntToChar(int i);//ø’÷∏’Î
 
+	//CStringToXXX
+	static int CStringToInt(CString str);
+	static bool CStringToBool(CString str);
+	static double CStringToDouble(CString str);
+
 	//XXXToCString()
 	static CString BoolToCString(bool bl);
 	static CString DoubleToCString(double d);
