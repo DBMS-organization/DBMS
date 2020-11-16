@@ -346,6 +346,10 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		this->OnLookTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM) {
+		GetParentFrame()->GetMenu()->EnableMenuItem(3, MF_BYPOSITION | MF_ENABLED);
+		GetParentFrame()->GetMenu()->EnableMenuItem(4, MF_BYPOSITION | MF_ENABLED);
+		GetParentFrame()->DrawMenuBar();
+
 		m_hCurrFIELDItem = hItem;
 		m_hCurrTBItem = m_pTreeCtrl->GetParentItem(m_hCurrFIELDItem);
 		m_hCurrDBItem = m_pTreeCtrl->GetParentItem(m_hCurrTBItem);

@@ -59,6 +59,8 @@ public:
 	afx_msg void OnTbNew();
 	afx_msg void OnFieldNew();
 	afx_msg void OnRecordNew();
+	afx_msg void OnRecordDelete();
+	afx_msg void OnRecordModify();
 };
 
 

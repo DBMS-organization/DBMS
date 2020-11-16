@@ -58,13 +58,18 @@
 #define ID_FIELD_NEW                    32778
 #define ID_RECORD_NEW                   32779
 #define ID_EXIT                         32780
+#define ID_32786                        32786
+#define ID_RECORD_DELETE                32787
+#define ID_32788                        32788
+#define ID_                             32789
+#define ID_RECORD_MODIFY                32790
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        331
-#define _APS_NEXT_COMMAND_VALUE         32786
+#define _APS_NEXT_COMMAND_VALUE         32791
 #define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
