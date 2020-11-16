@@ -1,6 +1,7 @@
 #pragma once
 
 #include <afxcview.h>
+#include "CRecordEntity.h"
 
 #define DBVIEW_DB_ITEM		0
 #define DBVIEW_TABLE_ITEM	1
@@ -48,6 +49,7 @@ public:
 	void GetDBAndTableName(CString& dbName, CString& tbName);
 	bool canCreateTable();
 	bool canCreateField();
+	bool canCreateRecord();
 
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCrtDB(CString dbname);
@@ -69,6 +71,8 @@ public:
 	afx_msg void OnRecoveryDB();
 	afx_msg void OnClearTable();
 	afx_msg void OnLookLog();
+
+	afx_msg void OnCrtRecord(CRecordEntity& recordEntity);
 };
 
 
