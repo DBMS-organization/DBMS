@@ -28,6 +28,7 @@
 #include"FieldDAO.h"
 #include"RecordDao.h"
 #include"CRecordEntity.h"
+#include "RecordLogic.h"
 
 using namespace std;
 

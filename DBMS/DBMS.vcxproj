@@ -203,6 +203,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RecordDao.h" />
+    <ClInclude Include="RecordLogic.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="TableDAO.h" />
     <ClInclude Include="CTableEntity.h" />
@@ -234,6 +235,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="RecordDao.cpp" />
+    <ClCompile Include="RecordLogic.cpp" />
     <ClCompile Include="TableDAO.cpp" />
     <ClCompile Include="CTableEntity.cpp" />
     <ClCompile Include="TableLogic.cpp" />
