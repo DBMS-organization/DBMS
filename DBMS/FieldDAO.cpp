@@ -36,7 +36,9 @@ vector<CFieldEntity>CFieldDAO::getFieldList(CString& tdfFilePath)
 			//char* order = new char[4];
 			int order;
 
+			
 			char* fieldName = new char[128];
+
 			//char* type = new char[4];
 			int type;
 

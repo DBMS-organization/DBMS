@@ -147,6 +147,9 @@
     <ClInclude Include="CreateField.h">
       <Filter>View\Head FIle</Filter>
     </ClInclude>
+    <ClInclude Include="CreateRecord.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="RecordDao.cpp">
       <Filter>Dao\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRecord.cpp">
+      <Filter>View\Source File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
