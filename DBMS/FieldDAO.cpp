@@ -73,6 +73,9 @@ vector<CFieldEntity>CFieldDAO::getFieldList(CString& tdfFilePath)
 			infile.read((char*)&primary, sizeof(bool));
 			infile.read((char*)&unique, sizeof(bool));
 			infile.read((char*)&notnull, sizeof(bool));
+			/*CString bo;
+			infile.read((char*)&bo, sizeof(bool));
+			_cprintf("--------------------------------------%s\n", bo.GetString());*/
 
 			//int order_ = atoi(order);
 			//int type_ = atoi(type);

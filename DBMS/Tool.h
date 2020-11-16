@@ -12,9 +12,15 @@ class CTool
 {
 public:
 	static const char* CStringToChar(CString str);
+
 	static CString BoolToCString(bool bl);
+
 	static const char* IntToChar(int i);
+
+	static CString IntToCStrign(int);
+
 	static int dataType(CString tpname);
+	
 	static CString IntTodataType(int num);
 
 	static CString IntToCString(int num);
@@ -32,9 +38,6 @@ public:
 
 	//判断文件名是否合法
 	static bool isValidFileName(CString filename);
-
-	//计算表中每一行数据的长度
-	static int calculateRecordLength(vector<CFieldEntity> fieldlist);
 
 	//获取指定数据类型的存储长度
 	static int getTypeStoreLength(CString tpname);

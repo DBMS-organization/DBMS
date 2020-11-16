@@ -35,12 +35,16 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 		fileSize = infile.tellg();
 		infile.seekg(0, ios::beg);
 
+		CString fieldName = _T("");
+		CString fieldValue = _T("");
+
 		for (int i = 0; i < recordNum;i++) {
 			//读取每一个字段信息
 			for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1)
 			{
 				if (ite_1->GetFieldType() == TYPE_BOOL) {
-
+					fieldName=ite_1->GetFieldName();
+					//infile.read((char*)&fieldValue, sizeof(bool));
 				}
 				else if (ite_1->GetFieldType() == TYPE_DATETIME) {
 
