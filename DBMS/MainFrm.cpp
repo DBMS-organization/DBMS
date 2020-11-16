@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_TB_NEW, &CMainFrame::OnTbNew)
 	ON_COMMAND(ID_FIELD_NEW, &CMainFrame::OnFieldNew)
 	ON_COMMAND(ID_RECORD_NEW, &CMainFrame::OnRecordNew)
+	ON_COMMAND(ID_RECORD_DELETE, &CMainFrame::OnRecordDelete)
+	ON_COMMAND(ID_RECORD_MODIFY, &CMainFrame::OnRecordModify)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -165,6 +167,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_TB_NEW);
 	lstBasicCommands.AddTail(ID_FIELD_NEW);
 	lstBasicCommands.AddTail(ID_RECORD_NEW);
+	lstBasicCommands.AddTail(ID_RECORD_DELETE);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
@@ -407,4 +410,16 @@ void CMainFrame::OnRecordNew()
 	CreateRecord crd;
 	crd.DoModal();
 
+}
+
+
+void CMainFrame::OnRecordDelete()
+{
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CMainFrame::OnRecordModify()
+{
+	// TODO: 在此添加命令处理程序代码
 }
