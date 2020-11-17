@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlterRecord.h" />
     <ClInclude Include="CFileTree.h" />
     <ClInclude Include="CreateRecord.h" />
     <ClInclude Include="CRecordEntity.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Tool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlterRecord.cpp" />
     <ClCompile Include="CFileTree.cpp" />
     <ClCompile Include="CreateDatabase.cpp" />
     <ClCompile Include="CreateField.cpp" />

@@ -16,6 +16,7 @@
 #include "CreateField.h"
 #include "CreateRecord.h"
 #include "DeleteRecord.h"
+#include "AlterRecord.h"
 
 
 #ifdef _DEBUG
@@ -436,4 +437,6 @@ void CMainFrame::OnRecordDelete()
 void CMainFrame::OnRecordModify()
 {
 	// TODO: 在此添加命令处理程序代码
+	AlterRecord ard;
+	ard.DoModal();
 }

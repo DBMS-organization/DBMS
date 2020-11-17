@@ -41,6 +41,7 @@
 #define IDD_DIALOG1                     329
 #define IDD_CreateRecord                329
 #define IDD_DeleteRecord                331
+#define IDD_AlterRecord                 333
 #define IDC_EDIT1                       1006
 #define IDC_CHECK1                      1007
 #define IDC_EDIT3                       1008
@@ -70,7 +71,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        333
+#define _APS_NEXT_RESOURCE_VALUE        335
 #define _APS_NEXT_COMMAND_VALUE         32791
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310

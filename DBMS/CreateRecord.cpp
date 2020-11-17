@@ -211,7 +211,7 @@ void CreateRecord::OnEnKillfocusEdit1()
 	int len = CTool::CStringToInt(list.GetItemText(m_Row, 3));
 	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT int s %d %s \n", CTool::CStringToInt(list.GetItemText(m_Row, 3)), list.GetItemText(m_Row, 3));
 	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT s1, s2,s3  %s %s %s\n", s1.c_str(), s2.c_str(),s3.c_str());
-
+		
 
 
 	if (!CTool::judgeType(type, fieldValue, len)) {

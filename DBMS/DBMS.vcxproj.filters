@@ -156,6 +156,9 @@
     <ClInclude Include="DeleteRecord.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AlterRecord.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -231,6 +234,9 @@
       <Filter>Logic\Source File</Filter>
     </ClCompile>
     <ClCompile Include="DeleteRecord.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AlterRecord.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
