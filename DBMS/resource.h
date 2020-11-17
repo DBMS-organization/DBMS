@@ -40,6 +40,7 @@
 #define IDD_CreateField                 323
 #define IDD_DIALOG1                     329
 #define IDD_CreateRecord                329
+#define IDD_DeleteRecord                331
 #define IDC_EDIT1                       1006
 #define IDC_CHECK1                      1007
 #define IDC_EDIT3                       1008
@@ -48,6 +49,7 @@
 #define IDC_CHECK3                      1011
 #define IDC_COMBO1                      1012
 #define IDC_LIST1                       1015
+#define IDC_EDIT2                       1016
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -68,9 +70,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        331
+#define _APS_NEXT_RESOURCE_VALUE        333
 #define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1016
+#define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

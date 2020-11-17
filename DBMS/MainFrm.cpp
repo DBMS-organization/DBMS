@@ -15,6 +15,8 @@
 #include "CreateTable.h"
 #include "CreateField.h"
 #include "CreateRecord.h"
+#include "DeleteRecord.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -423,6 +425,11 @@ void CMainFrame::OnRecordDelete()
 	在这调用CFileTree里的OnDelRecord()函数
 	这个函数还没写完整，参数和逻辑你们补充一下
 	************************************/
+	if (m_pFileTree->canCreateRecord()) {
+		DeleteRecord drd;
+		drd.DoModal();
+	}
+
 }
 
 

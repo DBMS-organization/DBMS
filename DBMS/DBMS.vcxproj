@@ -196,6 +196,7 @@
     <ClInclude Include="DBMS.h" />
     <ClInclude Include="DBMSDoc.h" />
     <ClInclude Include="DBMSView.h" />
+    <ClInclude Include="DeleteRecord.h" />
     <ClInclude Include="FieldDAO.h" />
     <ClInclude Include="FieldEntity.h" />
     <ClInclude Include="FieldLogic.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="DBMS.cpp" />
     <ClCompile Include="DBMSDoc.cpp" />
     <ClCompile Include="DBMSView.cpp" />
+    <ClCompile Include="DeleteRecord.cpp" />
     <ClCompile Include="FieldDAO.cpp" />
     <ClCompile Include="FieldEntity.cpp" />
     <ClCompile Include="FieldLogic.cpp" />
