@@ -168,12 +168,18 @@ int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primary
 
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
 
-	bool isUnique;
+	bool isUnique = false;
+	bool isexist = false;
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
 		if (ite_1->GetFieldName().Compare(fieldname) == 0) {
 			isUnique=ite_1->GetUnique();
+			isexist = true;
+			_cprintf("ccccccccccccccccccccccccccccccc  %d", isUnique);
 		}
 	}
+	_cprintf("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb %d", isexist);
+	if (!isexist) return 0;
+
 	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 		
 		if (primarykeyValue.CompareNoCase(recordite->GetValue(primarykey))==0) {
