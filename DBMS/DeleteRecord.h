@@ -23,4 +23,6 @@ protected:
 public:
 	CComboBox cb;
 	CEdit ed;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedOk();
 };
