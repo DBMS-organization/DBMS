@@ -153,8 +153,22 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 	
 }
 
-
-int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primarykey, CString primarykeyValue, CString fieldname, CString fieldvalue)
+/// <summary>
+/// 相当于alter table tablename set modifiedField="modifiedValue" where queryFiled="fitValue";
+/// </summary>
+/// <param name="dbname">数据库名</param>
+/// <param name="tablename">表名</param>
+/// <param name="queryField">用来查询的字段名</param>
+/// <param name="fitValue">用来查询的字段需要满足的值</param>
+/// <param name="modifiedField">需要修改的字段名</param>
+/// <param name="modifiedValue">修改后该字段的值</param>
+/// <returns></returns>
+int CRecordLogic::AlterRecord(CString dbname, 
+	                          CString tablename, 
+	                          CString queryField, 
+	                          CString fitValue,
+	                          CString modifiedField, 
+	                          CString modifiedValue)
 {
 	this->dbName = dbname;
 	this->tbName = tablename;
@@ -171,7 +185,7 @@ int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primary
 	bool isUnique = false;
 	bool isexist = false;
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
-		if (ite_1->GetFieldName().Compare(fieldname) == 0) {
+		if (ite_1->GetFieldName().Compare(modifiedField) == 0) {
 			isUnique=ite_1->GetUnique();
 			isexist = true;
 			_cprintf("ccccccccccccccccccccccccccccccc  %d", isUnique);
@@ -182,17 +196,17 @@ int CRecordLogic::AlterRecord(CString dbname, CString tablename, CString primary
 
 	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 		
-		if (primarykeyValue.CompareNoCase(recordite->GetValue(primarykey))==0) {
+		if (fitValue.CompareNoCase(recordite->GetValue(queryField))==0) {
 			if (!isUnique) {
-				recordite->SetValue(fieldname,fieldvalue);
+				recordite->SetValue(modifiedField,modifiedValue);
 			}
 			else {
 				for (vector<CRecordEntity>::iterator recordite_1 = recordlist.begin(); recordite != recordlist.end(); ++recordite_1) {
-					if (recordite_1->GetValue(fieldname).Compare(fieldvalue) == 0) {
+					if (recordite_1->GetValue(modifiedField).Compare(modifiedValue) == 0) {
 						return 0;
 					}
 				}
-				recordite->SetValue(fieldname, fieldvalue);
+				recordite->SetValue(modifiedField, modifiedValue);
 			}
 		}
 	}
