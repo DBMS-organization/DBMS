@@ -560,9 +560,13 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 			在这调用删除记录的函数,上面是表明和数据库名
 			****************************************/
 			CRecordLogic recordlogic;
-			recordlogic.DeleteRecord(dbname, tbname, fieldname, value);
-			CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
-			pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+			if (recordlogic.DeleteRecord(dbname, tbname, fieldname, value)) {
+				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+			}
+			else {
+				AfxMessageBox(_T("触犯约束条件！"));
+			}
 		}
 
 	}
