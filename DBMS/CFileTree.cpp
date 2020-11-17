@@ -289,6 +289,22 @@ CString CFileTree::GetSelectedTBName()
 		return NULL;
 }
 
+//CString CFileTree::GetSelectedFieldName()
+//{
+//	if (this->m_hCurrTBItem)
+//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
+//	else
+//		return NULL;
+//}
+//
+//CString CFileTree::GetSelectedRecordName()
+//{
+//	if (this->m_hCurrTBItem)
+//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
+//	else
+//		return NULL;
+//}
+
 
 
 //查看表记录
@@ -526,7 +542,7 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 	
 }
 
-void CFileTree::OnDelRecord()
+void CFileTree::OnDelRecord (CString fieldname, CString value)
 {
 	if (m_hCurrDBItem == NULL) {
 		//AfxMessageBox(_T("请选择数据表！"));
@@ -543,7 +559,8 @@ void CFileTree::OnDelRecord()
 			/*************************************
 			在这调用删除记录的函数,上面是表明和数据库名
 			****************************************/
-
+			CRecordLogic recordlogic;
+			recordlogic.DeleteRecord(dbname, tbname, fieldname, value);
 		}
 
 	}

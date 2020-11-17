@@ -107,7 +107,7 @@ BOOL CDBMSDoc::OnNewDocument()
 	recordlogic.DeleteRecord(_T("db1"), _T("t1"), _T("sname"), _T("ydz"));
 	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(_T("db1"), _T("t1"));
 	_cprintf("222222222222222222222222\n");
-
+	//打印剩下的
 	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 		CString sname = recordite->GetValue(_T("sname"));
 		CString ssex = recordite->GetValue(_T("ssex"));
@@ -127,7 +127,7 @@ BOOL CDBMSDoc::OnNewDocument()
 	recordlogic.AlterRecord(_T("db1"), _T("t1"), _T("sname"), _T("ds"), _T("sname"), _T("dengshuo"));
 	vector<CRecordEntity> recordlist = CRecordDao::getRecordList(_T("db1"), _T("t1"));
 	_cprintf("222222222222222222222222\n");
-
+	//打印剩下的
 	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 		CString sname = recordite->GetValue(_T("sname"));
 		CString ssex = recordite->GetValue(_T("ssex"));
