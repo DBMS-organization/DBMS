@@ -64,7 +64,7 @@ void DeleteRecord::OnBnClickedOk()
 	cb.GetLBText(num, str1);
 	ed.GetWindowText(str2);
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
-	pMainWnd->m_pFileTree->OnDelRecord();
+	pMainWnd->m_pFileTree->OnDelRecord(str1,str2);
 
 
 	CDialogEx::OnOK();
