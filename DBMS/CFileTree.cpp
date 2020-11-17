@@ -561,6 +561,8 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 			****************************************/
 			CRecordLogic recordlogic;
 			recordlogic.DeleteRecord(dbname, tbname, fieldname, value);
+			CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+			pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 		}
 
 	}
