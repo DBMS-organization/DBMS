@@ -575,7 +575,8 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 /***********************************************************
 需要的参数为：
 要修改记录的主键字段名和主键值，用于确定该记录的唯一性；
-要修改的记录的字段名和值。
+要修改的记录的字段名和要修改的值(new)。
+注：不需要传要修改的字段old值
 ************************************************************/
 void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CString fieldname, CString value)
 {
