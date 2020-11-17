@@ -565,7 +565,7 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 			}
 			else {
-				AfxMessageBox(_T("触犯约束条件！"));
+				AfxMessageBox(_T("该数据不存在！"));
 			}
 		}
 
