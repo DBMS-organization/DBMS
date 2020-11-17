@@ -110,7 +110,6 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 	}
 	if (count == 0)return 0;
 
-	if (!newRecord.empty()) {
 		ofstream clrfile(trdFilePath, ios::binary);
 		clrfile.close();
 		//Ð´ÎÄ¼þ
@@ -151,11 +150,6 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 		}
 		outfile.close();
 		return 1;
-	}
-	else {
-		ofstream clrfile(trdFilePath, ios::binary);
-		clrfile.close();
-	}
 	
 }
 
