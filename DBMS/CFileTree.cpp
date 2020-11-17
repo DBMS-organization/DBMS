@@ -541,7 +541,7 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 	}
 	
 }
-
+//删除记录
 void CFileTree::OnDelRecord (CString fieldname, CString value)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -565,7 +565,40 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 			}
 			else {
-				AfxMessageBox(_T("该数据不存在！"));
+				AfxMessageBox(_T("该记录不存在！"));
+			}
+		}
+
+	}
+}
+//修改记录
+/***********************************************************
+需要的参数为：
+要修改记录的主键字段名和主键值，用于确定该记录的唯一性；
+要修改的记录的字段名和值。
+************************************************************/
+void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CString fieldname, CString value)
+{
+	if (m_hCurrDBItem == NULL) {
+		//AfxMessageBox(_T("请选择数据表！"));
+	}
+	else {
+		HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
+		if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM) {
+			//AfxMessageBox(_T("请选择表！"));
+		}
+		else {
+			CString dbname, tbname;
+			dbname = this->GetSelectedDBName();
+			tbname = this->GetSelectedTBName();
+			
+			CRecordLogic recordlogic;
+			if (recordlogic.AlterRecord(dbname,tbname, primaryfieldname, primaryvalue, fieldname, value)) {
+				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+			}
+			else {
+				AfxMessageBox(_T("该记录不存在！"));
 			}
 		}
 
