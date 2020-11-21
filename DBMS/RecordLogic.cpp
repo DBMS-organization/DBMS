@@ -30,12 +30,14 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 			for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 				//判断同一字段下是否存在相同的值
 				if (record.GetValue(fieldite->GetFieldName()) == recordite->GetValue(fieldite->GetFieldName())) {
+					AfxMessageBox(_T("字段")+fieldite->GetFieldName()+_T("的值触犯唯一性约束！"));
 					return 0;
 				}
 			}
 		}
 		if (fieldite->GetNotNull()) {
 			if (record.GetValue(fieldite->GetFieldName()) == _T("")) {
+				AfxMessageBox(_T("字段") + fieldite->GetFieldName() + _T("的值触犯非空约束！"));
 				return 0;
 			}
 		}

@@ -125,7 +125,7 @@ CString CTool::IntToCString(int num)
 //判断是否为time数据类型
 bool CTool::isTime(CString time)
 {
-
+	if (time == _T("")) return true;
 
 	regex r1("^(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|((((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26]))|((16|[2468][048]|[3579][26])00))-0?2-29)");
 	//regex r2(" (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$");
@@ -195,6 +195,8 @@ bool CTool::isDouble(CString d)
 //判断是否为bool类型
 bool CTool::isBool(CString b)
 {
+	if (b == _T("")) return true;
+
 	if (strcmp(CStringToChar(b), "true") == 0 ||
 		strcmp(CStringToChar(b), "false") == 0)
 		return true;

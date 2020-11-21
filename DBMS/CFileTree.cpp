@@ -534,9 +534,6 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(),this->GetSelectedTBName());
 			}
-			else {
-				AfxMessageBox(_T("触犯约束条件！"));
-			}
 		}
 
 	}
@@ -569,7 +566,6 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 				AfxMessageBox(_T("该记录不存在！"));
 			}
 		}
-
 	}
 }
 //修改记录

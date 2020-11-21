@@ -35,4 +35,6 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCheck1();
+	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg void OnCbnEditchangeCombo1();
 };
