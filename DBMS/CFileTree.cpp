@@ -334,6 +334,8 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
+
+	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();			//获取主界面
 	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
 	if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM)          // 数据库节点
 	{
@@ -345,6 +347,9 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		GetParentFrame()->DrawMenuBar();
 
 		((CMainFrame*)GetParentFrame())->m_pTableView->ClearTable();
+
+		
+		pMainWnd->SetWindowText(_T("DBMS - ")+this->GetSelectedDBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_TABLE_ITEM)   // 表节点
 	{
@@ -356,10 +361,10 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		//当前选择的表与数据库
 		m_hCurrTBItem = hItem;
 		m_hCurrDBItem = m_pTreeCtrl->GetParentItem(m_hCurrTBItem);
-		//显示当前表的字段信息
-		this->OnDesignTable();
 
 		this->OnLookTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+
+		pMainWnd->SetWindowText(_T("DBMS - ")+this->GetSelectedDBName()+_T(" / ")+this->GetSelectedTBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM) {
 		GetParentFrame()->GetMenu()->EnableMenuItem(3, MF_BYPOSITION | MF_ENABLED);
@@ -374,10 +379,6 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	*pResult = 1;
-
-	string s;
-	s = CT2A(GetSelectedDBName().GetString());
-	_cprintf("%s\n", s.c_str());
 }
 
 
