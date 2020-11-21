@@ -605,3 +605,25 @@ void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CS
 
 	}
 }
+
+void CFileTree::OnDeleteDataBase(CString dbname)
+{
+	// TODO: 在此添加命令处理程序代码
+	if (!CTool::isValidFileName(dbname)) {
+		AfxMessageBox(_T("数据库名中不能带有|\\/:*?<>|\""));
+		return;
+	}
+
+	if (dbname == _T("")) {
+		AfxMessageBox(_T("数据库名中不能为空"));
+		return;
+	}
+
+	CDBLogic dbLogic;
+	if (dbLogic.DeleteDatabase(dbname)) {
+		DisplayDBList();
+	}
+	else {
+		AfxMessageBox(_T("该数据库不存在！"));
+	}
+}

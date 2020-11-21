@@ -209,6 +209,9 @@ int CRecordLogic::AlterRecord(CString dbname,
 				recordite->SetValue(modifiedField, modifiedValue);
 			}
 		}
+		else {
+			return 0;
+		}
 	}
 	ofstream clrfile(trdFilePath, ios::binary);
 	clrfile.close();

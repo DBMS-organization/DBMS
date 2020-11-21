@@ -76,7 +76,9 @@ public:
 	afx_msg void OnDelRecord(CString fieldname, CString value);
 
 	afx_msg void OnAlterRecord(CString primaryfieldname, CString primaryvalue, CString fieldname, CString value);
+	afx_msg void OnDeleteDataBase(CString dbname);
 };
+
 
 
 
