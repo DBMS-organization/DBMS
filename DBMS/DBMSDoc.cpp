@@ -142,6 +142,11 @@ BOOL CDBMSDoc::OnNewDocument()
 	//}
 
 
+	//删除数据库测试
+	/*CDBLogic dblogic;
+	dblogic.DeleteDatabase(_T("db1"));*/
+
+
 
 	return TRUE;
 }
