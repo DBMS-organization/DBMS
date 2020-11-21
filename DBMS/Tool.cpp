@@ -265,3 +265,31 @@ CString CTool::GetCurrTime()
 	CTime t(time);
 	return t.Format("%Y-%m-%d %H:%M:%S");
 }
+
+//删除文件夹及所有子文件
+bool CTool::DeleteFolder(CString& folderName)
+{
+
+	CFileFind finder;
+	CString path;
+	path.Format(CString("%s/*.*"), folderName);
+	BOOL bWorking = finder.FindFile(path);
+	while (bWorking)
+	{
+		bWorking = finder.FindNextFile();
+		if (finder.IsDirectory() && !finder.IsDots())
+		{//处理文件夹
+			CTool::DeleteFolder(finder.GetFilePath()); //递归删除文件夹
+			RemoveDirectory(finder.GetFilePath());
+		}
+		else
+		{//处理文件
+			DeleteFile(finder.GetFilePath());
+		}
+	}
+	if (!RemoveDirectory(folderName))
+		return false;
+
+	return true;
+}
+
