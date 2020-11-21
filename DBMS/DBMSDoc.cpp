@@ -48,7 +48,7 @@ BOOL CDBMSDoc::OnNewDocument()
 	// TODO: 在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
 
-	SetTitle(_T("无数据库"));						//设置标题前半段
+	SetTitle(_T("DBMS"));						//设置标题前半段
 
 	CString filePath = _T("DBMSROOT");
 	CreateDirectory(filePath, NULL);					//创建文件夹

@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_RECORD_NEW, &CMainFrame::OnRecordNew)
 	ON_COMMAND(ID_RECORD_DELETE, &CMainFrame::OnRecordDelete)
 	ON_COMMAND(ID_RECORD_MODIFY, &CMainFrame::OnRecordModify)
+	ON_COMMAND(ID_DB_DELETE, &CMainFrame::OnDbDelete)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -167,6 +168,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	lstBasicCommands.AddTail(ID_EXIT);
 	lstBasicCommands.AddTail(ID_DB_NEW);
+	lstBasicCommands.AddTail(ID_DB_DELETE);
 	lstBasicCommands.AddTail(ID_TB_NEW);
 	lstBasicCommands.AddTail(ID_FIELD_NEW);
 	lstBasicCommands.AddTail(ID_RECORD_NEW);
@@ -368,8 +370,9 @@ void CMainFrame::OnDbNew()
 {
 	// TODO: 在此添加命令处理程序代码
 	CreateDatabase cdb;
-	cdb.DoModal();
-	m_pFileTree->OnCrtDB(cdb.str);
+	if (cdb.DoModal() == IDOK) {
+		m_pFileTree->OnCrtDB(cdb.str);
+	}
 }
 
 //新键表
@@ -387,8 +390,9 @@ void CMainFrame::OnTbNew()
 	
 	if (m_pFileTree->canCreateTable()) {
 		CreateTable ctb;
-		ctb.DoModal();
-		m_pFileTree->OnCrtTable(ctb.str);
+		if (ctb.DoModal() == IDOK) {
+			m_pFileTree->OnCrtTable(ctb.str);
+		}
 	}
 	
 }
@@ -400,8 +404,9 @@ void CMainFrame::OnFieldNew()
 	
 	if (m_pFileTree->canCreateField()) {
 		CreateField cfd;
-		cfd.DoModal();
-		m_pFileTree->OnCrtField(cfd.ed1str, cfd.type, cfd.length, cfd.ed4str, cfd.isPK, cfd.isUNIQUE, cfd.isNULL);
+		if (cfd.DoModal() == IDOK) {
+			m_pFileTree->OnCrtField(cfd.ed1str, cfd.type, cfd.length, cfd.ed4str, cfd.isPK, cfd.isUNIQUE, cfd.isNULL);
+		}
 	}
 	
 }
@@ -437,6 +442,14 @@ void CMainFrame::OnRecordDelete()
 void CMainFrame::OnRecordModify()
 {
 	// TODO: 在此添加命令处理程序代码
-	AlterRecord ard;
-	ard.DoModal();
+	if (m_pFileTree->canCreateRecord()) {
+		AlterRecord ard;
+		ard.DoModal();
+	}
+}
+
+
+void CMainFrame::OnDbDelete()
+{
+	// TODO: 在此添加命令处理程序代码
 }
