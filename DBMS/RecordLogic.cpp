@@ -185,19 +185,25 @@ int CRecordLogic::AlterRecord(CString dbname,
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
 
 	bool isUnique = false;
-	bool isexist = false;
+	bool isexistmodifiedField = false;
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
 		if (ite_1->GetFieldName().Compare(modifiedField) == 0) {
 			isUnique=ite_1->GetUnique();
-			isexist = true;
-			_cprintf("ccccccccccccccccccccccccccccccc  %d", isUnique);
+			isexistmodifiedField = true;
 		}
 	}
-	_cprintf("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb %d", isexist);
-	if (!isexist) return 0;
+	if (!isexistmodifiedField) return 0;
 
-	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
-		
+	bool isexistqueryField = false;
+
+	for (vector<CFieldEntity>::iterator ite_2 = fieldlist.begin(); ite_2 != fieldlist.end(); ++ite_2) {
+		if (ite_2->GetFieldName().Compare(queryField) == 0) {
+			isexistqueryField = true;
+		}
+	}
+	if (!isexistqueryField) return 0;
+
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {	
 		if (fitValue.CompareNoCase(recordite->GetValue(queryField))==0) {
 			if (!isUnique) {
 				recordite->SetValue(modifiedField,modifiedValue);
@@ -210,9 +216,6 @@ int CRecordLogic::AlterRecord(CString dbname,
 				}
 				recordite->SetValue(modifiedField, modifiedValue);
 			}
-		}
-		else {
-			return 0;
 		}
 	}
 	ofstream clrfile(trdFilePath, ios::binary);
