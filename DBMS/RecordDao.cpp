@@ -50,8 +50,8 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 					fieldValue=CTool::BoolToCString(tempbool);
 				}
 				else if (ite_1->GetFieldType() == TYPE_DATETIME) {
-					char* tempTime = new char[20];
-					infile.read(tempTime, 20);
+					char* tempTime = new char[11];
+					infile.read(tempTime, 11);
 					fieldValue = CString(tempTime);
 				}
 				else if (ite_1->GetFieldType() == TYPE_DOUBLE) {			
