@@ -177,3 +177,54 @@ void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 	}
 	outFile.close();
 }
+
+void CRecordDao::reWriteRecord(CString dbname, CString tbname, vector<CRecordEntity> recordlist)
+{
+	CString trdfilepath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".trd");
+
+	CString tdfFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf");
+
+	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+
+	//Çå¿ÕtrdÎÄ¼þ
+	ofstream clearFile(trdfilepath, ios::binary);
+	clearFile.close();
+
+	ofstream outfile(trdfilepath, ios::binary | ios::app);
+
+	for (vector<CRecordEntity>::iterator ite = recordlist.begin(); ite != recordlist.end(); ++ite) {
+		for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+			CString fieldName = ite_1->GetFieldName();
+			CString recordvalue = ite->GetValue(fieldName);
+			if (ite_1->GetFieldType() == TYPE_BOOL) {
+				bool tempbool;
+				tempbool = CTool::CStringToBool(recordvalue);
+				outfile.write((char*)(&tempbool), sizeof(bool));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+				string tempTime;
+				tempTime = CT2A(recordvalue.GetString());
+				outfile.write(tempTime.c_str(), CTool::getTypeStoreLength(_T("DATETIME")));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
+				double tempDouble;
+				tempDouble = CTool::CStringToDouble(recordvalue);
+				outfile.write((char*)(&tempDouble), sizeof(double));
+			}
+			else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+				int tempInt = CTool::CStringToInt(recordvalue);
+				outfile.write((char*)(&tempInt), sizeof(int));
+			}
+			else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+				int varcharSize = recordvalue.GetLength() + 1;
+				string strtemp = CT2A(recordvalue.GetString());
+				//char* writedvarchar = new char[varcharSize + 1];
+				outfile.write((char*)(&varcharSize), sizeof(int));
+
+				//writedvarchar
+				outfile.write(strtemp.c_str(), varcharSize);
+			}
+		}
+	}
+	outfile.close();
+}
