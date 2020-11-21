@@ -57,6 +57,12 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 	}
 
 	if (!FieldExist) {
+		vector<CRecordEntity> recordlist = CRecordDao::getRecordList(DBName, TableName);
+		for (vector<CRecordEntity>::iterator ite = recordlist.begin(); ite != recordlist.end(); ++ite) {
+			ite->SetValue(fieldname, cdefault);
+		}
+
+
 		ofstream outfile(tdfPath, ios::binary | ios::app);
 
 		CFieldEntity field(fieldname);
@@ -117,6 +123,10 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 
 
 		outfile.close();
+
+
+		CRecordDao::reWriteRecord(DBName, TableName, recordlist);
+
 		return 1;
 	}
 	else {
