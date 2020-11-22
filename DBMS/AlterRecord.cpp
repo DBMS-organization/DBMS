@@ -37,8 +37,7 @@ END_MESSAGE_MAP()
 
 
 // AlterRecord 消息处理程序
-
-
+/*修改记录弹窗部分的ok按钮响应函数 四个参数为：所查询的字段名、对应的值、修改的字段名、修改后的值*/
 void AlterRecord::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码

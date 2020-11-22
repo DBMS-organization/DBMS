@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 // CreateTable 消息处理程序
 
-
+/*新建表弹窗ok按钮响应函数 编辑框获取输入的表名*/
 void CreateTable::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码

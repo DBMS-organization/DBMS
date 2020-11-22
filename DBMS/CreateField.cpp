@@ -62,7 +62,7 @@ BOOL CreateField::OnInitDialog()
 				  // 异常: OCX 属性页应返回 FALSE
 }
 
-
+/*新建字段弹窗ok按钮响应函数 编辑框获取输入的字段属性*/
 void CreateField::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -108,7 +108,7 @@ void CreateField::OnBnClickedOk()
 	
 }
 
-
+/*新建字段弹窗单选框响应函数 确定选中状态*/
 void CreateField::OnBnClickedCheck1()
 {
 	CButton* pBtn1 = (CButton*)GetDlgItem(IDC_CHECK1);
