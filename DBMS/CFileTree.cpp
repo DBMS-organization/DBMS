@@ -528,7 +528,7 @@ void CFileTree::OnDeleteDataBase(CString dbname)
 	}
 
 	if (dbname == _T("")) {
-		AfxMessageBox(_T("数据库名中不能为空"));
+		AfxMessageBox(_T("数据库名不能为空"));
 		return;
 	}
 
@@ -537,6 +537,35 @@ void CFileTree::OnDeleteDataBase(CString dbname)
 		DisplayDBList();
 	}
 	else {
-		AfxMessageBox(_T("该数据库不存在！"));
+		AfxMessageBox(_T("要删除的数据库不存在！"));
+	}
+}
+
+void CFileTree::OnDeleteTable(CString tablename)
+{
+	if (m_hCurrDBItem == NULL) {
+		//AfxMessageBox(_T("请选择数据表！"));
+	}
+	else {
+		CString dbname;
+		dbname = this->GetSelectedDBName();
+		if (!CTool::isValidFileName(dbname)) {
+			AfxMessageBox(_T("表名中不能带有|\\/:*?<>|\""));
+			return;
+		}
+
+		if (dbname == _T("")) {
+			AfxMessageBox(_T("表名不能为空"));
+			return;
+		}
+
+		CTableLogic tablelogic(dbname);
+		if (tablelogic.DeleteTable(tablename)) {
+			DisplayDBList();
+		}
+		else {
+			AfxMessageBox(_T("要删除的表不存在！"));
+		}
+
 	}
 }

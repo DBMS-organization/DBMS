@@ -115,3 +115,60 @@ int CTableLogic::CreateTable(CString& tablename)
 
 
 }
+
+int CTableLogic::DeleteTable(CString tablename)
+{
+	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbPath);
+	int count = 0;
+	vector<CTableEntity> newRecord;
+	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite) {
+		if (ite->getTableName() == tablename)
+		{
+			DeleteFile(ite->gettdf());
+			DeleteFile(ite->gettrd());
+			DeleteFile(ite->gettic());
+			count++;
+		}
+		else {
+			newRecord.push_back(*(ite));
+		}
+	}
+	if (count == 0) {
+		return 0;
+	}
+	ofstream clearFile(tbPath, ios::binary);
+	clearFile.close();
+	ofstream outFile(tbPath, ios::binary | ios::app);
+
+	for (vector<CTableEntity>::iterator ite_1 = newRecord.begin(); ite_1 != newRecord.end(); ++ite_1) {
+		string strtablename, strdbname, strtdf, strtrd, strtic, 
+			strcrtime, strmtime, strrecordnum, strfieldnum;
+		int recordnum;
+		int fieldnum;
+
+		//string
+		strdbname = CT2A(ite_1->getDBName().GetString());
+		strtablename = CT2A(ite_1->getTableName().GetString());
+		strtdf = CT2A(ite_1->gettdf().GetString());
+		strtrd = CT2A(ite_1->gettrd().GetString());
+		strtic = CT2A(ite_1->gettic().GetString());
+		strcrtime = CT2A(ite_1->getCreateTime().GetString());
+		strmtime = CT2A(ite_1->getModifyTime().GetString());
+		recordnum = ite_1->getRecord_num();
+		fieldnum = ite_1->getField_num();
+
+		outFile.write(strdbname.c_str(), 128);
+		outFile.write(strtablename.c_str(), 128);
+
+		outFile.write((char*)(&recordnum), sizeof(int));
+		outFile.write((char*)(&fieldnum), sizeof(int));
+
+		outFile.write(strtdf.c_str(), 256);
+		outFile.write(strtrd.c_str(), 256);
+		outFile.write(strtic.c_str(), 256);
+		outFile.write(strcrtime.c_str(), 20);
+		outFile.write(strmtime.c_str(), 20);
+	}
+	outFile.close();
+	return 1;
+}

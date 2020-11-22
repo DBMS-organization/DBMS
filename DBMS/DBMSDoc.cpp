@@ -147,6 +147,11 @@ BOOL CDBMSDoc::OnNewDocument()
 	dblogic.DeleteDatabase(_T("db1"));*/
 
 
+	//删除表测试
+	/*CTableLogic tablelogic(_T("TEST1"));
+	tablelogic.DeleteTable(_T("class"));*/
+
+
 
 	return TRUE;
 }
