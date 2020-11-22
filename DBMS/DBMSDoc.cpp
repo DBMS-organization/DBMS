@@ -57,8 +57,11 @@ BOOL CDBMSDoc::OnNewDocument()
 
 	ofstream dbfile;
 	dbfile.open("DBMSROOT\\databases.db", ios::binary | ios::app);
-
 	dbfile.close();
+
+	ofstream logfile;
+	logfile.open("DBMSROOT\\system.log", ios::app);
+	logfile.close();
 
 	//CDBLogic dbLogic;
 	//dbLogic.CreateDatabase(CString("ABC"));

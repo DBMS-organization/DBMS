@@ -11,7 +11,6 @@
 #include "framework.h"
 #include <afxcview.h>
 
-#include <conio.h>
 #include<string>
 #include<fstream>
 #include<vector>

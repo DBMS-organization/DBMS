@@ -4,7 +4,6 @@
 
 //从文件读取数据库列表
 vector<CDBEntity> CDBDao::getDatabasesList(CString& sysFilePath) {
-	AllocConsole();
 
 	vector<CDBEntity> databasesList;
 	ifstream infile(sysFilePath, ios::binary);

@@ -12,18 +12,24 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 	bool DBExist = false;
 	for (vector<CDBEntity>::iterator ite = dblist.begin(); ite != dblist.end(); ++ite)
 	{
-		//AllocConsole();
 
 		string strDBname1;
 		const char* chDBname1;
 		strDBname1 = CT2A(ite->GetdbName().GetString());
 		chDBname1 = strDBname1.c_str();
 
-		if (ite->GetdbName() == dbName)
+		/*if (ite->GetdbName() == dbName)
+		{
+			DBExist = true;
+			break;
+		}*/
+
+		if (ite->GetdbName().CompareNoCase(dbName) == 0)
 		{
 			DBExist = true;
 			break;
 		}
+		
 	}
 
 	if (!DBExist) {
