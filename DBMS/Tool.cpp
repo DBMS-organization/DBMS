@@ -169,24 +169,40 @@ bool CTool::isTime(CString time)
 //判断是否为int类型
 bool CTool::isInt(CString i)
 {
-	if (i != i.SpanIncluding(L"1234567890"))
+	/*if (i != i.SpanIncluding(L"1234567890"))
 		return false;
 	else
+		return true;*/
+	regex r("^\\+?\\d+$");
+	regex r1("^-[1-9]\\d*|0$");
+	string s = CT2A(i.GetString());
+	if (regex_match(s, r)|| regex_match(s, r1)) {
 		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 //判断是否为double类型
 bool CTool::isDouble(CString d)
 {
+	if (d == _T("")) return true;
+
 	if (isInt(d)) {
 		return true;
 	}
 	else{
-		//regex r("\d+\.\d+");
-		regex r("-[0-9]+(.[0-9]+)?|[0-9]+(.[0-9]+)?");
-		
+		regex r("^\\+?\\d+(\\.\\d+)?$");
+		regex r1("^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$");
 	    string s = CT2A(d.GetString());
-     	return regex_match(s,r);
+
+		if (regex_match(s, r) || regex_match(s, r1)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
