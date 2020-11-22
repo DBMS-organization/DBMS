@@ -169,6 +169,7 @@ bool CTool::isTime(CString time)
 //判断是否为int类型
 bool CTool::isInt(CString i)
 {
+	if(i == _T("")) return true;
 	/*if (i != i.SpanIncluding(L"1234567890"))
 		return false;
 	else
