@@ -80,6 +80,7 @@ BOOL CreateRecord::OnInitDialog()
 		list.SetItemText(i, 4, CTool::BoolToCString(ite->GetPrimary()));
 		list.SetItemText(i, 5, CTool::BoolToCString(ite->GetUnique()));
 		list.SetItemText(i, 6, CTool::BoolToCString(ite->GetNotNull()));
+		recordEntity.SetValue(ite->GetFieldName(), ite->GetDefaultValue());
 	}
 
 
@@ -199,7 +200,25 @@ void CreateRecord::OnEnKillfocusEdit1()
 		list.SetItemText(m_Row, m_Col, _T(""));
 	}
 	else {
-		recordEntity.SetValue(fieldName, fieldValue);
+		CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+		CString dbname = pMainWnd->m_pFileTree->GetSelectedDBName();
+		CString tbname = pMainWnd->m_pFileTree->GetSelectedTBName();
+		CFieldDAO fieldDao;
+		vector<CFieldEntity> fieldList = fieldDao.getFieldList(DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf"));
+		CString defaultValue=_T("");
+		for (vector<CFieldEntity>::iterator ite = fieldList.begin(); ite != fieldList.end(); ++ite) {
+			if (ite->GetFieldName() == fieldName) {
+				defaultValue = ite->GetDefaultValue();
+			}
+		}
+		
+		if (fieldValue == _T("")) {
+			recordEntity.SetValue(fieldName, defaultValue);
+		}
+		else {
+			recordEntity.SetValue(fieldName, fieldValue);
+		}
+		
 	}
 	
 }
