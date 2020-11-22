@@ -511,9 +511,9 @@ void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CS
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 			}
-			else {
+			/*else {
 				AfxMessageBox(_T("该记录不存在！"));
-			}
+			}*/
 		}
 
 	}
