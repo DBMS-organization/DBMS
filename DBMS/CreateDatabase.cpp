@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 // CreateDatabase 消息处理程序
 
-
+/*创建数据库弹窗ok按钮响应函数 编辑框获取输入的数据库名*/
 void CreateDatabase::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码

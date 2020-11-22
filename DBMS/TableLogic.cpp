@@ -36,11 +36,18 @@ int CTableLogic::CreateTable(CString& tablename)
 		rnum1 = rnum.c_str();
 		fnum1 = fnum.c_str();
 
-		if (ite->getTableName() == tablename)
+		/*if (ite->getTableName() == tablename)
+		{
+			TableExist = true;
+			break;
+		}*/
+
+		if (ite->getTableName().CompareNoCase(tablename) == 0)
 		{
 			TableExist = true;
 			break;
 		}
+		
 	}
 
 	if (!TableExist) {

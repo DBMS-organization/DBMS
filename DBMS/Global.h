@@ -1,5 +1,4 @@
 #pragma once
-#include <conio.h>
 
 #define SYSPATH CString("DBMSROOT\\databases.db")
 #define DATAFILEPATH CString("DBMSROOT\\data")

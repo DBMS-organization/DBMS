@@ -42,6 +42,8 @@
 #define IDD_CreateRecord                329
 #define IDD_DeleteRecord                331
 #define IDD_AlterRecord                 333
+#define IDD_DeleteDatabase              335
+#define IDD_DeleteTable                 337
 #define IDC_EDIT1                       1006
 #define IDC_CHECK1                      1007
 #define IDC_EDIT3                       1008
@@ -68,13 +70,14 @@
 #define ID_RECORD_MODIFY                32790
 #define ID_32791                        32791
 #define ID_DB_DELETE                    32792
+#define ID_Menu32793                    32793
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        335
-#define _APS_NEXT_COMMAND_VALUE         32793
+#define _APS_NEXT_RESOURCE_VALUE        339
+#define _APS_NEXT_COMMAND_VALUE         32794
 #define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

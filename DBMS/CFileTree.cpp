@@ -173,6 +173,15 @@ void CFileTree::OnCrtDB(CString dbname)
 			m_pTreeCtrl->SetItemData(hItem, DBVIEW_DB_ITEM);
 			//m_pTreeCtrl->EditLabel(hItem);
 		}
+
+		//写入日志
+		ofstream logfile;
+		logfile.open("DBMSROOT\\system.log", ios::app);
+		string currentTime, strDBname;
+		currentTime = CT2A(CTool::GetCurrTime());
+		strDBname = CT2A(dbname);
+		logfile << currentTime.c_str() << "\t" << "CREATE DATABASE " << strDBname.c_str() << endl;
+		logfile.close();
 	}
 	else {
 		AfxMessageBox(_T("数据库名已存在！"));
@@ -211,6 +220,16 @@ void CFileTree::OnCrtTable(CString tbname)
 				m_bAddTB = TRUE;
 				//m_pTreeCtrl->EditLabel(hTableItem);
 			}
+
+			//写入日志
+			ofstream logfile;
+			logfile.open("DBMSROOT\\system.log", ios::app);
+			string currentTime, strDBname,strTBname;
+			currentTime = CT2A(CTool::GetCurrTime());
+			strDBname = CT2A(this->GetSelectedDBName());
+			strTBname = CT2A(tbname);
+			logfile << currentTime.c_str() << "\t" << "ON DATABASE "<<strDBname.c_str()<<" CREATE TABLE " << strTBname.c_str() << endl;
+			logfile.close();
 		}
 		else {
 			AfxMessageBox(_T("表名已存在！"));
@@ -245,6 +264,17 @@ void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefa
 					m_bAddTB = TRUE;
 					//m_pTreeCtrl->EditLabel(hFieldItem);
 				}
+
+				//写入日志
+				ofstream logfile;
+				logfile.open("DBMSROOT\\system.log", ios::app);
+				string currentTime, strDBname, strTBname,strFieldname;
+				currentTime = CT2A(CTool::GetCurrTime());
+				strDBname = CT2A(this->GetSelectedDBName());
+				strTBname = CT2A(this->GetSelectedTBName());
+				strFieldname = CT2A(fieldname);
+				logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " TABLE " << strTBname.c_str() <<" CREATE FIELD "<<strFieldname.c_str()<< endl;
+				logfile.close();
 			}
 			else {
 				AfxMessageBox(_T("字段名已存在！"));
@@ -432,7 +462,7 @@ void CFileTree::OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-
+//添加记录
 void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -449,6 +479,25 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 			if (recordlogic.AddRecord(this->GetSelectedDBName(), this->GetSelectedTBName(), recordEntity)) {
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(),this->GetSelectedTBName());
+
+				//写入日志
+				ofstream logfile;
+				logfile.open("DBMSROOT\\system.log", ios::app);
+				string currentTime, strDBname, strTBname, strRecordmsg;
+				currentTime = CT2A(CTool::GetCurrTime());
+				strDBname = CT2A(this->GetSelectedDBName());
+				strTBname = CT2A(this->GetSelectedTBName());
+				strRecordmsg = "";
+
+				map < CString, CString > recordvalues = recordEntity.GetValues();
+				map<CString, CString>::iterator iter;
+				CString recordMsg = _T("");
+				for (iter = recordvalues.begin(); iter != recordvalues.end(); iter++) {
+					recordMsg += _T("  ")+ iter->first + _T(" = ") + iter->second;
+				}
+				strRecordmsg = CT2A(recordMsg);
+				logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " TABLE " << strTBname.c_str() << " ADD RECORD " << strRecordmsg.c_str() << endl;
+				logfile.close();
 			}
 		}
 
@@ -477,6 +526,18 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 			if (recordlogic.DeleteRecord(dbname, tbname, fieldname, value)) {
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+
+				//写入日志
+				ofstream logfile;
+				logfile.open("DBMSROOT\\system.log", ios::app);
+				string currentTime, strDBname, strTBname, strRecordmsg;
+				currentTime = CT2A(CTool::GetCurrTime());
+				strDBname = CT2A(this->GetSelectedDBName());
+				strTBname = CT2A(this->GetSelectedTBName());
+				strRecordmsg = CT2A(_T("WHERE ")+ fieldname+_T(" = ")+ value);;
+
+				logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " TABLE " << strTBname.c_str() << " DELETE RECORD " << strRecordmsg.c_str() << endl;
+				logfile.close();
 			}
 			else {
 				AfxMessageBox(_T("该记录不存在！"));
@@ -510,10 +571,19 @@ void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CS
 			if (recordlogic.AlterRecord(dbname,tbname, primaryfieldname, primaryvalue, fieldname, value)) {
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+
+				//写入日志
+				ofstream logfile;
+				logfile.open("DBMSROOT\\system.log", ios::app);
+				string currentTime, strDBname, strTBname, strRecordmsg;
+				currentTime = CT2A(CTool::GetCurrTime());
+				strDBname = CT2A(this->GetSelectedDBName());
+				strTBname = CT2A(this->GetSelectedTBName());
+				strRecordmsg = CT2A(_T("WHERE ") + primaryfieldname + _T(" = ") + primaryvalue +_T("  FIELDNAME = ")+ fieldname+ _T("  NEW = ")+ value);
+
+				logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " TABLE " << strTBname.c_str() << " MODIFY RECORD " << strRecordmsg.c_str() << endl;
+				logfile.close();
 			}
-			/*else {
-				AfxMessageBox(_T("该记录不存在！"));
-			}*/
 		}
 
 	}
@@ -535,6 +605,15 @@ void CFileTree::OnDeleteDataBase(CString dbname)
 	CDBLogic dbLogic;
 	if (dbLogic.DeleteDatabase(dbname)) {
 		DisplayDBList();
+
+		//写入日志
+		ofstream logfile;
+		logfile.open("DBMSROOT\\system.log", ios::app);
+		string currentTime, strDBname;
+		currentTime = CT2A(CTool::GetCurrTime());
+		strDBname = CT2A(dbname);
+		logfile << currentTime.c_str() << "\t" << "DELETE DATABASE " << strDBname.c_str() << endl;
+		logfile.close();
 	}
 	else {
 		AfxMessageBox(_T("要删除的数据库不存在！"));
@@ -562,6 +641,16 @@ void CFileTree::OnDeleteTable(CString tablename)
 		CTableLogic tablelogic(dbname);
 		if (tablelogic.DeleteTable(tablename)) {
 			DisplayDBList();
+
+			//写入日志
+			ofstream logfile;
+			logfile.open("DBMSROOT\\system.log", ios::app);
+			string currentTime, strDBname, strTBname;
+			currentTime = CT2A(CTool::GetCurrTime());
+			strDBname = CT2A(this->GetSelectedDBName());
+			strTBname = CT2A(tablename);
+			logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " DELETE TABLE " << strTBname.c_str() << endl;
+			logfile.close();
 		}
 		else {
 			AfxMessageBox(_T("要删除的表不存在！"));

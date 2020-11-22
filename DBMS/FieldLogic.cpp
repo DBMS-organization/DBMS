@@ -25,7 +25,6 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 	bool FieldExist = false;
 	for (vector<CFieldEntity>::iterator ite = fieldlist.begin(); ite != fieldlist.end(); ++ite)
 	{
-		//AllocConsole();
 
 		string strfieldname1;
 		const char* chfieldname1;

@@ -17,7 +17,8 @@
 #include "CreateRecord.h"
 #include "DeleteRecord.h"
 #include "AlterRecord.h"
-
+#include "DeleteDatabase.h"
+#include "DeleteTable.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,6 +46,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_RECORD_DELETE, &CMainFrame::OnRecordDelete)
 	ON_COMMAND(ID_RECORD_MODIFY, &CMainFrame::OnRecordModify)
 	ON_COMMAND(ID_DB_DELETE, &CMainFrame::OnDbDelete)
+	ON_COMMAND(ID_Menu32793, &CMainFrame::OnTbDelete)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -60,7 +62,6 @@ static UINT indicators[] =
 CMainFrame::CMainFrame() noexcept
 {
 	// TODO: 在此添加成员初始化代码
-	AllocConsole();
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2008);
 }
 
@@ -362,7 +363,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 void CMainFrame::OnExit()
 {
 	// TODO: 在此添加命令处理程序代码
-	exit(0);
+exit(0);
 }
 
 //新建数据库
@@ -387,28 +388,28 @@ void CMainFrame::OnTbNew()
 			m_pFileTree->OnCrtTable(ctb.str);
 		}
 	}*/
-	
+
 	if (m_pFileTree->canCreateTable()) {
 		CreateTable ctb;
 		if (ctb.DoModal() == IDOK) {
 			m_pFileTree->OnCrtTable(ctb.str);
 		}
 	}
-	
+
 }
 
 //新建字段
 void CMainFrame::OnFieldNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	
+
 	if (m_pFileTree->canCreateField()) {
 		CreateField cfd;
 		if (cfd.DoModal() == IDOK) {
 			m_pFileTree->OnCrtField(cfd.ed1str, cfd.type, cfd.length, cfd.ed4str, cfd.isPK, cfd.isUNIQUE, cfd.isNULL);
 		}
 	}
-	
+
 }
 
 //添加记录
@@ -419,7 +420,7 @@ void CMainFrame::OnRecordNew()
 		CreateRecord crd;
 		crd.DoModal();
 	}
-	
+
 
 }
 
@@ -452,4 +453,19 @@ void CMainFrame::OnRecordModify()
 void CMainFrame::OnDbDelete()
 {
 	// TODO: 在此添加命令处理程序代码
+	DeleteDatabase ddb;
+	ddb.DoModal();
+
+}
+
+
+void CMainFrame::OnTbDelete()
+{
+	// TODO: 在此添加命令处理程序代码
+	if(m_pFileTree->canCreateTable())
+	{
+		DeleteTable dtb;
+		dtb.DoModal();
+	}
+
 }

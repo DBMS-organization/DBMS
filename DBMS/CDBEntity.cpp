@@ -3,7 +3,6 @@
 
 CDBEntity::CDBEntity(CString dbname, bool dbtype, CString DBpathIn)
 {
-	AllocConsole();
 	SetdbName(dbname);
 	SetType(dbtype);
 	SetDBpath(DBpathIn);

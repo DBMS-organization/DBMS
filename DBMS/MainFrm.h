@@ -62,6 +62,7 @@ public:
 	afx_msg void OnRecordDelete();
 	afx_msg void OnRecordModify();
 	afx_msg void OnDbDelete();
+	afx_msg void OnTbDelete();
 };
 
 
