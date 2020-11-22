@@ -157,7 +157,7 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="AlterRecord.h">
-      <Filter>头文件</Filter>
+      <Filter>View\Head FIle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -237,7 +237,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="AlterRecord.cpp">
-      <Filter>源文件</Filter>
+      <Filter>View\Source File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
