@@ -46,6 +46,8 @@ public:
 	static int getTypeStoreLength(CString tpname);
 	//获取当前时间
 	static CString GetCurrTime();
+	//删除文件夹及所有子文件
+	static bool DeleteFolder(CString& folderName);
 
 };
 

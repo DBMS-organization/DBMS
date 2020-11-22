@@ -13,5 +13,6 @@ public:
 	~CTableLogic();
 
 	int CreateTable(CString& tablename);//根据表名创建一张新表
+	int DeleteTable(CString tablename);//删除表
 };
 

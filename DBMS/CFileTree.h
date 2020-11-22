@@ -53,30 +53,23 @@ public:
 
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCrtDB(CString dbname);
-	afx_msg void OnOpenDB();
-	afx_msg void OnDeleteDB();
 	afx_msg void OnCrtTable(CString dbname);
 	afx_msg void OnCrtField(CString dbname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull);
 	afx_msg void OnLookTable(CString dbname, CString tbname);
 	afx_msg void OnLookField(CString dbname, CString tbname);
-	afx_msg void OnConditionQuery();
 	afx_msg void OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteTable();
-	afx_msg void OnDesignTable();
 	afx_msg void OnRenameDB();
 	afx_msg void OnTvnBeginlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnAddTable();
-	afx_msg void OnBackupDB();
-	afx_msg void OnRecoveryDB();
-	afx_msg void OnClearTable();
-	afx_msg void OnLookLog();
 
 	afx_msg void OnCrtRecord(CRecordEntity& recordEntity);
 	afx_msg void OnDelRecord(CString fieldname, CString value);
 
 	afx_msg void OnAlterRecord(CString primaryfieldname, CString primaryvalue, CString fieldname, CString value);
+	afx_msg void OnDeleteDataBase(CString dbname);
+	afx_msg void OnDeleteTable(CString tablename);
 };
+
 
 
 

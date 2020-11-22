@@ -182,18 +182,6 @@ void CFileTree::OnCrtDB(CString dbname)
 }
 
 
-void CFileTree::OnOpenDB()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
-void CFileTree::OnDeleteDB()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
 void CFileTree::OnCrtTable(CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -208,7 +196,7 @@ void CFileTree::OnCrtTable(CString tbname)
 	}
 
 	// 同时打开数据库
-	this->OnOpenDB();
+	//this->OnOpenDB();
 	if (m_hCurrDBItem == NULL) {
 		//AfxMessageBox(_T("请选择数据库！"));
 	}
@@ -289,23 +277,6 @@ CString CFileTree::GetSelectedTBName()
 		return NULL;
 }
 
-//CString CFileTree::GetSelectedFieldName()
-//{
-//	if (this->m_hCurrTBItem)
-//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
-//	else
-//		return NULL;
-//}
-//
-//CString CFileTree::GetSelectedRecordName()
-//{
-//	if (this->m_hCurrTBItem)
-//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
-//	else
-//		return NULL;
-//}
-
-
 
 //查看表记录
 void CFileTree::OnLookTable(CString dbname, CString tbname)
@@ -323,17 +294,12 @@ void CFileTree::OnLookField(CString dbname,CString tbname)
 }
 
 
-//按照多字段查询
-void CFileTree::OnConditionQuery()
-{
-
-}
-
-
 void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
+
+	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();			//获取主界面
 	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
 	if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_DB_ITEM)          // 数据库节点
 	{
@@ -345,6 +311,9 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		GetParentFrame()->DrawMenuBar();
 
 		((CMainFrame*)GetParentFrame())->m_pTableView->ClearTable();
+
+		
+		pMainWnd->SetWindowText(_T("DBMS - ")+this->GetSelectedDBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_TABLE_ITEM)   // 表节点
 	{
@@ -356,10 +325,10 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 		//当前选择的表与数据库
 		m_hCurrTBItem = hItem;
 		m_hCurrDBItem = m_pTreeCtrl->GetParentItem(m_hCurrTBItem);
-		//显示当前表的字段信息
-		this->OnDesignTable();
 
 		this->OnLookTable(this->GetSelectedDBName(), this->GetSelectedTBName());
+
+		pMainWnd->SetWindowText(_T("DBMS - ")+this->GetSelectedDBName()+_T(" / ")+this->GetSelectedTBName());
 	}
 	else if (m_pTreeCtrl->GetItemData(hItem) == DBVIEW_FIELD_ITEM) {
 		GetParentFrame()->GetMenu()->EnableMenuItem(3, MF_BYPOSITION | MF_ENABLED);
@@ -374,24 +343,6 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	*pResult = 1;
-
-	string s;
-	s = CT2A(GetSelectedDBName().GetString());
-	_cprintf("%s\n", s.c_str());
-}
-
-
-void CFileTree::OnDeleteTable()
-{
-	// TODO: 在此添加命令处理程序代码
-
-}
-
-
-void CFileTree::OnDesignTable()
-{
-	// TODO: 在此添加命令处理程序代码
-	
 }
 
 
@@ -470,51 +421,17 @@ void CFileTree::OnTvnBeginlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 void CFileTree::OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMTVDISPINFO pTVDispInfo = reinterpret_cast<LPNMTVDISPINFO>(pNMHDR);
-	CString name = pTVDispInfo->item.pszText;
+	/*CString name = pTVDispInfo->item.pszText;
 
 	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
 	if (name != "") {
 		m_pTreeCtrl->SetItemText(hItem, name);
-	}
+	}*/
 	
 
 	*pResult = 0;
 }
 
-
-//在数据库中增加一张表
-void CFileTree::OnAddTable()
-{
-	// TODO:  在此添加命令处理程序代码
-	//this->OnCrtTable();
-}
-
-
-//备份指定的数据库
-void CFileTree::OnBackupDB()
-{
-	// TODO: 在此添加命令处理程序代码
-
-}
-
-//将数据库文件导入到创建的新库
-void CFileTree::OnRecoveryDB()
-{
-	// TODO: 在此添加命令处理程序代码
-	
-}
-
-//清除表中的数据
-void CFileTree::OnClearTable()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
-void CFileTree::OnLookLog()
-{
-	// TODO: 在此添加命令处理程序代码
-}
 
 void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 {
@@ -532,9 +449,6 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 			if (recordlogic.AddRecord(this->GetSelectedDBName(), this->GetSelectedTBName(), recordEntity)) {
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(),this->GetSelectedTBName());
-			}
-			else {
-				AfxMessageBox(_T("触犯约束条件！"));
 			}
 		}
 
@@ -568,7 +482,6 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 				AfxMessageBox(_T("该记录不存在！"));
 			}
 		}
-
 	}
 }
 //修改记录
@@ -598,9 +511,60 @@ void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CS
 				CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 				pMainWnd->m_pTableView->displayTable(this->GetSelectedDBName(), this->GetSelectedTBName());
 			}
-			else {
+			/*else {
 				AfxMessageBox(_T("该记录不存在！"));
-			}
+			}*/
+		}
+
+	}
+}
+
+void CFileTree::OnDeleteDataBase(CString dbname)
+{
+	// TODO: 在此添加命令处理程序代码
+	if (!CTool::isValidFileName(dbname)) {
+		AfxMessageBox(_T("数据库名中不能带有|\\/:*?<>|\""));
+		return;
+	}
+
+	if (dbname == _T("")) {
+		AfxMessageBox(_T("数据库名不能为空"));
+		return;
+	}
+
+	CDBLogic dbLogic;
+	if (dbLogic.DeleteDatabase(dbname)) {
+		DisplayDBList();
+	}
+	else {
+		AfxMessageBox(_T("要删除的数据库不存在！"));
+	}
+}
+
+void CFileTree::OnDeleteTable(CString tablename)
+{
+	if (m_hCurrDBItem == NULL) {
+		//AfxMessageBox(_T("请选择数据表！"));
+	}
+	else {
+		CString dbname;
+		dbname = this->GetSelectedDBName();
+		if (!CTool::isValidFileName(dbname)) {
+			AfxMessageBox(_T("表名中不能带有|\\/:*?<>|\""));
+			return;
+		}
+
+		if (dbname == _T("")) {
+			AfxMessageBox(_T("表名不能为空"));
+			return;
+		}
+
+		CTableLogic tablelogic(dbname);
+		if (tablelogic.DeleteTable(tablename)) {
+			DisplayDBList();
+		}
+		else {
+			AfxMessageBox(_T("要删除的表不存在！"));
 		}
 
 	}

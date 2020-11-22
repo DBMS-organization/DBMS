@@ -48,7 +48,7 @@ BOOL CDBMSDoc::OnNewDocument()
 	// TODO: 在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
 
-	SetTitle(_T("无数据库"));						//设置标题前半段
+	SetTitle(_T("DBMS"));						//设置标题前半段
 
 	CString filePath = _T("DBMSROOT");
 	CreateDirectory(filePath, NULL);					//创建文件夹
@@ -140,6 +140,16 @@ BOOL CDBMSDoc::OnNewDocument()
 	//	_cprintf("zzzzzzzzzzzzzzzzzzzzzz  %s  %s %s %s recordnum %d\n",  strssex.c_str(), strsage.c_str(), strnum.c_str(), strsname.c_str(),recordlist.size());
 
 	//}
+
+
+	//删除数据库测试
+	/*CDBLogic dblogic;
+	dblogic.DeleteDatabase(_T("db1"));*/
+
+
+	//删除表测试
+	/*CTableLogic tablelogic(_T("TEST1"));
+	tablelogic.DeleteTable(_T("class"));*/
 
 
 

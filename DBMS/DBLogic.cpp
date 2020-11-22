@@ -18,13 +18,10 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 		const char* chDBname1;
 		strDBname1 = CT2A(ite->GetdbName().GetString());
 		chDBname1 = strDBname1.c_str();
-		_cprintf("111111111 %s\n", chDBname1);
-
 
 		if (ite->GetdbName() == dbName)
 		{
 			DBExist = true;
-			_cprintf("true\n");
 			break;
 		}
 	}
@@ -52,12 +49,8 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 		fpath = strfilepath.c_str();
 		ctime = strctime.c_str();
 
-		/*char type[2];
-		type[0] = '1';
-		type[1] = '\0';*/
 		bool type = true;
 		outFile.write(chDBname, 128);
-		//outFile.write(type, 2);
 		outFile.write((char*)(&type), sizeof(bool));
 
 		outFile.write(fpath, 256);
@@ -70,3 +63,47 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 		return 0;
 	}
 }
+
+int CDBLogic::DeleteDatabase(CString dbName)
+{
+	vector<CDBEntity> dblist = CDBDao::getDatabasesList(syspath);
+	int count = 0;
+	vector<CDBEntity> newRecord;
+	for (vector<CDBEntity>::iterator dbite = dblist.begin(); dbite != dblist.end(); ++dbite) {
+		if (dbite->GetdbName()==dbName)
+		{
+			count++;
+		}
+		else {			
+			newRecord.push_back(*(dbite));
+		}
+	}
+	if (count == 0)return 0;
+
+	ofstream clearFile(syspath, ios::binary);
+	clearFile.close();
+	ofstream outFile(syspath, ios::binary | ios::app);
+
+	for (vector<CDBEntity>::iterator ite = newRecord.begin(); ite != newRecord.end(); ++ite) {
+		string strDBname, strfilepath, strctime;
+		strDBname = CT2A(ite->GetdbName().GetString());
+		strfilepath = CT2A(ite->GetDBpath().GetString());
+		strctime = CT2A(ite->GetcreateTime().GetString());
+
+		bool type = true;
+		outFile.write(strDBname.c_str(), 128);
+		outFile.write((char*)(&type), sizeof(bool));
+
+		outFile.write(strfilepath.c_str(), 256);
+		outFile.write(strctime.c_str(), 20);
+	}
+	outFile.close();
+	CString filepath;
+	filepath = _T("DBMSROOT\\data\\") + dbName;
+	CTool::DeleteFolder(filepath);//删除文件夹及所有子文件
+	return 1;
+}
+
+
+
+

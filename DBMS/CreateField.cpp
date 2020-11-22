@@ -35,6 +35,8 @@ void CreateField::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CreateField, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CreateField::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_CHECK1, &CreateField::OnBnClickedCheck1)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &CreateField::OnCbnSelchangeCombo1)
+	ON_CBN_EDITCHANGE(IDC_COMBO1, &CreateField::OnCbnEditchangeCombo1)
 END_MESSAGE_MAP()
 
 
@@ -52,6 +54,7 @@ BOOL CreateField::OnInitDialog()
 	cb.AddString(_T("INTEGER"));
 	cb.AddString(_T("VARCHAR"));
 	
+	ed2.EnableWindow(false);
 
 	// TODO:  在此添加额外的初始化
 
@@ -80,8 +83,29 @@ void CreateField::OnBnClickedOk()
 	isNULL = pBtn2->GetCheck();
 	isUNIQUE = pBtn3->GetCheck();
 
-
-	CDialogEx::OnOK();
+	if (!CTool::judgeType(ed2str, ed4str, length)) {
+		if (ed2str == _T("BOOL")) {
+			AfxMessageBox(_T("默认值与数据类型不符,\n请输入true或false！"));
+		}
+		else if (ed2str == _T("DATETIME")) {
+			AfxMessageBox(_T("默认值与数据类型不符,请按格式yyyy-mm-dd输入！"));
+		}
+		else if (ed2str == _T("VARCHAR")) {
+			AfxMessageBox(_T("默认值超过VARCHAR的最大长度！"));
+		}
+		else if (ed2str == _T("INTEGER")) {
+			AfxMessageBox(_T("默认值不是整型数！"));
+		}
+		else if (ed2str == _T("DOUBLE")) {
+			AfxMessageBox(_T("默认值不是双精度数！"));
+		}
+		
+		ed3.SetWindowText(_T(""));
+	}
+	else {
+		CDialogEx::OnOK();
+	}
+	
 }
 
 /*新建字段弹窗单选框响应函数 确定选中状态*/
@@ -102,5 +126,40 @@ void CreateField::OnBnClickedCheck1()
 		pBtn3->SetCheck(0);
 		pBtn2->EnableWindow(true);
 		pBtn3->EnableWindow(true);
+	}
+}
+
+
+void CreateField::OnCbnSelchangeCombo1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString CSType;
+	int nIndex = cb.GetCurSel();
+	cb.GetLBText(nIndex, CSType);
+
+	ed2.EnableWindow(false);
+	ed2.SetWindowText(_T(""));
+	if (CSType == _T("VARCHAR")) {
+		ed2.EnableWindow(true);
+		ed2.SetWindowText(_T("20"));
+	}
+}
+
+
+void CreateField::OnCbnEditchangeCombo1()
+{
+	//AfxMessageBox(_T("EDITCHANGE"));
+	// TODO: 在此添加控件通知处理程序代码
+	CString CSType;
+	cb.GetWindowText(CSType);
+
+
+	if (CSType == _T("VARCHAR")) {
+		ed2.EnableWindow(true);
+		ed2.SetWindowText(_T("20"));
+	}
+	else {
+		ed2.EnableWindow(false);
+		ed2.SetWindowText(_T(""));
 	}
 }

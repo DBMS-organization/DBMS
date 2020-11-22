@@ -125,7 +125,7 @@ CString CTool::IntToCString(int num)
 //判断是否为time数据类型
 bool CTool::isTime(CString time)
 {
-
+	if (time == _T("")) return true;
 
 	regex r1("^(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|((((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26]))|((16|[2468][048]|[3579][26])00))-0?2-29)");
 	//regex r2(" (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$");
@@ -186,8 +186,6 @@ bool CTool::isDouble(CString d)
 		regex r("-[0-9]+(.[0-9]+)?|[0-9]+(.[0-9]+)?");
 		
 	    string s = CT2A(d.GetString());
-
-		_cprintf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& %d\n", regex_match(s, r));
      	return regex_match(s,r);
 	}
 }
@@ -195,6 +193,8 @@ bool CTool::isDouble(CString d)
 //判断是否为bool类型
 bool CTool::isBool(CString b)
 {
+	if (b == _T("")) return true;
+
 	if (strcmp(CStringToChar(b), "true") == 0 ||
 		strcmp(CStringToChar(b), "false") == 0)
 		return true;
@@ -265,3 +265,31 @@ CString CTool::GetCurrTime()
 	CTime t(time);
 	return t.Format("%Y-%m-%d %H:%M:%S");
 }
+
+//删除文件夹及所有子文件
+bool CTool::DeleteFolder(CString& folderName)
+{
+
+	CFileFind finder;
+	CString path;
+	path.Format(CString("%s/*.*"), folderName);
+	BOOL bWorking = finder.FindFile(path);
+	while (bWorking)
+	{
+		bWorking = finder.FindNextFile();
+		if (finder.IsDirectory() && !finder.IsDots())
+		{//处理文件夹
+			CTool::DeleteFolder(finder.GetFilePath()); //递归删除文件夹
+			RemoveDirectory(finder.GetFilePath());
+		}
+		else
+		{//处理文件
+			DeleteFile(finder.GetFilePath());
+		}
+	}
+	if (!RemoveDirectory(folderName))
+		return false;
+
+	return true;
+}
+

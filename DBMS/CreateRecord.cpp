@@ -146,16 +146,7 @@ void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 		CString tbname = pMainWnd->m_pFileTree->GetSelectedTBName();
 		CString tdfFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf");
 		vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
-		
-		
-
-		
-		//读取每一个字段信息
-		/*for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1)
-		{*/
-			
-		//}
-		
+	
 	}
 
 
@@ -184,39 +175,27 @@ void CreateRecord::OnEnKillfocusEdit1()
 	s2 = CT2A(fieldValue);
 	s3 = CT2A(type);
 
-	valid = true;
-	/*if (fieldName == _T("VARCHAR")) {
-		int len = CTool::CStringToInt(list.GetItemText(m_Row, 3));
-		_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT int s %d %s \n", CTool::CStringToInt(list.GetItemText(m_Row, 3)), list.GetItemText(m_Row, 3));
-		if (!CTool::judgeType(type, fieldValue, len)) {
-			valid = false;
-			AfxMessageBox(_T("输入值不符合约束！"));
-			list.SetItemText(m_Row, m_Col, _T(""));
-		}
-		else {
-			recordEntity.SetValue(fieldName, fieldValue);
-		}
-	}
-	else {
-		if (!CTool::judgeType(type, fieldValue)) {
-			valid = false;
-			AfxMessageBox(_T("输入值不符合约束！"));
-			list.SetItemText(m_Row, m_Col, _T(""));
-		}
-		else {
-			recordEntity.SetValue(fieldName, fieldValue);
-		}
-	}*/
-
 	int len = CTool::CStringToInt(list.GetItemText(m_Row, 3));
-	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT int s %d %s \n", CTool::CStringToInt(list.GetItemText(m_Row, 3)), list.GetItemText(m_Row, 3));
-	_cprintf("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT s1, s2,s3  %s %s %s\n", s1.c_str(), s2.c_str(),s3.c_str());
 		
 
-
 	if (!CTool::judgeType(type, fieldValue, len)) {
-		valid = false;
-		AfxMessageBox(_T("输入值不符合约束！"));
+		//valid = false;
+		//AfxMessageBox(_T("输入值不符合约束！"));
+		if (type == _T("BOOL")) {
+			AfxMessageBox(_T("输入值与数据类型不符,\n请输入true或false！"));
+		}
+		else if (type == _T("DATETIME")) {
+			AfxMessageBox(_T("输入值与数据类型不符,请按格式yyyy-mm-dd输入！"));
+		}
+		else if (type == _T("VARCHAR")) {
+			AfxMessageBox(_T("输入值超过VARCHAR的最大长度！"));
+		}
+		else if (type == _T("INTEGER")) {
+			AfxMessageBox(_T("输入值不是整型数！"));
+		}
+		else if (type == _T("DOUBLE")) {
+			AfxMessageBox(_T("输入值不是双精度数！"));
+		}
 		list.SetItemText(m_Row, m_Col, _T(""));
 	}
 	else {
@@ -247,10 +226,10 @@ void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 void CreateRecord::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (valid) {
-		CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
-		pMainWnd->m_pFileTree->OnCrtRecord(recordEntity);
-	}
+	//if (valid) {
+	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
+	pMainWnd->m_pFileTree->OnCrtRecord(recordEntity);
+	//}
 	
 
 	CDialogEx::OnOK();

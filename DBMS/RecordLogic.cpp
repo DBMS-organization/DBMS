@@ -30,17 +30,18 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 			for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
 				//判断同一字段下是否存在相同的值
 				if (record.GetValue(fieldite->GetFieldName()) == recordite->GetValue(fieldite->GetFieldName())) {
+					AfxMessageBox(_T("字段")+fieldite->GetFieldName()+_T("的值触犯唯一性约束！"));
 					return 0;
 				}
 			}
 		}
 		if (fieldite->GetNotNull()) {
 			if (record.GetValue(fieldite->GetFieldName()) == _T("")) {
+				AfxMessageBox(_T("字段") + fieldite->GetFieldName() + _T("的值触犯非空约束！"));
 				return 0;
 			}
 		}
 	}
-	_cprintf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
 	ofstream outfile(trdFilePath, ios::binary | ios::app);
 	
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
@@ -68,10 +69,7 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 		else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 			int varcharSize = recordvalue.GetLength()+1;
 			string strtemp = CT2A(recordvalue.GetString());
-			//char* writedvarchar = new char[varcharSize + 1];
 			outfile.write((char*)(&varcharSize), sizeof(int));
-
-			//writedvarchar
 			outfile.write(strtemp.c_str(), varcharSize);
 		}
 	}
@@ -140,10 +138,7 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 				else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 					int varcharSize = recordvalue.GetLength() + 1;
 					string strtemp = CT2A(recordvalue.GetString());
-					//char* writedvarchar = new char[varcharSize + 1];
 					outfile.write((char*)(&varcharSize), sizeof(int));
-
-					//writedvarchar
 					outfile.write(strtemp.c_str(), varcharSize);
 				}
 			}
@@ -183,26 +178,72 @@ int CRecordLogic::AlterRecord(CString dbname,
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
 
 	bool isUnique = false;
-	bool isexist = false;
+	bool isNotNull = false;
+	bool isexistmodifiedField = false;
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
-		if (ite_1->GetFieldName().Compare(modifiedField) == 0) {
+		if (ite_1->GetFieldName().CompareNoCase(modifiedField) == 0) {
 			isUnique=ite_1->GetUnique();
-			isexist = true;
-			_cprintf("ccccccccccccccccccccccccccccccc  %d", isUnique);
+			isNotNull = ite_1->GetNotNull();
+			isexistmodifiedField = true;
 		}
 	}
-	_cprintf("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb %d", isexist);
-	if (!isexist) return 0;
+	if (!isexistmodifiedField) {
+		AfxMessageBox(_T("不存在要修改的字段 ")+modifiedField + _T(" ！"));
+		return 0;
+	}
+	if (isNotNull) {
+		if (modifiedValue == _T("")) {
+			AfxMessageBox(modifiedField + _T("的值") + modifiedValue + _T("触犯非空约束！"));
+			return 0;
+		}
+	}
+	bool isexistqueryField = false;
 
-	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {
-		
+	for (vector<CFieldEntity>::iterator ite_2 = fieldlist.begin(); ite_2 != fieldlist.end(); ++ite_2) {
+		if (ite_2->GetFieldName().CompareNoCase(queryField) == 0) {
+			isexistqueryField = true;
+		}
+	}
+	if (!isexistqueryField) {
+		AfxMessageBox(_T("不存在要查询的字段 ") + queryField + _T(" ！"));
+		return 0;
+	}
+
+	for (vector<CFieldEntity>::iterator ite_3 = fieldlist.begin(); ite_3 != fieldlist.end(); ++ite_3) {
+		if (ite_3->GetFieldName().CompareNoCase(modifiedField) == 0) {
+			CString type = CTool::IntTodataType(ite_3->GetFieldType());
+			if (!CTool::judgeType(type, modifiedValue, ite_3->GetFieldParam())) {
+				//valid = false;
+				//AfxMessageBox(_T("输入值不符合约束！"));
+				if (type == _T("BOOL")) {
+					AfxMessageBox(_T("修改后的值与该字段数据类型不符,\n请输入true或false！"));
+				}
+				else if (type == _T("DATETIME")) {
+					AfxMessageBox(_T("修改后的值与该字段数据类型不符,请按格式yyyy-mm-dd输入！"));
+				}
+				else if (type == _T("VARCHAR")) {
+					AfxMessageBox(_T("修改后的值超过该字段限制的最大长度！"));
+				}
+				else if (type == _T("INTEGER")) {
+					AfxMessageBox(_T("修改后的值与该字段数据类型不符，不是整型数！"));
+				}
+				else if (type == _T("DOUBLE")) {
+					AfxMessageBox(_T("修改后的值与该字段数据类型不符，不是双精度数！"));
+				}
+				return 0;
+			}
+		}
+	}
+
+	for (vector<CRecordEntity>::iterator recordite = recordlist.begin(); recordite != recordlist.end(); ++recordite) {	
 		if (fitValue.CompareNoCase(recordite->GetValue(queryField))==0) {
 			if (!isUnique) {
 				recordite->SetValue(modifiedField,modifiedValue);
 			}
 			else {
-				for (vector<CRecordEntity>::iterator recordite_1 = recordlist.begin(); recordite != recordlist.end(); ++recordite_1) {
+				for (vector<CRecordEntity>::iterator recordite_1 = recordlist.begin(); recordite_1 != recordlist.end(); ++recordite_1) {
 					if (recordite_1->GetValue(modifiedField).Compare(modifiedValue) == 0) {
+						AfxMessageBox(modifiedField+_T("的值")+ modifiedValue+ _T("触犯唯一性约束！"));
 						return 0;
 					}
 				}
@@ -240,7 +281,6 @@ int CRecordLogic::AlterRecord(CString dbname,
 			else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 				int varcharSize = recordvalue.GetLength() + 1;
 				string strtemp = CT2A(recordvalue.GetString());
-				//char* writedvarchar = new char[varcharSize + 1];
 				outfile.write((char*)(&varcharSize), sizeof(int));
 
 				//writedvarchar

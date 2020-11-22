@@ -30,14 +30,8 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 	else {							//文件正常打开
 		infile.seekg(0, ios::cur);	//文件指针指向开头
 
-		//int fileSize;
-		//infile.seekg(0, ios::end);
-		//fileSize = infile.tellg();
-		//infile.seekg(0, ios::beg);
-
 		CString fieldName = _T("");
 		CString fieldValue = _T("");
-		_cprintf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  %d\n", recordNum);
 		for (int i = 0; i < recordNum;i++) {
 			CRecordEntity recordEntity;
 			//读取每一个字段信息
@@ -69,7 +63,6 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 					infile.read((char*)&varcharSize, sizeof(int));
 					char* tempVarchar = new char[varcharSize];
 					infile.read(tempVarchar, varcharSize);
-					//_cprintf("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ %s\n", tempVarchar);
 					fieldValue = CString(tempVarchar);
 				}
 				recordEntity.SetValue(fieldName, fieldValue);
@@ -89,22 +82,14 @@ void CRecordDao::AddRecordNum(CString dbname, CString tbname)
 	CString tbFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + dbname + _T(".tb");
 
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbFilePath);
-	
-	/*string strdbname, strtbname;
-	strdbname = CT2A(tablelist.at(0).getDBName().GetString());
-	strtbname = CT2A(tablelist.at(0).getTableName().GetString());
-	_cprintf("\nstrdbname.c_str(), strtbname.c_str()    %s %s\n", strdbname.c_str(), strtbname.c_str());*/
-	//_cprintf("\ndddddddddddddddddddddddddddddddddddddd tablelist size %d\n ",tablelist.size());
 
 	for (vector<CTableEntity>::iterator ite = tablelist.begin(); ite != tablelist.end(); ++ite) {
 		if (ite->getTableName() == tbname) {
 			int recordnum;
 			recordnum = ite->getRecord_num();
-			_cprintf("\ntestrecordnum1    %d\n", recordnum);
 			int temp = ite->getRecord_num() + 1;
 			ite->SetRecordNum(temp);
 			recordnum = ite->getRecord_num();
-			_cprintf("\ntestrecordnum2    %d\n", recordnum);
 			break;
 		}
 	}
@@ -121,7 +106,6 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 		if (ite->getTableName() == tbname) {
 			int temp = ite->getRecord_num() - 1;
 			ite->SetRecordNum(temp);
-			_cprintf("111111111111111111111111111111111111111111111111111recordnum %d\n", temp);
 		}
 	}
 	CRecordDao::reWritetb(tablelist);
@@ -129,10 +113,6 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 
 void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 {
-	//string strdbname, strtbname;
-	//strdbname = CT2A(tablelist.at(0).getDBName().GetString());
-	//strtbname = CT2A(tablelist.at(0).getTableName().GetString());
-	//_cprintf("\n888888888888888strdbname.c_str(), strtbname.c_str()    %s %s\n", strdbname.c_str(), strtbname.c_str());
 	CString tbfilepath = DATAFILEPATH + _T("\\") + tablelist[0].getDBName() + _T("\\") + tablelist[0].getDBName() + _T(".tb");
 	ofstream clearFile(tbfilepath, ios::binary);
 	clearFile.close();
@@ -146,8 +126,6 @@ void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 		int fieldnum;
 
 		CString ctime = CTool::GetCurrTime();
-		
-
 
 		strtablename = CT2A(ite->getTableName().GetString());
 		strdbname = CT2A(ite->getDBName().GetString());
@@ -159,10 +137,7 @@ void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 
 		recordnum = ite->getRecord_num();
 		fieldnum = ite->getField_num();
-		_cprintf("\ntestrecordnum3    %d %s\n", recordnum, strtablename.c_str());
 
-		
-		
 		outFile.write(strdbname.c_str(), 128);
 		outFile.write(strtablename.c_str(), 128);
 		outFile.write((char*)(&recordnum), sizeof(int));
@@ -176,4 +151,52 @@ void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 
 	}
 	outFile.close();
+}
+
+void CRecordDao::reWriteRecord(CString dbname, CString tbname, vector<CRecordEntity> recordlist)
+{
+	CString trdfilepath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".trd");
+
+	CString tdfFilePath = DATAFILEPATH + _T("\\") + dbname + _T("\\") + tbname + _T(".tdf");
+
+	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfFilePath);
+
+	//清空trd文件
+	ofstream clearFile(trdfilepath, ios::binary);
+	clearFile.close();
+
+	ofstream outfile(trdfilepath, ios::binary | ios::app);
+
+	for (vector<CRecordEntity>::iterator ite = recordlist.begin(); ite != recordlist.end(); ++ite) {
+		for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
+			CString fieldName = ite_1->GetFieldName();
+			CString recordvalue = ite->GetValue(fieldName);
+			if (ite_1->GetFieldType() == TYPE_BOOL) {
+				bool tempbool;
+				tempbool = CTool::CStringToBool(recordvalue);
+				outfile.write((char*)(&tempbool), sizeof(bool));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DATETIME) {
+				string tempTime;
+				tempTime = CT2A(recordvalue.GetString());
+				outfile.write(tempTime.c_str(), CTool::getTypeStoreLength(_T("DATETIME")));
+			}
+			else if (ite_1->GetFieldType() == TYPE_DOUBLE) {
+				double tempDouble;
+				tempDouble = CTool::CStringToDouble(recordvalue);
+				outfile.write((char*)(&tempDouble), sizeof(double));
+			}
+			else if (ite_1->GetFieldType() == TYPE_INTEGER) {
+				int tempInt = CTool::CStringToInt(recordvalue);
+				outfile.write((char*)(&tempInt), sizeof(int));
+			}
+			else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
+				int varcharSize = recordvalue.GetLength() + 1;
+				string strtemp = CT2A(recordvalue.GetString());
+				outfile.write((char*)(&varcharSize), sizeof(int));
+				outfile.write(strtemp.c_str(), varcharSize);
+			}
+		}
+	}
+	outfile.close();
 }
