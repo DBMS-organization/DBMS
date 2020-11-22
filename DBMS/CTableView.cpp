@@ -70,20 +70,6 @@ void CTableView::OnInitialUpdate()
 	//初始化的视图类型为非法视图
 	m_curView = TABLEVIEW_VALID;
 
-
-	//m_ListCtrl->InsertColumn(0, CString("#"), LVCFMT_LEFT, 0);
-	//m_ListCtrl->InsertColumn(1, CString("字段名"), LVCFMT_LEFT, 100);
-	//m_ListCtrl->InsertColumn(2, CString("顺序"), LVCFMT_LEFT, 0);
-	//m_ListCtrl->InsertColumn(3, CString("类型"), LVCFMT_LEFT, 80);
-	//m_ListCtrl->InsertColumn(4, CString("长度"), LVCFMT_LEFT, 50);
-	//m_ListCtrl->InsertColumn(5, CString("最小值"), LVCFMT_LEFT, 100);
-	//m_ListCtrl->InsertColumn(6, CString("最大值"), LVCFMT_LEFT, 100);
-	//m_ListCtrl->InsertColumn(7, CString("默认值"), LVCFMT_LEFT, 100);
-	//m_ListCtrl->InsertColumn(8, CString("主键"), LVCFMT_LEFT, 40);
-	//m_ListCtrl->InsertColumn(9, CString("允许空值"), LVCFMT_LEFT, 70);
-	//m_ListCtrl->InsertColumn(10, CString("唯一值"), LVCFMT_LEFT, 60);
-	//m_ListCtrl->InsertColumn(11, CString("注释"), LVCFMT_LEFT, 100);
-
 }
 
 

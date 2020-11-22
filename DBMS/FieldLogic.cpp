@@ -32,26 +32,9 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		strfieldname1 = CT2A(ite->GetFieldName().GetString());
 		chfieldname1 = strfieldname1.c_str();
 
-
-
-		_cprintf("FieldMsg %s %d %d %d\n", chfieldname1, ite->GetFieldType(), ite->GetPrimary(), ite->GetNotNull());
-		/*if (ite->GetPrimary()) {
-			_cprintf(" primary true");
-		}
-		else {
-			_cprintf(" primary false");
-		}
-		if (ite->GetNotNull()) {
-			_cprintf(" notnull true\n");
-		}
-		else {
-			_cprintf(" notnull false\n");
-		}*/
-
 		if (ite->GetFieldName() == fieldname)
 		{
 			FieldExist = true;
-			_cprintf("true\n");
 			break;
 		}
 	}
@@ -61,7 +44,6 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		for (vector<CRecordEntity>::iterator ite = recordlist.begin(); ite != recordlist.end(); ++ite) {
 			ite->SetValue(fieldname, cdefault);
 		}
-
 
 		ofstream outfile(tdfPath, ios::binary | ios::app);
 
@@ -81,49 +63,17 @@ int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cd
 		strdefault = CT2A(cdefault.GetString());
 
 
-		//strorder = std::to_string(order);
-		//strtype = std::to_string(type);
-		//strparam = std::to_string(param);
-
-		/*char chprimary[2], chunique[2], chnotnull[2];
-		chprimary[1] = '\0';
-		if (primary) chprimary[0] = '1';
-		else chprimary[0] = '0';
-
-		chunique[1] = '\0';
-		if (unique) chunique[0] = '1';
-		else chunique[0] = '0';
-
-		chnotnull[1] = '\0';
-		if (notnull) chnotnull[0] = '1';
-		else chnotnull[0] = '0';*/
-
-		//_cprintf("888888888888 %s %s %s %s\n", strorder.c_str(), strfieldname.c_str(), chprimary, chnotnull);
-
-
-		//outfile.write(strorder.c_str(), 4);
 		outfile.write((char*)(&order), sizeof(int));
-
 		outfile.write(strfieldname.c_str(), 128);
-		//outfile.write(strtype.c_str(), 4);
 		outfile.write((char*)(&type), sizeof(int));
-
-		//outfile.write(strparam.c_str(), 4);
 		outfile.write((char*)(&param), sizeof(int));
-
 		outfile.write(strtime.c_str(), 20);
 		outfile.write(strdefault.c_str(), 128);
-
-		/*outfile.write(chprimary, 2);
-		outfile.write(chunique, 2);
-		outfile.write(chnotnull, 2);*/
 		outfile.write((char*)(&primary), sizeof(bool));
 		outfile.write((char*)(&unique), sizeof(bool));
 		outfile.write((char*)(&notnull), sizeof(bool));
 
-
 		outfile.close();
-
 
 		CRecordDao::reWriteRecord(DBName, TableName, recordlist);
 

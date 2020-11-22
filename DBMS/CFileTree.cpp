@@ -182,18 +182,6 @@ void CFileTree::OnCrtDB(CString dbname)
 }
 
 
-void CFileTree::OnOpenDB()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
-void CFileTree::OnDeleteDB()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
 void CFileTree::OnCrtTable(CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -208,7 +196,7 @@ void CFileTree::OnCrtTable(CString tbname)
 	}
 
 	// 同时打开数据库
-	this->OnOpenDB();
+	//this->OnOpenDB();
 	if (m_hCurrDBItem == NULL) {
 		//AfxMessageBox(_T("请选择数据库！"));
 	}
@@ -289,23 +277,6 @@ CString CFileTree::GetSelectedTBName()
 		return NULL;
 }
 
-//CString CFileTree::GetSelectedFieldName()
-//{
-//	if (this->m_hCurrTBItem)
-//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
-//	else
-//		return NULL;
-//}
-//
-//CString CFileTree::GetSelectedRecordName()
-//{
-//	if (this->m_hCurrTBItem)
-//		return m_pTreeCtrl->GetItemText(m_hCurrTBItem);
-//	else
-//		return NULL;
-//}
-
-
 
 //查看表记录
 void CFileTree::OnLookTable(CString dbname, CString tbname)
@@ -320,13 +291,6 @@ void CFileTree::OnLookField(CString dbname,CString tbname)
 {
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 	pMainWnd->m_pTableView->displayFieldMsg(dbname,tbname);
-}
-
-
-//按照多字段查询
-void CFileTree::OnConditionQuery()
-{
-
 }
 
 
@@ -379,20 +343,6 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	*pResult = 1;
-}
-
-
-void CFileTree::OnDeleteTable()
-{
-	// TODO: 在此添加命令处理程序代码
-
-}
-
-
-void CFileTree::OnDesignTable()
-{
-	// TODO: 在此添加命令处理程序代码
-	
 }
 
 
@@ -471,51 +421,17 @@ void CFileTree::OnTvnBeginlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 void CFileTree::OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMTVDISPINFO pTVDispInfo = reinterpret_cast<LPNMTVDISPINFO>(pNMHDR);
-	CString name = pTVDispInfo->item.pszText;
+	/*CString name = pTVDispInfo->item.pszText;
 
 	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
 	if (name != "") {
 		m_pTreeCtrl->SetItemText(hItem, name);
-	}
+	}*/
 	
 
 	*pResult = 0;
 }
 
-
-//在数据库中增加一张表
-void CFileTree::OnAddTable()
-{
-	// TODO:  在此添加命令处理程序代码
-	//this->OnCrtTable();
-}
-
-
-//备份指定的数据库
-void CFileTree::OnBackupDB()
-{
-	// TODO: 在此添加命令处理程序代码
-
-}
-
-//将数据库文件导入到创建的新库
-void CFileTree::OnRecoveryDB()
-{
-	// TODO: 在此添加命令处理程序代码
-	
-}
-
-//清除表中的数据
-void CFileTree::OnClearTable()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
-
-void CFileTree::OnLookLog()
-{
-	// TODO: 在此添加命令处理程序代码
-}
 
 void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 {

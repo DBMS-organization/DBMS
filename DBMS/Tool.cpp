@@ -186,8 +186,6 @@ bool CTool::isDouble(CString d)
 		regex r("-[0-9]+(.[0-9]+)?|[0-9]+(.[0-9]+)?");
 		
 	    string s = CT2A(d.GetString());
-
-		_cprintf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& %d\n", regex_match(s, r));
      	return regex_match(s,r);
 	}
 }

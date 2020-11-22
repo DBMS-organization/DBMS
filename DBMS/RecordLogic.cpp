@@ -42,7 +42,6 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 			}
 		}
 	}
-	_cprintf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
 	ofstream outfile(trdFilePath, ios::binary | ios::app);
 	
 	for (vector<CFieldEntity>::iterator ite_1 = fieldlist.begin(); ite_1 != fieldlist.end(); ++ite_1) {
@@ -70,10 +69,7 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 		else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 			int varcharSize = recordvalue.GetLength()+1;
 			string strtemp = CT2A(recordvalue.GetString());
-			//char* writedvarchar = new char[varcharSize + 1];
 			outfile.write((char*)(&varcharSize), sizeof(int));
-
-			//writedvarchar
 			outfile.write(strtemp.c_str(), varcharSize);
 		}
 	}
@@ -142,10 +138,7 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 				else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 					int varcharSize = recordvalue.GetLength() + 1;
 					string strtemp = CT2A(recordvalue.GetString());
-					//char* writedvarchar = new char[varcharSize + 1];
 					outfile.write((char*)(&varcharSize), sizeof(int));
-
-					//writedvarchar
 					outfile.write(strtemp.c_str(), varcharSize);
 				}
 			}
@@ -248,7 +241,6 @@ int CRecordLogic::AlterRecord(CString dbname,
 			else if (ite_1->GetFieldType() == TYPE_VARCHAR) {
 				int varcharSize = recordvalue.GetLength() + 1;
 				string strtemp = CT2A(recordvalue.GetString());
-				//char* writedvarchar = new char[varcharSize + 1];
 				outfile.write((char*)(&varcharSize), sizeof(int));
 
 				//writedvarchar
