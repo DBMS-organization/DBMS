@@ -3,7 +3,12 @@
 #include "Global.h"
 #include "regex"
 
-
+/***************************************************************************************
+* 函数名    ：CStringToChar
+* 参数str   : 一个CString类型的参数
+* 返回值    ：返回一个char数组
+* 描述      ：将CString转为char*
+****************************************************************************************/
 const char* CTool::CStringToChar(CString str)
 {
 	/*
@@ -18,6 +23,13 @@ const char* CTool::CStringToChar(CString str)
 	return T2A(str);
 }
 
+/***************************************************************************************
+* 函数名     ：CStringToChar（两个参数的转化方法）
+* 参数str    :一个CString类型的参数
+*     c      :一个char*类型的参数
+* 返回值     ：void
+* 描述       ：将CString转为char*存储到c中
+****************************************************************************************/
 void CTool::CStringToChar(CString str,char*c)
 {
 	string s;
@@ -27,6 +39,12 @@ void CTool::CStringToChar(CString str,char*c)
 	c = const_cast<char*>(ch);
 }
 
+/***************************************************************************************
+* 函数名    ：BoolToCString
+* 参数bl    ：需要转化为CString类型的bool值
+* 返回值    ：bool值转化成的CString
+* 描述      ：将bool类型的bl转为CString
+****************************************************************************************/
 CString CTool::BoolToCString(bool bl)
 {
 	CString s;
@@ -35,7 +53,12 @@ CString CTool::BoolToCString(bool bl)
 	return s;
 }
 
-//int to char*
+/***************************************************************************************
+* 函数名    ：IntToChar
+* 参数i     ：需要转化为char*类型的int值
+* 返回值    ：int值转化成的char*
+* 描述      ：将int类型的i转为char*
+****************************************************************************************/
 const char* CTool::IntToChar(int i)
 {
 	const char* c;
@@ -45,11 +68,23 @@ const char* CTool::IntToChar(int i)
 	return c;
 }
 
+/***************************************************************************************
+* 函数名    ：CStringToInt
+* 参数str   ：需要转化为int类型的CString
+* 返回值    ：CString值转化成的int
+* 描述      ：将CString类型的str转为int
+****************************************************************************************/
 int CTool::CStringToInt(CString str)
 {
 	return atoi(CT2A(str.GetBuffer()));
 }
 
+/***************************************************************************************
+* 函数名    ：CStringToBool
+* 参数str   ：需要转化为bool类型的CString
+* 返回值    ：CString值转化成的bool值
+* 描述      ：将CString类型的str转为bool
+****************************************************************************************/
 bool CTool::CStringToBool(CString str)
 {
 	if (strcmp(CT2A(str.GetBuffer()), "false")==0)
@@ -58,11 +93,23 @@ bool CTool::CStringToBool(CString str)
 		return true;
 }
 
+/***************************************************************************************
+* 函数名    ：CStringToDouble
+* 参数str   ：需要转化为double类型的CString
+* 返回值    ：CString值转化成的double
+* 描述      ：将CString类型的str转为double
+****************************************************************************************/
 double CTool::CStringToDouble(CString str)
 {
 	return atof(CT2A(str.GetBuffer()));
 }
 
+/***************************************************************************************
+* 函数名    ：DoubleToCString
+* 参数d     ：需要转化为CString类型的double值
+* 返回值    ：double值转化成的CString
+* 描述      ：将double类型的d转为CString
+****************************************************************************************/
 CString CTool::DoubleToCString(double d)
 {
 	CString s;
@@ -75,6 +122,14 @@ CString CTool::DoubleToCString(double d)
 	*/
 }
 
+/***************************************************************************************
+* 函数名    ：dataType
+* 参数tpname：用于描述变量类型名的CString
+* 返回值    ：int
+* 描述      ：判断CString中的字符串表示的是哪一类型的参数并返回int值
+*             TYPE_BOOL,TYPE_DATATIME,TYPE_DOUBLE,TYPE_INTEGER,TYPE_VARCHAR
+*             分别代表五种数据类型
+****************************************************************************************/
 int CTool::dataType(CString tpname) {
 	if (tpname == _T("BOOL")) {
 		return TYPE_BOOL;
@@ -94,6 +149,13 @@ int CTool::dataType(CString tpname) {
 	return 0;
 }
 
+/***************************************************************************************
+* 函数名    ：IntTodataType
+* 参数num   ：int值 TYPE_BOOL,TYPE_DATATIME,TYPE_DOUBLE,TYPE_INTEGER,TYPE_VARCHAR中的一个
+* 返回值    ：用来表示数据类型的CString
+* 描述      ：将TYPE_BOOL,TYPE_DATATIME,TYPE_DOUBLE,TYPE_INTEGER,TYPE_VARCHAR
+              （int值）转为其数据类型所对应的CString
+****************************************************************************************/
 CString CTool::IntTodataType(int num)
 {
 	if (num == TYPE_BOOL) {
@@ -115,6 +177,12 @@ CString CTool::IntTodataType(int num)
 	return _T("");
 }
 
+/***************************************************************************************
+* 函数名    ：IntToCString
+* 参数num   ：需要转化为CString类型的int值
+* 返回值    ：int值转化成的CString
+* 描述      ：将int类型的num转为CString
+****************************************************************************************/
 CString CTool::IntToCString(int num)
 {
 	CString s;
@@ -122,7 +190,13 @@ CString CTool::IntToCString(int num)
 	return s;
 }
 
-//判断是否为time数据类型
+/***************************************************************************************
+* 函数名    ：isTime
+* 参数time  ：需要判断是否符合时间类型格式（yyyy-mm-dd）
+              以及时间合法性(如："2021-02-29"非法)的CString
+* 返回值    ：判断结果bool值
+* 描述      ：判断时间是否符合格式及是否合法，若符合规则返回true
+****************************************************************************************/
 bool CTool::isTime(CString time)
 {
 	if (time == _T("")) return true;
@@ -134,39 +208,15 @@ bool CTool::isTime(CString time)
 	//string s2 = s.substr(10, 9);
 	if (regex_match(s1, r1))
 		return true;
-	else return false;
-
-
-
-	/*regex r1("^(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|((((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26]))|((16|[2468][048]|[3579][26])00))-0?2-29)");
-	regex r2(" (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$");
-	string s = CT2A(time.GetString());
-	string s1 = s.substr(0,10);
-	string s2 = s.substr(10,9);
-	if (regex_match(s1, r1) && regex_match(s2, r2))
-		return true;
-	else return false;*/
-
-
-
-
-	/*
-	regex r("\d\d\d\d-\d\d-\d\d\s\d\d:\d\d:\d\d");
-	string s = CT2A(time.GetString());
-	if(!regex_match(s, r)) return false;
-	else {
-		string s1 = s.substr(0,10);
-		regex r1("((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229))|((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))$");
-		if (!regex_match(s1, r1))return false;
-		else {
-			string s2 = s.substr(12,8);
-			regex r2("");
-			return regex_match(s2,r2);
-		}
-	}*/
+	else return false;	
 }
 
-//判断是否为int类型
+/***************************************************************************************
+* 函数名    ：isInt
+* 参数i     ：CString类型的参数
+* 返回值    ：bool值
+* 描述      ：判断CString类型的值i是否是整数，若是则返回true
+****************************************************************************************/
 bool CTool::isInt(CString i)
 {
 	if(i == _T("")) return true;
@@ -185,7 +235,12 @@ bool CTool::isInt(CString i)
 	}
 }
 
-//判断是否为double类型
+/***************************************************************************************
+* 函数名    ：isDouble
+* 参数d     ：CString类型的参数
+* 返回值    ：bool值
+* 描述      ：判断CString类型的值d是否是double类型的数，若是则返回true
+****************************************************************************************/
 bool CTool::isDouble(CString d)
 {
 	if (d == _T("")) return true;
@@ -207,7 +262,12 @@ bool CTool::isDouble(CString d)
 	}
 }
 
-//判断是否为bool类型
+/***************************************************************************************
+* 函数名    ：isBool
+* 参数b     ：CString类型的参数
+* 返回值    ：bool值
+* 描述      ：判断CString类型的值b是否是bool类型，若是则返回true
+****************************************************************************************/
 bool CTool::isBool(CString b)
 {
 	if (b == _T("")) return true;
@@ -219,9 +279,17 @@ bool CTool::isBool(CString b)
 		return false;
 }
 
-/*判断content的数据类型是否为type
-* 若type为varchar则会判断varchar的长度是否能够存储所给的content
-*/
+/***************************************************************************************
+* 函数名     ：judgeType
+* 参数type   ：CString类型的值
+*     content: CString类型的值
+*     length : int类型的值
+* 返回值     ：bool类型的值
+* 描述       ：判断content中的数据的数据类型是否为字符串type所表示的数据类型
+*              若是则返回true
+*              若type为varchar则会判断varchar的长度是否能够存储所给的content
+* 如         : judgeType(_T("bool"),_T("false"),0)  "false"是"bool"类型，故返回true
+****************************************************************************************/
 bool CTool::judgeType(CString type, CString content, int length)
 {
 	bool judge = true;
@@ -246,7 +314,13 @@ bool CTool::judgeType(CString type, CString content, int length)
 	return judge;
 }
 
-//判断文件名是否合法
+/***************************************************************************************
+* 函数名      ：isValidFileName
+* 参数filename：需要转化为CString类型的int值
+* 返回值      ：bool类型的值
+* 描述        ：判断文件名是否合法，若文件名中含有|\/:*?<>|" 中的任意一个
+*               则文件名非法，返回false，否则返回true
+****************************************************************************************/
 bool CTool::isValidFileName(CString filename) 
 {
 	if (filename!= filename.SpanExcluding(L"|\\/:*?<>|\""))
@@ -255,6 +329,12 @@ bool CTool::isValidFileName(CString filename)
 		return true;
 }
 
+/***************************************************************************************
+* 函数名    ：getTypeStoreLength
+* 参数tpname：CString类型的参数
+* 返回值    ：int值
+* 描述      ：返回tpname所表示的数据类型在文件中的存储长度
+****************************************************************************************/
 int CTool::getTypeStoreLength(CString tpname)
 {
 	if (tpname == _T("BOOL")) {
@@ -275,6 +355,12 @@ int CTool::getTypeStoreLength(CString tpname)
 	return 0;
 }
 
+/***************************************************************************************
+* 函数名    ：GetCurrTime
+* 参数      ：无
+* 返回值    ：表示当时（系统）时间的CString
+* 描述      ：获取当时的系统时间，以"%Y-%m-%d %H:%M:%S"格式的CString返回
+****************************************************************************************/
 CString CTool::GetCurrTime()
 {
 	SYSTEMTIME time;
@@ -283,7 +369,12 @@ CString CTool::GetCurrTime()
 	return t.Format("%Y-%m-%d %H:%M:%S");
 }
 
-//删除文件夹及所有子文件
+/***************************************************************************************
+* 函数名        ：DeleteFolder
+* 参数folderName：CString类型的参数
+* 返回值        ：bool值
+* 描述          ：删除文件夹及所有子文件，成功则返回true
+****************************************************************************************/
 bool CTool::DeleteFolder(CString& folderName)
 {
 
