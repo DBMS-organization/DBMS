@@ -7,6 +7,6 @@ class CDBDao
 {
 
 public:
-	static vector<CDBEntity> getDatabasesList(CString& sysFilepath);
+	static vector<CDBEntity> getDatabasesList(CString& sysFilepath);//从.db文件读取数据库列表
 };
 

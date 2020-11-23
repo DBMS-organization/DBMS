@@ -10,7 +10,12 @@ CFieldDAO::~CFieldDAO()
 {
 }
 
-//从文件读取字段数据
+/***************************************
+* 函数名：getFieldList
+* 参数：.tdf文件的地址
+* 返回值：返回一个vector类型的字段列表
+* 描述：从文件读取字段数据，存入vector中
+****************************************/
 vector<CFieldEntity>CFieldDAO::getFieldList(CString& tdfFilePath)
 {
 
