@@ -44,7 +44,12 @@ END_MESSAGE_MAP()
 
 
 
-
+/***************************************
+* 函数名：OnInitDialog
+* 参数：无
+* 返回值：无
+* 描述：新建字段弹窗初始化函数:下拉框设有默认的字段类型 BOOL、DATETIME、DOUBLE、INTEGER、VARVHAR
+****************************************/
 BOOL CreateField::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -62,7 +67,13 @@ BOOL CreateField::OnInitDialog()
 				  // 异常: OCX 属性页应返回 FALSE
 }
 
-/*新建字段弹窗ok按钮响应函数 编辑框获取输入的字段属性*/
+/***************************************
+* 函数名：OnBnClickedOk
+* 参数：无
+* 返回值：无
+* 描述：新建字段弹窗确定按钮响应函数:编辑框获取输入的字段属性以及单选框对象
+* 设置除VARCHAR外 大小一栏无法编辑以及加入容错判断
+****************************************/
 void CreateField::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -107,7 +118,12 @@ void CreateField::OnBnClickedOk()
 	}
 	
 }
-
+/***************************************
+* 函数名：OnBnClickedCheck1
+* 参数：无
+* 返回值：无
+* 描述：新建字段弹窗单选框响应函数:获取选中状态,当字段为主键时另外两个框也自动选中
+****************************************/
 /*新建字段弹窗单选框响应函数 确定选中状态*/
 void CreateField::OnBnClickedCheck1()
 {
@@ -129,7 +145,13 @@ void CreateField::OnBnClickedCheck1()
 	}
 }
 
-
+/***************************************
+* 函数名：OnCbnSelchangeCombo1
+* 参数：无
+* 返回值：无
+* 描述：新建字段弹窗下拉框响应函数:当创建字段时如果选VARCHAR的时候会动填一个限制长度
+* 防止没填长度就成功创建字段
+****************************************/
 void CreateField::OnCbnSelchangeCombo1()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -145,7 +167,13 @@ void CreateField::OnCbnSelchangeCombo1()
 	}
 }
 
-
+/***************************************
+* 函数名：OnCbnEditchangeCombo1
+* 参数：无
+* 返回值：无
+* 描述：新建字段弹窗ok按钮响应函数:当创建字段时如果选VARCHAR的时候会动填一个限制长度
+* 防止没填长度就成功创建字段
+****************************************/
 void CreateField::OnCbnEditchangeCombo1()
 {
 	//AfxMessageBox(_T("EDITCHANGE"));

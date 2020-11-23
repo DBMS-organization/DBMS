@@ -42,7 +42,12 @@ END_MESSAGE_MAP()
 
 // CreateRecord 消息处理程序
 
-
+/***************************************
+* 函数名：OnInitDialog
+* 参数：无
+* 返回值：无
+* 描述：新建记录弹窗初始化函数:画网格线并将初始化新建记录界面
+****************************************/
 BOOL CreateRecord::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -84,17 +89,6 @@ BOOL CreateRecord::OnInitDialog()
 	}
 
 
-	/*list.InsertItem(0, _T("JAVA"));
-	list.SetItemText(0, 1, _T("01"));
-	list.SetItemText(0, 2, _T("02"));
-
-	list.InsertItem(1, _T("C++"));
-	list.SetItemText(1, 1, _T("13"));
-	list.SetItemText(1, 2, _T("14"));
-
-	list.InsertItem(2, _T("PHP"));
-	list.SetItemText(2, 1, _T("22"));
-	list.SetItemText(2, 2, _T("23"));*/
 
 	// TODO:  在此添加额外的初始化
 
@@ -105,6 +99,12 @@ BOOL CreateRecord::OnInitDialog()
 }
 
 
+/***************************************
+* 函数名：OnNMDblclkList1
+* 参数：无
+* 返回值：无
+* 描述：双击list响应函数:实现双击编辑内容功能
+****************************************/
 void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
@@ -154,8 +154,12 @@ void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 
 }
-
-
+/***************************************
+* 函数名：OnEnKillfocusEdit1
+* 参数：无
+* 返回值：无
+* 描述：丢失焦点响应函数:编辑好内容之后单击其他区域丢失焦点，并将插入记录的值保存
+****************************************/
 void CreateRecord::OnEnKillfocusEdit1()
 {
 	CString str;
@@ -223,6 +227,12 @@ void CreateRecord::OnEnKillfocusEdit1()
 	
 }
 
+/***************************************
+* 函数名：AutoAdjustColumnWidth
+* 参数：pListCtrl
+* 返回值：无
+* 描述：新建记录弹窗自适应函数:将网格内容自适应大小
+****************************************/
 void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 {
 	pListCtrl->SetRedraw(FALSE);
@@ -241,7 +251,12 @@ void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 
 
 
-
+/***************************************
+* 函数名：OnBnClickedOk
+* 参数：无
+* 返回值：无
+* 描述：新建记录弹窗确定按钮响应函数:显示添加记录的值
+****************************************/
 void CreateRecord::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码

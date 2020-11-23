@@ -37,7 +37,12 @@ END_MESSAGE_MAP()
 
 // DeleteRecord 消息处理程序
 
-
+/***************************************
+* 函数名：OnInitDialog
+* 参数：无
+* 返回值：无
+* 描述：删除记录弹窗部分的初始化函数：下拉框初始化所存在的字段名称
+****************************************/
 BOOL DeleteRecord::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -56,7 +61,13 @@ BOOL DeleteRecord::OnInitDialog()
 				  // 异常: OCX 属性页应返回 FALSE
 }
 
-
+/***************************************
+* 函数名：OnBnClickedOk
+* 参数：无
+* 返回值：无
+* 描述：删除记录弹窗部分的确定按钮响应函数：下拉框获取选中要删除的记录名，编辑框获取所要删除的记录值,
+* 点击确定删除数据库
+****************************************/
 void DeleteRecord::OnBnClickedOk()
 {
 	CString str1,str2;
