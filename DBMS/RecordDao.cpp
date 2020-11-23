@@ -4,7 +4,8 @@
 
 /***************************************
 * 函数名：getRecordList
-* 参数：数据库名、表名
+* 参数：dbname（数据库名）
+		tbname（表名）
 * 返回值：返回一个vector类型的记录列表
 * 描述：从文件读取记录数据，存入vector中
 ****************************************/
@@ -85,7 +86,8 @@ vector<CRecordEntity> CRecordDao::getRecordList(CString dbname, CString tbname)
 
 /*******************************************************************
 * 函数名：AddRecordNum
-* 参数：数据库名、表名
+* 参数：dbname（数据库名）
+		tbname（表名）
 * 返回值：无
 * 描述：将recordnum加1，并将其重写到.tb文件中，从而解决添加记录的bug
 ********************************************************************/
@@ -110,7 +112,8 @@ void CRecordDao::AddRecordNum(CString dbname, CString tbname)
 
 /*******************************************************************
 * 函数名：MinusRecordNum
-* 参数：数据库名、表名
+* 参数：dbname（数据库名）
+		tbname（表名）
 * 返回值：无
 * 描述：将recordnum减1，并将其重写到.tb文件中，从而解决删除记录的bug
 ********************************************************************/
@@ -134,7 +137,7 @@ void CRecordDao::MinusRecordNum(CString dbname, CString tbname)
 * 函数名：reWritetb
 * 参数：vector<CTableEntity>类型的表数据列表
 * 返回值：无
-* 描述：重写到.tb文件
+* 描述：重写tb文件
 *********************************************/
 void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 {
@@ -181,7 +184,9 @@ void CRecordDao::reWritetb(vector<CTableEntity> tablelist)
 
 /**************************************************************
 * 函数名：reWriteRecord
-* 参数：数据库名、表名、vector<CRecordEntity>类型的记录数据列表
+* 参数：dbname（数据库名）
+		tbname（表名）
+		recordlist（vector<CRecordEntity>类型的记录数据列表）
 * 返回值：无
 * 描述：重写trd文件，用于解决添加记录之后不能添加字段的bug
 ***************************************************************/
