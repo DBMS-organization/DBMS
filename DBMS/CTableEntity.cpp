@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CTableEntity.h"
 
+//初始化表实体
 CTableEntity::CTableEntity(CString tablename, CString dbName)
 {
 	this->TableName = tablename;

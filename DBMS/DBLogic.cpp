@@ -4,7 +4,13 @@
 #include"CDBEntity.h"
 #include"DBDao.h"
 
-//接收一个数据库名并创建数据库
+
+/***************************************************************************
+* 函数名：CreateDatabase
+* 参数：dbName（数据库名）
+* 返回值：返回0或1（0创建数据库失败，1创建数据库成功）
+* 描述：接收一个数据库名并创建数据库，并将创建成功的数据库实体信息写入db文件
+****************************************************************************/
 int CDBLogic::CreateDatabase(CString& dbName) {
 	vector<CDBEntity> dblist = CDBDao::getDatabasesList(syspath);
 	/*CString createtime;
@@ -70,6 +76,14 @@ int CDBLogic::CreateDatabase(CString& dbName) {
 	}
 }
 
+
+/*****************************************************************************
+* 函数名：DeleteDatabase
+* 参数：dbName（数据库名）
+* 返回值：返回0或1（0删除数据库失败，1删除数据库成功）
+* 描述：接收一个数据库名并删除数据库，并将删除成功之后的数据库列表重写在db文件，
+		并删除相关数据库数据文件夹及其子文件
+******************************************************************************/
 int CDBLogic::DeleteDatabase(CString dbName)
 {
 	vector<CDBEntity> dblist = CDBDao::getDatabasesList(syspath);

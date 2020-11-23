@@ -3,6 +3,12 @@
 #include "CTableEntity.h"
 #include "TableDAO.h"
 
+/**************************************
+* 函数名：CTableLogic
+* 参数：dbname（数据库名）
+* 返回值：无
+* 描述：初始化表逻辑层
+***************************************/
 CTableLogic::CTableLogic(CString dbName)
 {
 	
@@ -17,7 +23,12 @@ CTableLogic::~CTableLogic()
 }
 
 
-//根据表名创建一张新表
+/*****************************************************
+* 函数名：CreateTable
+* 参数：tablename（表名）
+* 返回值：返回0或1（0创建表失败，1创建表成功）
+* 描述：根据表名创建一张新表，并将表实体信息写入tb文件
+******************************************************/
 int CTableLogic::CreateTable(CString& tablename)
 {
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbPath);
@@ -123,6 +134,12 @@ int CTableLogic::CreateTable(CString& tablename)
 
 }
 
+/********************************************************
+* 函数名：DeleteTable
+* 参数：tablename（表名）
+* 返回值：返回0或1（0删除表失败，1删除表成功）
+* 描述：根据表名删除表，并将删除后的表信息列表重写入tb文件
+**********************************************************/
 int CTableLogic::DeleteTable(CString tablename)
 {
 	vector<CTableEntity> tablelist = CTableDAO::getTableList(tbPath);

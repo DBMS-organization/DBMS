@@ -4,7 +4,13 @@
 #include <amp.h>
 
 using namespace std;
-
+/*****************************************************************************
+* 函数名：CFieldLogic
+* 参数：dbName（数据库名）
+		tableName（表名）
+* 返回值：无
+* 描述：接收数据库名和表名进行初始化
+******************************************************************************/
 CFieldLogic::CFieldLogic(CString dbName, CString tableName)
 {
 	this->DBName = dbName;
@@ -16,6 +22,18 @@ CFieldLogic::~CFieldLogic()
 {
 }
 
+/********************************************************
+* 函数名：CreateField
+* 参数：fieldname（字段名）
+		type（字段类型）
+		param（字段类型参数）
+		cdefault（字段默认值）
+		Primary（主键true，非主键false）
+		NotNull（非空true，允许空false）
+		Unique（唯一true，非唯一false）
+* 返回值：返回0或1（0创建字段失败，1创建字段成功）
+* 描述：接收字段实体信息创建字段，并将字段信息写入tdf文件
+*********************************************************/
 int CFieldLogic::CreateField(CString& fieldname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull)
 {
 	vector<CFieldEntity> fieldlist = CFieldDAO::getFieldList(tdfPath);

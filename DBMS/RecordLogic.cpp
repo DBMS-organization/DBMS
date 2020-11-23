@@ -10,6 +10,14 @@ CRecordLogic::~CRecordLogic()
 {
 }
 
+/*************************************************
+* 函数名：AddRecord
+* 参数：dbname（数据库名）
+		tablename（表名）
+		record（记录实体）
+* 返回值：返回0或1（0添加记录失败，1添加记录成功）
+* 描述：添加记录，并判断该记录的类型写入trd文件
+**************************************************/
 int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &record)
 {
 	this->dbName = dbname;
@@ -81,6 +89,15 @@ int CRecordLogic::AddRecord(CString dbname, CString tablename, CRecordEntity &re
 	return 1;
 }
 
+/******************************************************
+* 函数名：DeleteRecord
+* 参数：dbname（数据库名）
+		tablename（表名）
+		fieldname（字段名）
+		fieldvalue（字段值）
+* 返回值：返回0或1（0删除记录失败，1删除记录成功）
+* 描述：删除记录，并将删除记录后的纪录列表重写入trd文件
+*******************************************************/
 int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldname, CString fieldvalue)
 {
 	this->dbName = dbname;
@@ -148,16 +165,19 @@ int CRecordLogic::DeleteRecord(CString dbname, CString tablename, CString fieldn
 	
 }
 
-/// <summary>
-/// 相当于alter table tablename set modifiedField="modifiedValue" where queryFiled="fitValue";
-/// </summary>
-/// <param name="dbname">数据库名</param>
-/// <param name="tablename">表名</param>
-/// <param name="queryField">用来查询的字段名</param>
-/// <param name="fitValue">用来查询的字段需要满足的值</param>
-/// <param name="modifiedField">需要修改的字段名</param>
-/// <param name="modifiedValue">修改后该字段的值</param>
-/// <returns></returns>
+
+/************************************************************************************************
+* 函数名：AlterRecord
+* 参数：dbname（数据库名）
+		tablename（表名）
+		queryField（用来查询的字段名）
+		fitValue（用来查询的字段需要满足的值）
+		modifiedField（需要修改的字段名）
+		modifiedValue（修改后该字段的值）
+* 返回值：返回0或1（0修改记录失败，1修改记录成功）
+* 描述：修改记录，并重写trd文件
+		相当于alter table tablename set modifiedField="modifiedValue" where queryFiled="fitValue";
+**************************************************************************************************/
 int CRecordLogic::AlterRecord(CString dbname, 
 	                          CString tablename, 
 	                          CString queryField, 

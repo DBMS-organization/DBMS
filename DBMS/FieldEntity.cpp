@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FieldEntity.h"
 
+//初始化字段实体
 CFieldEntity::CFieldEntity(CString fieldname)
 {
     this->fieldName = fieldName;
@@ -21,6 +22,7 @@ CFieldEntity::~CFieldEntity(void)
 {
 }
 
+//设置约束条件（主键，非空，唯一）
 void CFieldEntity::SetIntegrities(bool primary, bool unique, bool notnull)
 {
     this->Primary = primary;
