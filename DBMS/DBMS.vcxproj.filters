@@ -75,16 +75,7 @@
     <ClInclude Include="MainFrm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DBMSView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CTableView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CFileTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DBDao.h">
@@ -165,21 +156,21 @@
     <ClInclude Include="DeleteTable.h">
       <Filter>View\Head FIle</Filter>
     </ClInclude>
+    <ClInclude Include="CFileTree.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
+    <ClInclude Include="CTableView.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
+    <ClInclude Include="DBMSView.h">
+      <Filter>View\Head FIle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DBMSView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CTableView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CFileTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DBDao.cpp">
@@ -249,6 +240,15 @@
       <Filter>View\Source File</Filter>
     </ClCompile>
     <ClCompile Include="DeleteTable.cpp">
+      <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CFileTree.cpp">
+      <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="CTableView.cpp">
+      <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="DBMSView.cpp">
       <Filter>View\Source File</Filter>
     </ClCompile>
   </ItemGroup>
