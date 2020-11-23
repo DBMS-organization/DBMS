@@ -46,10 +46,10 @@ public:
 	CString GetSelectedTBName();//得到当前被选择的表名
 	void DisplayDBList();		//显示数据库列表
 
-	void GetDBAndTableName(CString& dbName, CString& tbName);
-	bool canCreateTable();
-	bool canCreateField();
-	bool canCreateRecord();
+	void GetDBAndTableName(CString& dbName, CString& tbName);//获取数据库名与表名
+	bool canCreateTable();//判断当前选择的文件是否符合创建表的条件
+	bool canCreateField();//判断当前选择的文件是否符合创建字段的条件
+	bool canCreateRecord();//判断当前选择的文件是否符合添加记录的条件
 
 	afx_msg void OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCrtDB(CString dbname);
@@ -58,9 +58,6 @@ public:
 	afx_msg void OnLookTable(CString dbname, CString tbname);
 	afx_msg void OnLookField(CString dbname, CString tbname);
 	afx_msg void OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRenameDB();
-	afx_msg void OnTvnBeginlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
 
 	afx_msg void OnCrtRecord(CRecordEntity& recordEntity);
 	afx_msg void OnDelRecord(CString fieldname, CString value);

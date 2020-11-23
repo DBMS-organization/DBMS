@@ -24,8 +24,8 @@ CFileTree::~CFileTree()
 BEGIN_MESSAGE_MAP(CFileTree, CTreeView)
 	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &CFileTree::OnTvnSelchanged)
 	ON_NOTIFY_REFLECT(NM_RCLICK, &CFileTree::OnNMRClick)
-	ON_NOTIFY_REFLECT(TVN_BEGINLABELEDIT, &CFileTree::OnTvnBeginlabeledit)
-	ON_NOTIFY_REFLECT(TVN_ENDLABELEDIT, &CFileTree::OnTvnEndlabeledit)
+	//ON_NOTIFY_REFLECT(TVN_BEGINLABELEDIT, &CFileTree::OnTvnBeginlabeledit)
+	//ON_NOTIFY_REFLECT(TVN_ENDLABELEDIT, &CFileTree::OnTvnEndlabeledit)
 END_MESSAGE_MAP()
 
 
@@ -82,7 +82,13 @@ void CFileTree::OnInitialUpdate()
 	m_bAddTB = FALSE;
 }
 
-//从文件中读取数据库信息并显示在树中
+
+/******************************************
+* 函数名：DisplayDBList
+* 参数：无
+* 返回值：无
+* 描述：从文件中读取数据库信息（数据库、表、字段）并显示在树中
+*******************************************/
 void CFileTree::DisplayDBList()
 {
 	CDBDao dbDao;
@@ -120,7 +126,10 @@ void CFileTree::DisplayDBList()
 	
 }
 
-//右键点击树结构
+
+/***********************
+ 右键点击树结构
+************************/
 void CFileTree::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -149,7 +158,14 @@ void CFileTree::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-
+/***************************************************************
+* 函数名：OnCrtDB
+* 参数：dbname(数据库名称）
+* 返回值：无
+* 描述：创建数据库的前后端接口，负责在左侧目录树中添加数据库节点，
+		并调用创建数据库文件的函数，同时具有对数据库名的一些容错判断。
+		还负责创建数据库的日志填写
+****************************************************************/
 void CFileTree::OnCrtDB(CString dbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -190,7 +206,14 @@ void CFileTree::OnCrtDB(CString dbname)
 
 }
 
-
+/***************************************************************
+* 函数名：OnCrtTable
+* 参数：tbname(表名称）
+* 返回值：无
+* 描述：创建表的前后端接口，负责在左侧目录树中添加表节点，
+		并调用创建表相关文件的函数，同时具有对表名的一些
+		容错判断。还负责创建表的日志填写
+****************************************************************/
 void CFileTree::OnCrtTable(CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -237,6 +260,20 @@ void CFileTree::OnCrtTable(CString tbname)
 	}
 }
 
+/***************************************************************
+* 函数名：OnCrtField
+* 参数：fieldname(字段名称）
+		type（数据类型转换成int后的值）
+		param（当数据类型为字符串时，字符串的限制长度）
+		cdefault（字段默认值）
+		primary（是否为主键，是true，不是false）
+		unique（是否唯一，是true，不是false）
+		notnull（是否非空，是true，不是false）
+* 返回值：无
+* 描述：创建表的前后端接口，负责在左侧目录树中添加表节点，
+		并调用创建表相关文件的函数，同时具有对表名的一些
+		容错判断。还负责创建字段的日志填写
+****************************************************************/
 void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefault, bool primary, bool unique, bool notnull)
 {
 	if (fieldname == _T("")) {
@@ -284,7 +321,12 @@ void CFileTree::OnCrtField(CString fieldname, int type, int param, CString cdefa
 	}
 }
 
-
+/*************************************************
+* 函数名：GetSelectedDBName
+* 参数：无
+* 返回值：数据库名字（CString)
+* 描述：判断当前用户选择的数据库是哪个，并返回数据库名
+**************************************************/
 CString CFileTree::GetSelectedDBName()
 {
 	if (m_hCurrDBItem)
@@ -299,6 +341,12 @@ CString CFileTree::GetSelectedDBName()
 
 }
 
+/*************************************************
+* 函数名：GetSelectedTBName
+* 参数：无
+* 返回值：表名（CString)
+* 描述：判断当前用户选择的表是哪个，并返回表名
+**************************************************/
 CString CFileTree::GetSelectedTBName()
 {
 	if (this->m_hCurrTBItem)
@@ -308,7 +356,13 @@ CString CFileTree::GetSelectedTBName()
 }
 
 
-//查看表记录
+/*************************************************
+* 函数名：OnLookTable
+* 参数：dbname（数据库名）
+		tbname（表名）
+* 返回值：无
+* 描述：显示表记录到右侧表中的接口
+**************************************************/
 void CFileTree::OnLookTable(CString dbname, CString tbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -316,14 +370,28 @@ void CFileTree::OnLookTable(CString dbname, CString tbname)
 	pMainWnd->m_pTableView->displayTable(dbname, tbname);
 }
 
-//查看字段描述信息
+/*************************************************
+* 函数名：OnLookField
+* 参数：dbname（数据库名）
+		tbname（表名）
+* 返回值：无
+* 描述：显示表字段描述信息到右侧表中的接口
+**************************************************/
 void CFileTree::OnLookField(CString dbname,CString tbname)
 {
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 	pMainWnd->m_pTableView->displayFieldMsg(dbname,tbname);
 }
 
-
+/************************************
+* 函数名：OnTvnSelchanged
+* 参数：pNMHDR
+		pResult
+* 返回值：无
+* 描述：鼠标点击切换树目录选择时调用的函数，
+		负责更新当前选择的数据库节点，与
+		表节点
+*************************************/
 void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
@@ -375,14 +443,31 @@ void CFileTree::OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 1;
 }
 
-
+/************************************
+* 函数名：GetDBAndTableName
+* 参数：dbName
+		tbName
+* 返回值：无
+* 描述：获取当前选择的表名，及该表所在的数据库名
+*************************************/
 void CFileTree::GetDBAndTableName(CString& dbName, CString& tbName)
 {
 	dbName = this->GetSelectedDBName();
 	tbName = this->GetSelectedTBName();
 }
 
-//判断是否能创建表，能则返回true否则返回false
+/********************************************
+* 函数名：canCreateTable
+* 参数：无
+* 返回值：能否创建表（bool）
+* 描述：根据当前选择的树目录中的节点判断
+		是否能创建表，能则返回true否则返回false
+		该函数一般只在本DBMS系统未创建任何数据库
+		时有用，当未创建任何数据库时需要提醒用户
+		现创建数据库，其他情况总能找到当前选择的
+		树目录节点对应的数据库，也就能在该数据库
+		中创建表
+**********************************************/
 bool CFileTree::canCreateTable()
 {
 	if (m_hCurrDBItem == NULL) {
@@ -394,6 +479,14 @@ bool CFileTree::canCreateTable()
 	}
 }
 
+/********************************************
+* 函数名：canCreateField
+* 参数：无
+* 返回值：能否创建字段（bool）
+* 描述：根据当前选择的树目录中的节点判断
+		是否能创建字段，能则返回true否则返回false
+		只有当用户在树目录中选择了表或字段节点时才返回true。
+**********************************************/
 bool CFileTree::canCreateField()
 {
 	if (m_hCurrDBItem == NULL) {
@@ -412,6 +505,14 @@ bool CFileTree::canCreateField()
 	}
 }
 
+/********************************************
+* 函数名：canCreateRecord
+* 参数：无
+* 返回值：能否添加记录（bool）
+* 描述：根据当前选择的树目录中的节点判断
+		是否能添加记录，能则返回true否则返回false
+		只有当用户在树目录中选择了表节点时才返回true。
+**********************************************/
 bool CFileTree::canCreateRecord()
 {
 	if (m_hCurrDBItem == NULL) {
@@ -429,40 +530,16 @@ bool CFileTree::canCreateRecord()
 	}
 }
 
-
-void CFileTree::OnRenameDB()
-{
-	// TODO: 在此添加命令处理程序代码
-	//CDBLogic dbLogic;
-	//CString oldDBName = GetSelectedDBName();
-	//dbLogic.ModifyDBName(oldDBName,);
-	m_pTreeCtrl->EditLabel(m_pTreeCtrl->GetSelectedItem());
-}
-
-
-void CFileTree::OnTvnBeginlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	LPNMTVDISPINFO pTVDispInfo = reinterpret_cast<LPNMTVDISPINFO>(pNMHDR);
-	// TODO: 在此添加控件通知处理程序代码
-	*pResult = 0;
-}
-
-//树形结构中当对节点编辑结束时执行该函数
-void CFileTree::OnTvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	LPNMTVDISPINFO pTVDispInfo = reinterpret_cast<LPNMTVDISPINFO>(pNMHDR);
-	/*CString name = pTVDispInfo->item.pszText;
-
-	HTREEITEM hItem = m_pTreeCtrl->GetSelectedItem();
-	if (name != "") {
-		m_pTreeCtrl->SetItemText(hItem, name);
-	}*/
-	
-
-	*pResult = 0;
-}
-
-//添加记录
+/*******************************************************
+* 函数名：OnCrtRecord
+* 参数：recordEntity（记录实体）
+* 返回值：无
+* 描述：作为前后端实现添加记录功能的接口，前端传入记录的实体，
+		在该函数中获取当前选择的数据库名与表名，并根据数据库
+		名、表名、记录实体调用后端创建记录时相关写文件操作的函
+		数，以及在右侧表中显示表添加记录后的结果。还负责添加
+		记录的日志填写
+*********************************************************/
 void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -504,7 +581,19 @@ void CFileTree::OnCrtRecord(CRecordEntity& recordEntity)
 	}
 	
 }
+
 //删除记录
+/*******************************************************
+* 函数名：OnDelRecord
+* 参数：fieldname（删除记录时查询的字段）
+		value（字段的值）
+* 返回值：无
+* 描述：作为前后端实现删除记录功能的接口，前端传入查询的字段
+		与字段的值在该函数中获取当前选择的数据库名与表名，
+		并根据数据库名、表名、查询的字段、字段的值调用后端
+		删除记录时相关读写文件操作的函数，以及在右侧表中显示
+		表删除记录后的结果。还负责删除记录的日志填写
+*********************************************************/
 void CFileTree::OnDelRecord (CString fieldname, CString value)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -520,7 +609,7 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 			dbname = this->GetSelectedDBName();
 			tbname = this->GetSelectedTBName();
 			/*************************************
-			在这调用删除记录的函数,上面是表明和数据库名
+			在这调用删除记录的函数,上面是表名和数据库名
 			****************************************/
 			CRecordLogic recordlogic;
 			if (recordlogic.DeleteRecord(dbname, tbname, fieldname, value)) {
@@ -545,13 +634,22 @@ void CFileTree::OnDelRecord (CString fieldname, CString value)
 		}
 	}
 }
+
 //修改记录
-/***********************************************************
-需要的参数为：
-要修改记录的主键字段名和主键值，用于确定该记录的唯一性；
-要修改的记录的字段名和要修改的值(new)。
-注：不需要传要修改的字段old值
-************************************************************/
+/*******************************************************
+* 函数名：OnAlterRecord
+* 参数：primaryfieldname（查询的字段名）
+		primaryvalue（查询字段的值）
+		fieldname（要修改的字段名）
+		value（修改后的值）
+* 返回值：无
+* 描述：作为前后端实现修改记录功能的接口，前端传入查询的字段、
+		查询字段的值、将要修改的字段、修改后的值，在该函数
+		中获取当前选择的数据库名与表名，并根据数据库名、表名
+		以及传入的参数调用后端修改记录时相关读写文件操作的函
+		数，以及在右侧表中显示表修改记录后的结果。还负责修改
+		记录的日志填写。
+*********************************************************/
 void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CString fieldname, CString value)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -589,6 +687,15 @@ void CFileTree::OnAlterRecord(CString primaryfieldname, CString primaryvalue, CS
 	}
 }
 
+/*******************************************************
+* 函数名：OnDeleteDataBase
+* 参数：dbname（要删除的数据库名）
+* 返回值：无
+* 描述：作为前后端实现删除数据库功能的接口，前端传入要删除的
+		数据库名，根据数据库名调用后端删除数据库时相关读写
+		文件操作的函数，以及在左侧树目录中更新删除数据库后的结果。
+		还负责修改删除数据库的日志填写。
+*********************************************************/
 void CFileTree::OnDeleteDataBase(CString dbname)
 {
 	// TODO: 在此添加命令处理程序代码
@@ -612,7 +719,7 @@ void CFileTree::OnDeleteDataBase(CString dbname)
 		string currentTime, strDBname;
 		currentTime = CT2A(CTool::GetCurrTime());
 		strDBname = CT2A(dbname);
-		logfile << currentTime.c_str() << "\t" << "DELETE DATABASE " << strDBname.c_str() << endl;
+		logfile << currentTime.c_str() << "\t" << "DROP DATABASE " << strDBname.c_str() << endl;
 		logfile.close();
 	}
 	else {
@@ -620,6 +727,15 @@ void CFileTree::OnDeleteDataBase(CString dbname)
 	}
 }
 
+/*******************************************************
+* 函数名：OnDeleteTable
+* 参数：tablename（要删除的表名）
+* 返回值：无
+* 描述：作为前后端实现删除表功能的接口，前端传入要删除的表名，
+		并在该函数中获取数据库名，根据数据库名及表名调用后端
+		删除表时相关读写文件操作的函数，以及在左侧树目录中
+		更新删除表后的结果。还负责修改删除表的日志填写。
+*********************************************************/
 void CFileTree::OnDeleteTable(CString tablename)
 {
 	if (m_hCurrDBItem == NULL) {
@@ -647,9 +763,9 @@ void CFileTree::OnDeleteTable(CString tablename)
 			logfile.open("DBMSROOT\\system.log", ios::app);
 			string currentTime, strDBname, strTBname;
 			currentTime = CT2A(CTool::GetCurrTime());
-			strDBname = CT2A(this->GetSelectedDBName());
+			strDBname = CT2A(dbname);
 			strTBname = CT2A(tablename);
-			logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " DELETE TABLE " << strTBname.c_str() << endl;
+			logfile << currentTime.c_str() << "\t" << "ON DATABASE " << strDBname.c_str() << " DROP TABLE " << strTBname.c_str() << endl;
 			logfile.close();
 		}
 		else {
