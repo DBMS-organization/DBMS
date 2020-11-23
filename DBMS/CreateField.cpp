@@ -48,7 +48,7 @@ END_MESSAGE_MAP()
 * 函数名：OnInitDialog
 * 参数：无
 * 返回值：无
-* 描述：新建字段弹窗初始化函数:下拉框设有默认的字段类型 BOOL、DATETIME、DOUBLE、INTEGER、VARVHAR
+* 描述：新建字段弹窗初始化函数：下拉框设有默认的字段类型 BOOL、DATETIME、DOUBLE、INTEGER、VARVHAR
 ****************************************/
 BOOL CreateField::OnInitDialog()
 {

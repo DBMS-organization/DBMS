@@ -46,7 +46,7 @@ END_MESSAGE_MAP()
 * 函数名：OnInitDialog
 * 参数：无
 * 返回值：无
-* 描述：新建记录弹窗初始化函数:画网格线并将初始化新建记录界面
+* 描述：新建记录弹窗初始化函数：画网格线并将初始化新建记录界面
 ****************************************/
 BOOL CreateRecord::OnInitDialog()
 {
@@ -103,7 +103,7 @@ BOOL CreateRecord::OnInitDialog()
 * 函数名：OnNMDblclkList1
 * 参数：无
 * 返回值：无
-* 描述：双击list响应函数:实现双击编辑内容功能
+* 描述：双击list响应函数：实现双击编辑内容功能
 ****************************************/
 void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -158,7 +158,7 @@ void CreateRecord::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 * 函数名：OnEnKillfocusEdit1
 * 参数：无
 * 返回值：无
-* 描述：丢失焦点响应函数:编辑好内容之后单击其他区域丢失焦点，并将插入记录的值保存
+* 描述：丢失焦点响应函数：编辑好内容之后单击其他区域丢失焦点，并将插入记录的值保存
 ****************************************/
 void CreateRecord::OnEnKillfocusEdit1()
 {
@@ -231,7 +231,7 @@ void CreateRecord::OnEnKillfocusEdit1()
 * 函数名：AutoAdjustColumnWidth
 * 参数：pListCtrl
 * 返回值：无
-* 描述：新建记录弹窗自适应函数:将网格内容自适应大小
+* 描述：新建记录弹窗自适应函数：将网格内容自适应大小
 ****************************************/
 void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 {
@@ -255,7 +255,7 @@ void CreateRecord::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 * 函数名：OnBnClickedOk
 * 参数：无
 * 返回值：无
-* 描述：新建记录弹窗确定按钮响应函数:显示添加记录的值
+* 描述：新建记录弹窗确定按钮响应函数：显示添加记录的值
 ****************************************/
 void CreateRecord::OnBnClickedOk()
 {
