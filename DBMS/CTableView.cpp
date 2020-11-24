@@ -130,7 +130,7 @@ void CTableView::displayTable(CString dbname, CString tbname)
 
 //在表中显示字段描述信息
 /*******************************************************
-* 函数名：displayTable
+* 函数名：displayFieldMsg
 * 参数：dbname（数据库名）
 *		tbname（表名）
 * 返回值：无
