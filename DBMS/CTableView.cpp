@@ -1,15 +1,10 @@
 #include "pch.h"
 #include "CTableView.h"
 
-
 // TableView.cpp : 实现文件
-//
 
 #include "DBMS.h"
 #include "MainFrm.h"
-
-
-
 
 // CTableView
 
@@ -17,7 +12,6 @@ IMPLEMENT_DYNCREATE(CTableView, CListView)
 
 CTableView::CTableView()
 {
-
 }
 
 CTableView::~CTableView()
@@ -84,6 +78,13 @@ void CTableView::ClearTable()
 }
 
 //在表中显示记录
+/*******************************************************
+* 函数名：displayTable
+* 参数：dbname（数据库名）
+*		tbname（表名）
+* 返回值：无
+* 描述：将表种的记录显示到右侧的表格中
+*********************************************************/
 void CTableView::displayTable(CString dbname, CString tbname)
 {
 	this->ClearTable();
@@ -128,6 +129,13 @@ void CTableView::displayTable(CString dbname, CString tbname)
 }
 
 //在表中显示字段描述信息
+/*******************************************************
+* 函数名：displayTable
+* 参数：dbname（数据库名）
+*		tbname（表名）
+* 返回值：无
+* 描述：将表中的字段信息显示到右侧的表格中
+*********************************************************/
 void CTableView::displayFieldMsg(CString dbname, CString tbname)
 {
 	this->ClearTable();
@@ -206,6 +214,12 @@ void CTableView::OnNMRClick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+/*******************************************************
+* 函数名：AutoAdjustColumnWidth
+* 参数：pListCtrl
+* 返回值：无
+* 描述：自动根据表中单元格内的文本长度调整单元格的长度
+*********************************************************/
 void CTableView::AutoAdjustColumnWidth(CListCtrl* pListCtrl)
 {
 	pListCtrl->SetRedraw(FALSE);

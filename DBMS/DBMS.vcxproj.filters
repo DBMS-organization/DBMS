@@ -75,9 +75,6 @@
     <ClInclude Include="MainFrm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DBDao.h">
       <Filter>Dao\Head File</Filter>
     </ClInclude>
@@ -95,18 +92,6 @@
     </ClInclude>
     <ClInclude Include="CTableEntity.h">
       <Filter>Entity\Head File</Filter>
-    </ClInclude>
-    <ClInclude Include="DBMS.h">
-      <Filter>Global\Head File</Filter>
-    </ClInclude>
-    <ClInclude Include="DBMSDoc.h">
-      <Filter>Global\Head File</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Global\Head File</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Global\Head File</Filter>
     </ClInclude>
     <ClInclude Include="Global.h">
       <Filter>Global\Head File</Filter>
@@ -165,12 +150,24 @@
     <ClInclude Include="DBMSView.h">
       <Filter>View\Head FIle</Filter>
     </ClInclude>
+    <ClInclude Include="DBMS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DBMSDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Global\Head File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DBDao.cpp">
@@ -190,12 +187,6 @@
     </ClCompile>
     <ClCompile Include="CTableEntity.cpp">
       <Filter>Entity\Source FIle</Filter>
-    </ClCompile>
-    <ClCompile Include="DBMS.cpp">
-      <Filter>Global\Source File</Filter>
-    </ClCompile>
-    <ClCompile Include="DBMSDoc.cpp">
-      <Filter>Global\Source File</Filter>
     </ClCompile>
     <ClCompile Include="DBLogic.cpp">
       <Filter>Logic\Source File</Filter>
@@ -250,6 +241,15 @@
     </ClCompile>
     <ClCompile Include="DBMSView.cpp">
       <Filter>View\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="DBMS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DBMSDoc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Global\Source File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
